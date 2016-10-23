@@ -47,7 +47,7 @@ function cf_translate_load(){
             $slugs = new stdClass();
             $slugs->cf = Caldera_Forms::PLUGIN_SLUG;
             $slugs->translate = $slugs->cf . '-translate';
-            new CF_Translate_Menu($slugs, CFTRANS_PATH, CFTRANS_URL, CFTRANS_VER );
+            new CF_Translate_Admin($slugs, CFTRANS_PATH, CFTRANS_URL, CFTRANS_VER );
 
         }
 
@@ -144,7 +144,7 @@ function cf_translate_save_translation(){
 
                     }
 
-                    $form->add_translation( $language, $fields );
+                    $form->get_translator()->add_fields_to_language( $language, $fields );
                     $saved = $form->save();
                     if( $saved ){
                         status_header( 200 );
@@ -218,7 +218,7 @@ function cf_translate_get_language(){
                         exit;
                     }else{
                         status_header( 501 );
-                        wp_send_json_error( $form->get_languages() );
+                        wp_send_json_error( $form->get_translator()->get_languages() );
 
                     }
 

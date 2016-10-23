@@ -1,14 +1,21 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: josh
- * Date: 10/23/16
- * Time: 1:03 PM
+ * Object factories
+ *
+ * @package CF_Translate
+ * @author    Josh Pollock <Josh@CalderaWP.com>
+ * @license   GPL-2.0+
+ * @link
+ * @copyright 2016 CalderaWP LLC
  */
 class CF_Translate_Factories{
 
     /**
+     * Get form as CF_Translate_Form object
+     *
+     * @since 0.1.0
+     *
      * @param string|array $form_id Form config or form ID
      *
      * @return CF_Translate_Form|null|WP_Error
@@ -28,6 +35,15 @@ class CF_Translate_Factories{
         }
     }
 
+	/**
+	 * Get a CF_Translate_Translator object for a form
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $form Form config
+	 *
+	 * @return CF_Translate_Translator
+	 */
     public static function new_translator( array  $form ){
         $code = get_locale();
         $translator = new CF_Translate_Translator(  );
@@ -38,6 +54,15 @@ class CF_Translate_Factories{
         return $translator;
     }
 
+	/**
+	 * Create a set of fields for a language
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param CF_Translate_Form|array $form The form
+	 *
+	 * @return array
+	 */
     public static function new_language_fields( $form  ){
         if( $form instanceof  CF_Translate_Form ){
             $form = $form->get_form();
@@ -51,6 +76,16 @@ class CF_Translate_Factories{
         return $objects;
     }
 
+	/**
+	 * Create a CF_Translate_Field object form field config array
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field Field config
+	 * @param bool $sanitize Optional. If true, field object is sanitized. False is default
+	 *
+	 * @return CF_Translate_Field
+	 */
     public static function field_object( array $field, $sanitize = false ){
         $field_object = new CF_Translate_Field();
         foreach ( $field_object->get_field_names() as $key ){
@@ -66,6 +101,15 @@ class CF_Translate_Factories{
 
     }
 
+	/**
+	 * Sanitize a CF_Translate_Field object
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param CF_Translate_Field $field
+	 *
+	 * @return CF_Translate_Field
+	 */
     public static function sanatize_field( CF_Translate_Field $field  ){
         $field->ID = trim( strip_tags( $field->ID ) );
 	    foreach ( $field->get_field_names() as $key ){

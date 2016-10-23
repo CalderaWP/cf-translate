@@ -1,11 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: josh
- * Date: 10/23/16
- * Time: 2:57 PM
+ * Translate form in front-end
+ *
+ * @package CF_Translate
+ * @author    Josh Pollock <Josh@CalderaWP.com>
+ * @license   GPL-2.0+
+ * @link
+ * @copyright 2016 CalderaWP LLC
  */
-
 class  CF_Translate_Render {
 
     /**

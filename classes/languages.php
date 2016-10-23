@@ -1,17 +1,63 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: josh
- * Date: 10/23/16
- * Time: 3:37 PM
+ * Container for language codes
+ *
+ * Can be JSON serialized directly for UI
+ *
+ * @package CF_Translate
+ * @author    Josh Pollock <Josh@CalderaWP.com>
+ * @license   GPL-2.0+
+ * @link
+ * @copyright 2016 CalderaWP LLC
  */
 class CF_Translate_Languages implements JsonSerializable{
 
+	/**
+	 * Prepared languages
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var array
+	 */
     protected $languages;
 
+	/**
+	 * @inheritdoc
+	 */
+	public function jsonSerialize(){
+		$this->to_array();
+
+		return $this->languages;
+	}
+
+	/**
+	 * Get formatted languages as array
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return array
+	 */
+	public function to_array() {
+		if (  empty( $this->languages ) ) {
+			foreach ( $this->languages() as $code => $language ) {
+				$this->languages[ $code ] = array(
+					'name' => $language
+				);
+			}
+		}
+
+		return $this->languages;
+	}
 
 
+	/**
+	 * Raw language data
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return array
+	 */
     protected function languages(){
         return array(
             "ab" => "Abkhazian",
@@ -383,13 +429,6 @@ class CF_Translate_Languages implements JsonSerializable{
         );
     }
 
-    public function jsonSerialize(){
-        foreach( $this->languages() as $code => $language ){
-            $this->languages[ $code ] = array(
-                'name' => $language
-            );
-        }
-        return $this->languages;
-    }
+
 
 }

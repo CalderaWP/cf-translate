@@ -1,25 +1,45 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: josh
- * Date: 10/23/16
- * Time: 12:50 PM
+ * Translation system
+ *
+ * @package CF_Translate
+ * @author    Josh Pollock <Josh@CalderaWP.com>
+ * @license   GPL-2.0+
+ * @link
+ * @copyright 2016 CalderaWP LLC
  */
 class CF_Translate_Translator {
 
+	/** @var  array */
     protected $form_info;
 
+	/** @var  array */
     protected $fields;
 
+	/** @var  array */
     protected $languages;
 
-
+	/**
+	 * CF_Translate_Translator constructor.
+	 *
+	 * @since 0.1.0
+	 */
     public function __construct(){
         $this->languages = array();
     }
 
 
+	/**
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string $code Language code
+	 * @param string $type Info type
+	 * @param string $value Info bit
+ 	 *
+	 * @return bool
+	 */
     public function add_form_info( $code, $type, $value  ){
         if ( $this->add_language( $code ) ) {
             $this->form_info[$code][$type] = $value;
@@ -30,6 +50,10 @@ class CF_Translate_Translator {
     }
 
 	/**
+	 * Get fields by language
+	 *
+	 * @since 0.1.0
+	 *
 	 * @param $code
 	 * @param bool $to_array
 	 *
@@ -55,15 +79,40 @@ class CF_Translate_Translator {
         return array();
     }
 
+	/**
+	 * Get all languages
+	 * @since 0.1.0
+	 *
+	 * @param string $code Language code
+	 *
+	 * @return array
+	 */
     public function get_languages(){
         return $this->languages;
     }
 
+	/**
+	 * Check if we have a language in object
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string $code Language code
+	 *
+	 * @return bool
+	 */
     public function has_language( $code ){
         return in_array( $code, $this->languages );
     }
 
-
+	/**
+	 * Add a language to system
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string $code Language code
+	 *
+	 * @return bool
+	 */
     public function add_language( $code ){
         if( ! $this->validate_code( $code ) ){
             return false;
@@ -89,6 +138,16 @@ class CF_Translate_Translator {
 
     }
 
+	/**
+	 * Add a new language
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string $code Language code
+	 * @param array $fields Fields -- must be an array of CF_Translate_Field objects
+	 *
+	 * @return  bool
+	 */
     public function add_fields_to_language( $code, array $fields ){
         if( $this->add_language( $code ) ){
             foreach( $fields as $field ){
@@ -96,7 +155,11 @@ class CF_Translate_Translator {
                     $this->fields[ $code ][ $field->ID ] = $field;
                 }
             }
+
+            return true;
         }
+
+        return false;
     }
 
     protected function validate_code( $code ){

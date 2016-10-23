@@ -1,37 +1,81 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: josh
- * Date: 10/22/16
- * Time: 2:30 PM
+ * Set up admin
+ *
+ * @package CF_Translate
+ * @author    Josh Pollock <Josh@CalderaWP.com>
+ * @license   GPL-2.0+
+ * @link
+ * @copyright 2016 CalderaWP LLC
  */
-class CF_Translate_Menu {
+class CF_Translate_Admin {
 
 	/**
+	 * Slugs for resources
+	 *
+	 * @since 0.1.0
+	 *
 	 * @var stdClass
 	 */
 	protected $slugs;
 
+	/**
+	 * Plugin directory path
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
 	protected $path;
 
+	/**
+	 * Plugin directory url
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
 	protected $url;
 
+	/**
+	 * Plugin version
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
 	protected $version;
 
-
+	/**
+	 * CF_Translate_Admin constructor.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param $slugs
+	 * @param $path
+	 * @param $url
+	 * @param $version
+	 */
 	public function __construct( $slugs, $path, $url, $version ) {
 		$this->slugs = $slugs;
 		$this->path = $path;
 		$this->url = $url;
 		$this->version = $version;
 
-		add_action('admin_menu', array( $this, 'add_menu' ) );
+		add_action( 'admin_menu', array( $this, 'add_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'register' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 
 	}
 
+	/**
+	 * Add submenu to Caldera Forms menu
+	 *
+	 * @since 0.1.0
+	 *
+	 * @uses "admin_menu" action
+	 */
 	public function add_menu(){
 		add_submenu_page(
 			$this->slugs->cf,
@@ -43,10 +87,22 @@ class CF_Translate_Menu {
 		);
 	}
 
+	/**
+	 * Render the main admin page
+	 *
+	 * @since 0.1.0
+	 */
 	public function render_admin(){
 		include $this->path . '/views/main-page.php';
 	}
 
+	/**
+	 * Register scripts/styles
+	 *
+	 * @since 0.1.0
+	 *
+	 * @uses "admin_enqueue_scripts"
+	 */
 	public function register(){
 		//$codes_slug = $this->slugs->translate . '-language-codes';
 		//wp_register_script( $codes_slug, $this->url . '/assets/js/language-codes.js' );
@@ -59,6 +115,15 @@ class CF_Translate_Menu {
 
 	}
 
+	/**
+	 * Load scripts/styles
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string $hook Current hook
+	 *
+	 * @uses "admin_enqueue_scripts"
+	 */
 	public function enqueue( $hook ){
 		if( $this->slugs->cf . '_page_' . $this->slugs->translate == $hook ){
 			wp_enqueue_script( $this->slugs->translate );
@@ -69,6 +134,11 @@ class CF_Translate_Menu {
 
 	}
 
+	/**
+	 * Localize JavaScript
+	 *
+	 * @since 0.1.0
+	 */
 	public function localize(){
         $form = $this->get_form();
         if( is_wp_error( $form ) ){
@@ -82,6 +152,10 @@ class CF_Translate_Menu {
 	}
 
     /**
+     * Get the form based on current HTTP request
+     *
+     * @since 0.1.0
+     *
      * @return array|CF_Translate_Form|null|WP_Error
      */
 	protected function get_form(){
@@ -95,6 +169,6 @@ class CF_Translate_Menu {
 
 		return null;
 
-
 	}
+
 }

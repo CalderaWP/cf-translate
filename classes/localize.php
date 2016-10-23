@@ -1,24 +1,45 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: josh
- * Date: 10/22/16
- * Time: 2:37 PM
+ * Sets up the CFTRANS object for amdin
+ *
+ * @package CF_Translate
+ * @author    Josh Pollock <Josh@CalderaWP.com>
+ * @license   GPL-2.0+
+ * @link
+ * @copyright 2016 CalderaWP LLC
  */
 class CF_Translate_Localize {
 
     /**
-     * @var CF_Translate_Form
+     * Current form
+     *
+     * Not always set!
+     *
+     * @since 0.1.0
+     *
+     * @var CF_Translate_Form|null
      */
 	protected $form;
 
-	protected $language_codes;
-
+	/**
+	 * CF_Translate_Localize constructor.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param CF_Translate_Form|null $form
+	 */
 	public function __construct( CF_Translate_Form $form = null ) {
 		$this->form = $form;
 	}
 
+	/**
+	 * Get data formatted as array
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return array
+	 */
 	public function to_array(){
 		$data = array(
 			'strings' => $this->strings(),
@@ -36,7 +57,7 @@ class CF_Translate_Localize {
 		if( ! empty( $this->form ) ){
 			$data[ 'form' ] = array(
 				'ID' => $this->form->get_id(),
-				'languages' => $this->form->get_languages(),
+				'languages' => $this->form->get_translator()->get_languages(),
 				'form_info' => $this->form_info()
 			);
             foreach( $data[ 'form' ][ 'languages' ] as $language ){
@@ -60,22 +81,39 @@ class CF_Translate_Localize {
 		return $data;
 	}
 
+	/**
+	 * Get prepared form info
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return array
+	 */
 	protected function form_info(){
 		return array(
 			'name' => $this->form[ 'name' ]
 		);
 	}
-	protected function fields(){
 
-		return  $this->form[ 'translations' ][ 'fields' ];
-	}
-
+	/**
+	 * Get prepared strings for UI
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return array
+	 */
 	protected function strings(){
 		return array(
 
 		);
 	}
 
+	/**
+	 * Get other info for UI
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return array
+	 */
 	protected function data(){
 		return array(
 			'nonce' => CF_Translate_AdminForm:: nonce(),
