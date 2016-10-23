@@ -9,11 +9,17 @@
 class CF_Translate_Factories{
 
     /**
-     * @param $form_id
+     * @param string|array $form_id Form config or form ID
+     *
      * @return CF_Translate_Form|null|WP_Error
      */
     public static function get_form( $form_id ){
-        $form = Caldera_Forms_Forms::get_form( $form_id );
+	    if (  ! is_array( $form_id ) ) {
+		    $form = Caldera_Forms_Forms::get_form( $form_id );
+	    }else{
+	    	$form = $form_id;
+	    }
+
         if( ! empty( $form ) ){
             $form = new CF_Translate_Form( $form );
             return $form;
@@ -61,10 +67,12 @@ class CF_Translate_Factories{
     }
 
     public static function sanatize_field( CF_Translate_Field $field  ){
-        $field->ID = caldera_forms_very_safe_string($field->ID);
-        $field->caption = Caldera_Forms_Sanitize::sanitize( $field->caption );
-        $field->label = Caldera_Forms_Sanitize::sanitize( $field->label );
-        $field->default = Caldera_Forms_Sanitize::sanitize( $field->default );
+        $field->ID = trim( strip_tags( $field->ID ) );
+	    foreach ( $field->get_field_names() as $key ){
+		    if ( 'ID' != $key &&  ! empty(  $field->$key  ) ) {
+			    $field->$key = Caldera_Forms_Sanitize::sanitize( $field->$key );
+		    }
+	    }
         return $field;
     }
 }

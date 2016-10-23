@@ -29,8 +29,26 @@ class CF_Translate_Translator {
         return false;
     }
 
-    public function get_fields( $code ){
+	/**
+	 * @param $code
+	 * @param bool $to_array
+	 *
+	 * @return array
+	 */
+    public function get_fields( $code, $to_array = false ){
         if( $this->has_language( $code ) ){
+        	if( $to_array ){
+		        $fields = array();
+		        /**
+		         * @var  string $id
+		         * @var CF_Translate_Field $field
+		         */
+		        foreach ( $this->fields[ $code ] as $id => $field ){
+		        	$fields[ $id ] = $field->to_array( false );
+		        }
+
+		        return $fields;
+	        }
             return $this->fields[ $code ];
         }
 
@@ -74,7 +92,7 @@ class CF_Translate_Translator {
     public function add_fields_to_language( $code, array $fields ){
         if( $this->add_language( $code ) ){
             foreach( $fields as $field ){
-                if( $field instanceof  Caldera_Forms_Object ){
+                if( $field instanceof  CF_Translate_Field ){
                     $this->fields[ $code ][ $field->ID ] = $field;
                 }
             }

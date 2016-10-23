@@ -1,10 +1,12 @@
 
 
-function CF_Translations( CFTRANS, $, _, Handlebars ){
+function CF_Translations( settings, $, _, Handlebars ){
 
     var self = this;
 
     this.languages = [];
+
+    this.languages_objects = {};
 
     this.language_codes = {};
 
@@ -13,10 +15,11 @@ function CF_Translations( CFTRANS, $, _, Handlebars ){
     this.init = function(){
         self.language_codes = cf_lang_codes;
 
-        if( ! _.isEmpty( CFTRANS.languages ) ){
-            self.languages = CFTRANS.form.languages;
+        if( ! _.isEmpty( settings.form.languages ) ){
+            self.languages = settings.form.languages;
+            var x=1;
         }else{
-            self.add_language( CFTRANS.local );
+            self.add_language( settings.local );
         }
     };
 
@@ -35,10 +38,18 @@ function CF_Translations( CFTRANS, $, _, Handlebars ){
 
     this.populate_language_selector = function( $selector ){
         self.$language_selector = $selector;
-        var codes = _.allKeys(self.languages );
-        _.each( codes, function( code ){
+        _.each( self.languages, function( code ){
             self.add_language_option( code );
         });
+    };
+
+    this.get_language_obj = function( code ){
+        code = code.substring(0,2).toLowerCase();
+        if( ! _.has( self.languages_objects, code ) ){
+            self.languages_objects[ code ] = self.language_codes[ code ];
+        }
+
+        return self.languages_objects[ code ];
     };
 
     this.add_language_option = function( code ){
@@ -56,7 +67,8 @@ function CF_Translations( CFTRANS, $, _, Handlebars ){
             });
         }
         if ( ! found ) {
-            self.$language_selector.append('<option value="' + code + '">' + self.languages[code].name + '</option>');
+            var lang = self.get_language_obj( code );
+            self.$language_selector.append('<option value="' + code + '">' + lang.name + '</option>');
         }
     };
 
@@ -64,14 +76,13 @@ function CF_Translations( CFTRANS, $, _, Handlebars ){
         $form.on( 'submit',  function(e){
             e.preventDefault();
             self.load_language( self.$language_selector.val() );
-
         });
 
         $add_language_button.on( 'click', function(e){
             e.preventDefault();
             var lang = $add_language.val();
             if( self.is_language_known( lang ) ){
-                if( ! _.has( CFTRANS.form.fields, lang ) ){
+                if( ! _.has( settings.form.fields, lang ) ){
                     self.get_language_fields( lang );
                 }
                 self.add_language( lang );
@@ -89,18 +100,21 @@ function CF_Translations( CFTRANS, $, _, Handlebars ){
     };
 
     this.get_language_fields = function( language ){
-        $.get( CFTRANS.data.api, {
+        $.get( settings.data.api, {
             action: 'cf_translate_get_language',
-            form_id: CFTRANS.form.ID,
+            form_id: settings.form.ID,
             language: language,
-            cftrans_nonce: CFTRANS.data.nonce,
+            cftrans_nonce: settings.data.nonce,
 
         }).success( function( r ){
-                CFTRANS.form.fields[ language ] = r;
+            if( _.has( r, 'data' ) ){
+                settings.form.fields[ language ] = r.data;
+            }
+
         } ).error( function( r ){
             console.log( r );
         });
-    }
+    };
 
     this.find_language = function( language ){
         if( self.is_language_known( language ) ){
@@ -122,7 +136,7 @@ function CF_Translations( CFTRANS, $, _, Handlebars ){
     };
 
     this.load_language = function( language_code ){
-        var translator = new CF_Translate_Form( CFTRANS.form, language_code, CFTRANS.data, $ );
+        var translator = new CF_Translate_Form( settings.form, language_code, settings.data, $ );
         translator.init();
     };
 
@@ -269,7 +283,8 @@ function CF_Translate_Field( field_data, language ){
             language: language,
             ID: field_data.ID,
             caption: field_data.caption,
-            label: field_data.label
+            label: field_data.label,
+            default: field_data.default
         };
 
 }

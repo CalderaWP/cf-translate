@@ -8,9 +8,16 @@
  */
 class CF_Translate_Form implements ArrayAccess {
 
+	/**
+	 * Form config
+	 *
+	 * Accessible by using object as array
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var array
+	 */
     protected $form;
-
-    protected $fields;
 
     /**
      * @var CF_Translate_Translator
@@ -51,9 +58,11 @@ class CF_Translate_Form implements ArrayAccess {
 
     protected  function add_translation_data( $form ){
         if( ! isset( $form[ 'translations' ] ) || ! $form[ 'translations' ] instanceof  CF_Translate_Translator ){
-            $form[ 'translations' ] = $this->translator =  CF_Translate_Factories::new_translator( $form );
+            $form[ 'translations' ]  =  CF_Translate_Factories::new_translator( $form );
 
         }
+
+	    $this->translator = $form[ 'translations' ];
 
 
         return $form;

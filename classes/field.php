@@ -22,4 +22,10 @@ class CF_Translate_Field extends Caldera_Forms_Object {
         return array_keys( $vars );
     }
 
+    public function __call( $name, $arguments ) {
+	    if( isset( $this->$name ) ){
+	    	return $this->$name;
+	    }
+    }
+
 }

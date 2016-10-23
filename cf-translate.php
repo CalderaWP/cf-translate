@@ -35,7 +35,14 @@ define( 'CFTRANS_VER', '1.0.7' );
 add_action( 'caldera_forms_includes_complete', 'cf_translate_load', 25 );
 function cf_translate_load(){
     if ( method_exists( 'Caldera_Forms_Forms', 'get_fields' ) ) {
+	    /**
+	     * Add autoloader
+	     */
         Caldera_Forms_Autoloader::add_root('CF_Translate', CFTRANS_PATH . 'classes');
+
+	    /**
+	     * Load admin
+	     */
         if (is_admin()) {
             $slugs = new stdClass();
             $slugs->cf = Caldera_Forms::PLUGIN_SLUG;
@@ -43,15 +50,64 @@ function cf_translate_load(){
             new CF_Translate_Menu($slugs, CFTRANS_PATH, CFTRANS_URL, CFTRANS_VER );
 
         }
+
+	    /**
+	     * When form is rendered init front-end system
+	     */
+        add_action( 'caldera_forms_render_start', 'cf_translate_front_end_init' );
+
+	    /**
+	     * admin-ajax - use CF API when we get to 1.5.0
+	     */
+	    add_action( 'wp_ajax_cf_translate_save_translation', 'cf_translate_save_translation'  );
+	    add_action( 'wp_ajax_cf_translate_add_language', 'cf_translate_add_language'  );
+	    add_action( 'wp_ajax_cf_translate_get_language', 'cf_translate_get_language'  );
+
     }
 
 }
 
-//use CF API when we get to 1.5.0
-add_action( 'wp_ajax_cf_translate_save_translation', 'cf_translate_save_translation'  );
-add_action( 'wp_ajax_cf_translate_add_language', 'cf_translate_add_language'  );
-add_action( 'wp_ajax_cf_translate_get_language', 'cf_translate_get_language'  );
+/**
+ * Start up front-end for translating
+ *
+ * @since 0.1.0
+ *
+ * @uses "caldera_forms_render_start" action
+ */
+function cf_translate_front_end_init( $form ){
+	$form = CF_Translate_Factories::get_form( $form );
+	$front_end = new CF_Translate_Render( $form, cf_translate_get_current_language()  );
 
+	/**
+	 * Runs after the front-end is loaded for a form
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param CF_Translate_Render $front_end Front-end system
+	 * @param CF_Translate_Form $form Form object for translating
+	 */
+	add_action( 'cf_translate_front_end_init', $front_end, $form );
+}
+
+/**
+ * Get the current language
+ *
+ * @since 0.1.0
+ *
+ * Defaults to value of get_locale() but has filter
+ *
+ * @return string
+ */
+function cf_translate_get_current_language(){
+	/**
+	 * Filter current language
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string $language Language code
+	 */
+	return apply_filters( 'cf_translate_get_current_language', get_locale() );
+}
 
 
 add_action( 'init', 'cf_translate_init_text_domain' );
@@ -68,9 +124,7 @@ function cf_translate_templates(){
 	include  $dir . '/field-list.php';
 }
 
-function cf_translate_get_language_codes(){
 
-}
 
 function cf_translate_save_translation(){
 	if( cf_translate_can_translate() ){
@@ -157,7 +211,7 @@ function cf_translate_get_language(){
                     $form->get_translator()->add_language( $language );
                     $form->get_translator()->add_fields_to_language( $language, CF_Translate_Factories::new_language_fields( $form ) );
 
-                    $fields = $form->get_translator()->get_fields( $language );
+                    $fields = $form->get_translator()->get_fields( $language, true );
                     if( ! empty( $fields ) ){
                         status_header( 200 );
                         wp_send_json_success( $fields );

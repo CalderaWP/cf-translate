@@ -39,7 +39,11 @@
 
 									<?php
 										foreach ( $forms as $id => $form ){
-											printf( '<option value="%s">%s', esc_attr( $id ), esc_html( $form[ 'name' ] ) );
+											$selected = '';
+											if( ! empty( $_GET[ 'form' ] ) && $_GET[ 'form' ] == $id ){
+												$selected = 'selected';
+											}
+											printf( '<option value="%s" %s >%s', esc_attr( $id ), $selected, esc_html( $form[ 'name' ] ) );
 										}
 									?>
 								</select>
@@ -93,8 +97,8 @@
                 ?>
                 <div>
                     <button role="button" id="cf-translations-save-button"
-                            title="<?php esc_attr_e('Save Translations For This Language', 'caldera-forms-translation' ); ?>" class="button" disabled>
-                                <?php esc_html_e( 'Save Transaltions', 'caldera-forms-translation' ); ?>
+                            title="<?php esc_attr_e('Save Translations For This Language', 'caldera-forms-translation' ); ?>" class="button primary" disabled>
+                                <?php esc_html_e( 'Save Translations', 'caldera-forms-translation' ); ?>
                             </button>
                             <div class="caldera-config-group cf-translate-field-group" style="display: none;visibility: hidden" aria-hidden="true">
                                 <label for="cf-translate-field-select">
