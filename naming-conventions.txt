@@ -1,0 +1,5 @@
+Plugin Name -- Caldera Forms Translations
+Text domain -- caldera-forms-translation
+Function prefix -- cf_translation
+Class Prefix -- CF_Translate
+Hook Prefix -- cf_translation
