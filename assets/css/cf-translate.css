@@ -25,3 +25,8 @@ li.cf-translations-notice-wrap{
 li.caldera-editor-logo {
     margin-top: 6px !important;
 }
+#cf-translate-add-language-button {
+    background: #fafafa;
+    border-color: #999;
+    color: #23282d;
+}
