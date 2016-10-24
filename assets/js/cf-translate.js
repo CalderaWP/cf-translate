@@ -89,7 +89,7 @@ function CF_Translations( settings, $, _, Handlebars ){
                 self.$language_selector.val( lang );
 
             }else{
-                alert( 'not added' );
+                cf_translation_report( settings.strings.bad_language, false );
             }
         });
 
@@ -111,7 +111,7 @@ function CF_Translations( settings, $, _, Handlebars ){
             }
 
         } ).error( function( r ){
-            console.log( r );
+
         });
     };
 
@@ -196,8 +196,6 @@ function CF_Translate_Form( form, language_code, save, $ ){
         if( _.has( form, 'fields') ){
             //this needs to use self.language_code but en_US vs en...
             self.fields = form.fields[ language_code ];
-        }else{
-            alert();
         }
         self.$save_button.attr( 'disabled', false );
         self.$field_selector.find('option').remove();
@@ -216,9 +214,10 @@ function CF_Translate_Form( form, language_code, save, $ ){
                 form_id: form.ID
             };
             $.post( save.api, data ).success( function(r){
-                alert( 'saved' );
+                cf_translation_report( CFTRANS.strings.translations_saved, true );
+
             }).error( function(r){
-                alert( 'fuck');
+                cf_translation_report( CFTRANS.strings.save_error, false );
             });
         });
     };
@@ -305,3 +304,19 @@ jQuery( document ).ready( function( $ ) {
 
 });
 
+function cf_translation_report( message, good ){
+
+    var $not_saved = jQuery( document.getElementById( 'cf-translations-not-saved' ) );
+    var $saved = jQuery( document.getElementById( 'cf-translations-saved' ) );
+
+
+    if( good ){
+        $saved.html( message ).show().css( 'visibility', 'visible' ).attr( 'aria-hidden', false );
+        $not_saved.html( '' ).hide().css( 'visibility', 'hidden' ).attr( 'aria-hidden', true );
+    }else{
+        $not_saved.html( message ).show().css( 'visibility', 'visible' ).attr( 'aria-hidden', false );
+        $saved.html( '' ).hide().css( 'visibility', 'hidden' ).attr( 'aria-hidden', true );
+    }
+
+
+}

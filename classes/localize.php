@@ -103,7 +103,11 @@ class CF_Translate_Localize {
 	 */
 	protected function strings(){
 		return array(
-
+			'bad_language'         => __( 'Could not add language, please check that it is supported.', 'caldera-forms-translation' ),
+			'translations_saved'   => __( 'Translations Saved :)', 'caldera-forms-translation' ),
+			'save_error'           => __( 'Not Saved :(', 'caldera-forms-translation' ),
+			'unsaved_translations' => __( 'You Have Unsaved Translations!', 'caldera-forms-translation' ),
+			'unsaved_settings'     => __( 'You Have Unsaved Settings!', 'caldera-forms-translation' ),
 		);
 	}
 
