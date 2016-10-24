@@ -41,6 +41,10 @@ class CF_Translate_PickerOptions extends CF_Translate_Filter {
 		$languages = $this->form->get_translator()->get_languages();
 		foreach ( $languages as $_language ){
 			$code = $this->prepare_code( $_language );
+			if( false == $code ){
+				continue;
+			}
+
 			$language = $this->get_language( $code );
 			if ( ! empty( $language ) ){
 				$field['config']['option'][$code] = array(
@@ -93,8 +97,7 @@ class CF_Translate_PickerOptions extends CF_Translate_Filter {
 	protected function get_language( $code ){
 
 		if( empty( $this->languages ) ){
-			$_languages = new CF_Translate_Languages();
-			$this->languages = $_languages->to_array();
+			$this->languages = CF_Translate_Languages::get_instance()->to_array();
 		}
 
 		if( ! empty( $this->languages[ $code ] ) ){
@@ -112,8 +115,9 @@ class CF_Translate_PickerOptions extends CF_Translate_Filter {
 	 * @return string
 	 */
 	protected function prepare_code( $code ) {
-		$code = strtolower( substr( $code, 0, 2 ) );
-
+		if( ! CF_Translate_Languages::get_instance()->valid( $code ) ){
+			return false;
+		}
 		return $code;
 
 	}

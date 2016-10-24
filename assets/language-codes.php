@@ -2,9 +2,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-$languges = new CF_Translate_Languages();
+$lang = CF_Translate_Languages::get_instance();
 ?>
 <script>
-    var cf_lang_codes = <?php echo json_encode( $languges ); ?>
+    var cf_lang_codes = <?php echo json_encode( $lang ); ?>
 
 </script>

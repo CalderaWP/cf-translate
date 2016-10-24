@@ -43,7 +43,6 @@ function CF_Translations( settings, $, _, Handlebars ){
     };
 
     this.get_language_obj = function( code ){
-        code = code.substring(0,2).toLowerCase();
         if( ! _.has( self.languages_objects, code ) ){
             self.languages_objects[ code ] = self.language_codes[ code ];
         }
@@ -59,7 +58,7 @@ function CF_Translations( settings, $, _, Handlebars ){
             var $opt;
             $options.each(function (i, opt) {
                 $opt = $( opt );
-                if( _.isString( $opt.val() ) && $opt.val().substring(0,2).toLowerCase() === code ){
+                if( _.isString( $opt.val() ) && $opt.val() === code ){
                     found = true;
                     return false;
                 }
@@ -117,12 +116,12 @@ function CF_Translations( settings, $, _, Handlebars ){
 
     this.find_language = function( language ){
         if( self.is_language_known( language ) ){
-            return self.language_codes[ language.substring(0,2).toLowerCase() ];
+            return self.language_codes[ language ];
         }
     };
 
     this.is_language_known = function( language ) {
-        return _.has( self.language_codes, language.substring(0,2).toLowerCase() );
+        return _.has( self.language_codes, language );
     };
 
     this.find_language_by_name = function( language ){
@@ -186,7 +185,7 @@ function CF_Translate_Form( form, language_code, save, $ ){
 
     this.$field_edit_area = $( '#cf-translate-field-translator-wrap' );
 
-    this.language = language_code.substr(0,2).toLocaleLowerCase();
+    this.language = language_code;
 
     this.has_changes = false;
 
@@ -308,7 +307,6 @@ function cf_translation_report( message, good ){
 
     var $not_saved = jQuery( document.getElementById( 'cf-translations-not-saved' ) );
     var $saved = jQuery( document.getElementById( 'cf-translations-saved' ) );
-
 
     if( good ){
         $saved.html( message ).show().css( 'visibility', 'visible' ).attr( 'aria-hidden', false );
