@@ -68,9 +68,16 @@ function cf_translate_load(){
 	    add_action( 'wp_ajax_cf_translate_add_language', 'cf_translate_add_language'  );
 	    add_action( 'wp_ajax_cf_translate_get_language', 'cf_translate_get_language'  );
 
+
     }
 
 }
+
+/**
+ *
+ */
+add_filter( 'cf_translate_get_current_language', 'cf_translate_select_language' );
+
 
 /**
  * Start up front-end for translating
@@ -119,6 +126,26 @@ function cf_translate_get_current_language(){
 	 * @param string $language Language code
 	 */
 	return apply_filters( 'cf_translate_get_current_language', get_locale() );
+}
+
+/**
+ * Change language based on cf_lang GET var
+ *
+ * @since 0.2.0
+ *
+ * @uses "cf_translate_get_current_language"
+ *
+ * @param $language
+ *
+ * @return string
+ */
+function cf_translate_select_language( $language ){
+	if( ! empty( $_GET[ 'cf_lang' ] ) && is_string( $_GET[ 'cf_lang' ] ) ){
+		$language = trim( strip_tags( $_GET[ 'cf_lang' ] ) );
+	}
+
+	return $language;
+
 }
 
 
@@ -190,16 +217,20 @@ function cf_translate_save_translation(){
  */
 function cf_translate_add_switcher_field( $field_types ){
 
-	$field_types[ 'language-picker' ] =  array(
-		"field"		=>	__( 'Language Picker', 'caldera-forms-translation' ),
+	$field_types[ 'language-picker' ] = array(
+		"field"       => __( 'Language Picker', 'caldera-forms-translation' ),
 		"description" => __( 'Translation chooser', 'caldera-forms-translation' ),
-		"file"		=>	CFTRANS_PATH . "fields/picker/field.php",
-		"category"	=>	__( 'Select', 'caldera-forms' ),
-		"static"	=> true,
-		"setup"		=>	array(
-			"template"	=>	CFTRANS_PATH . "fields/picker/config_template.php",
-			"preview"	=>	CFTRANS_PATH . "fields/picker/dropdown/preview.php",
-		)
+		"file"        => CFTRANS_PATH . "fields/picker/field.php",
+		"category"    => __( 'Select', 'caldera-forms' ),
+		"static"      => true,
+		"single"      => true,
+		"setup"       => array(
+			"template" => CFTRANS_PATH . "fields/picker/config_template.php",
+			"preview"  => CFTRANS_PATH . "fields/picker/dropdown/preview.php",
+		),
+		"scripts"     => array(
+			CFTRANS_URL . 'assets/js/language-picker.js'
+		),
 	);
 
 	return $field_types;

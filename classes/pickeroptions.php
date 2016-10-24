@@ -1,14 +1,22 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: josh
- * Date: 10/23/16
- * Time: 8:17 PM
+ * Add all form languages to the language picker field
+ *
+ * @package CF_Translate
+ * @author    Josh Pollock <Josh@CalderaWP.com>
+ * @license   GPL-2.0+
+ * @link
+ * @copyright 2016 CalderaWP LLC
  */
 class CF_Translate_PickerOptions extends CF_Translate_Filter {
 
+
 	/**
+	 * Languages in use
+	 *
+	 * @since 0.2.0
+	 *
 	 * @var array
 	 */
 	protected $languages;
@@ -43,9 +51,36 @@ class CF_Translate_PickerOptions extends CF_Translate_Filter {
 
 		}
 
+		$this->localize( $languages, $field[ 'ID' ] );
 		return $field;
 	}
 
+	/**
+	 * Setup our JavaScript
+	 *
+	 * @since 0.2.0
+	 *
+	 * @param array $languages language codes
+	 * @param string $field_id Field ID
+	 */
+	protected function localize( $languages, $field_id ){
+		global $current_form_count;
+		$slug = Caldera_Forms_Render_Assets::make_slug( 'language-picker' );
+		if ( ! wp_script_is( $slug ) ) {
+			wp_enqueue_script( $slug, CFTRANS_URL . '/assets/js/language-picker.js' );
+		}
+		wp_localize_script( $slug, 'CF_LANGUAGE_PICKER_FIELD', array(
+			'languages' => json_encode( $languages ),
+			'form_id'   => esc_attr( $this->form->get_id() ),
+			'field_id'  => esc_attr( $field_id ),
+			'field_id_attr' => esc_attr( $field_id . '_' . $current_form_count ),
+			'default'   => cf_translate_get_current_language(),
+			'api'       => cf_ajax_api_url( $this->form->get_id() ),
+			'wrap_id_attr' => esc_attr( $this->form->get_id() . '_' . $current_form_count ),
+			'current_count' => $current_form_count
+		) );
+
+	}
 	/**
 	 * Get language if valid
 	 *
@@ -80,5 +115,7 @@ class CF_Translate_PickerOptions extends CF_Translate_Filter {
 		$code = strtolower( substr( $code, 0, 2 ) );
 
 		return $code;
+
 	}
+
 }
