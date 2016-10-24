@@ -1,4 +1,4 @@
-
+var cf_translations_has_changes = false;
 
 function CF_Translations( settings, $, _, Handlebars ){
 
@@ -185,11 +185,10 @@ function CF_Translate_Form( form, language_code, save, $ ){
 
     this.language = language_code;
 
-    this.has_changes = false;
-
     this.$save_button = $( '#cf-translations-save-button' );
 
     this.init = function( ){
+
         if( _.has( form, 'fields') ){
             //this needs to use self.language_code but en_US vs en...
             self.fields = form.fields[ language_code ];
@@ -212,7 +211,7 @@ function CF_Translate_Form( form, language_code, save, $ ){
             };
             $.post( save.api, data ).success( function(r){
                 cf_translation_report( CFTRANS.strings.translations_saved, true );
-
+                cf_translations_has_changes = false;
             }).error( function(r){
                 cf_translation_report( CFTRANS.strings.save_error, false );
             });
@@ -249,17 +248,20 @@ function CF_Translate_Form( form, language_code, save, $ ){
     this.bind = function( id ){
         var $label = $( '#cf-translate-field-label-' + id + '-' + self.language );
         var $caption = $( '#cf-translate-field-caption-' + id + '-' + self.language );
+        var $default = $( '#cf-translate-field-default-' + id + '-' + self.language );
 
         var  handle_click = function() {
+            cf_translations_has_changes = true;
             _.debounce( self.add_translation( id, language_code, {
                 label : $label.val(),
-                caption: $caption.val()
+                caption: $caption.val(),
+                defualt: $default.val()
             }), 3000 );
         };
 
         $label.on( 'change', handle_click );
         $caption.on( 'change', handle_click );
-
+        $default.on( 'change', handle_click );
 
     };
 
@@ -268,9 +270,11 @@ function CF_Translate_Form( form, language_code, save, $ ){
             form[ 'fields' ][ language ][ field_id ][ i ] = translation;
         });
 
-        self.has_changes = true;
+        cf_translations_has_changes = true;
 
     };
+
+
 }
 
 function CF_Translate_Field( field_data, language ){
@@ -301,6 +305,21 @@ jQuery( document ).ready( function( $ ) {
 
     }
 
+    window.onbeforeunload = function (e) {
+        if( true == cf_translations_has_changes ) {
+            var message = CFTRANS.unsaved_translations;
+            e = e || window.event;
+            // For IE and Firefox
+            if (e) {
+                e.returnValue = message;
+            }
+
+            // For Safari
+            return message;
+        }
+
+    };
+
 });
 
 function cf_translation_report( message, good ){
@@ -318,3 +337,5 @@ function cf_translation_report( message, good ){
 
 
 }
+
+
