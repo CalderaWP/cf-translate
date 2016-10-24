@@ -115,7 +115,7 @@ class CF_Translate_Admin {
 		wp_enqueue_style( 'cf-grid-styles' );
 		wp_enqueue_style( 'cf-form-styles' );
 		wp_register_script( $handlebars_slug, CFCORE_URL . 'assets/js/handlebars.js' );
-		wp_register_script( $this->slugs->translate, $this->url . '/assets/js/cf-translate.js', array(
+		wp_register_script( $this->slugs->translate, $this->url . '/assets/js/cf-translate.min.js', array(
 			'jquery',
 			'underscore',
 			$handlebars_slug

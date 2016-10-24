@@ -1,4 +1,183 @@
-var cf_translations_has_changes = false;
+/*! cf-translations - v0.1.0 - 2016-10-24 */function CF_Translate_Field( field_data, language ){
+    return  {
+        language: language,
+        ID: field_data.ID,
+        caption: field_data.caption,
+        label: field_data.label,
+        default: field_data.default
+    };
+
+}function CF_Translate_Form( form, language_code, save, $ ){
+    var self = this;
+
+    this.fields = {};
+
+    this.field_objs = {};
+
+    this.template_engine = new CF_Translate_Template_Engine( $, Handlebars );
+
+    this.$field_selector = $( '#cf-translate-field-select' );
+
+    this.$field_edit_area = $( '#cf-translate-field-translator-wrap' );
+
+    this.language = language_code;
+
+    this.$save_button = $( '#cf-translations-save-button' );
+
+    this.init = function( ){
+
+        if( _.has( form, 'fields') ){
+            self.fields = form.fields[ language_code ];
+        }
+
+        self.$save_button.attr( 'disabled', false );
+        self.$field_selector.find('option').remove();
+        self.setup_fields();
+        self.$field_selector.on( 'change', function(){
+            var field = self.get_field( self.$field_selector.val() );
+            self.render_field_ui( field, self.language, self.$field_edit_area );
+        });
+
+        self.$save_button.on( 'click', function(){
+            var data = {
+                action: 'cf_translate_save_translation',
+                language: language_code,
+                fields: self.fields,
+                cftrans_nonce: save.nonce,
+                form_id: form.ID
+            };
+            $.post( save.api, data ).success( function(r){
+                cf_translation_report( CFTRANS.strings.translations_saved, true );
+                cf_translations_has_changes = false;
+            }).error( function(r){
+                cf_translation_report( CFTRANS.strings.save_error, false );
+            });
+        });
+    };
+
+    this.setup_fields = function(){
+        var list = {};
+        _.each( self.fields, function( field, id ){
+
+            if( _.has( field, 'label' ) ){
+                list[id] = {ID: id, label: field.label};
+            }
+
+        });
+        self.template_engine.render_template( 'field_list', { fields: list}, self.$field_selector );
+        self.$field_selector.parent().parent().show().css( 'visibility', 'visible' ).attr( 'aria-hidden', false );
+    };
+
+    this.get_field = function( id ){
+        if( undefined == self.field_objs[ id ] ){
+            self.field_objs[ id ] = new CF_Translate_Field( self.fields[ id ], self.language );
+        }
+
+        return self.field_objs[ id ];
+    };
+
+    this.render_field_ui = function( field ){
+        self.$field_edit_area.empty();
+        self.template_engine.render_template( 'field', field, self.$field_edit_area );
+        self.bind( field.ID );
+    };
+
+    this.bind = function( id ){
+        var $label = $( '#cf-translate-field-label-' + id + '-' + self.language );
+        var $caption = $( '#cf-translate-field-caption-' + id + '-' + self.language );
+        var $default = $( '#cf-translate-field-default-' + id + '-' + self.language );
+
+        var  handle_click = function() {
+            cf_translations_has_changes = true;
+            _.debounce( self.add_translation( id, language_code, {
+                label : $label.val(),
+                caption: $caption.val(),
+                defualt: $default.val()
+            }), 3000 );
+        };
+
+        $label.on( 'change', handle_click );
+        $caption.on( 'change', handle_click );
+        $default.on( 'change', handle_click );
+
+    };
+
+    this.add_translation = function( field_id, language, translations ){
+        $.each( translations, function( i, translation ) {
+            form[ 'fields' ][ language ][ field_id ][ i ] = translation;
+        });
+
+        cf_translations_has_changes = true;
+
+    };
+
+
+}
+jQuery( document ).ready( function( $ ) {
+    var cf_translations_has_changes = false;
+    if( _.isObject( CFTRANS ) ) {
+        var cf_translations = new CF_Translations( CFTRANS, $,  _, Handlebars );
+        cf_translations.init();
+
+        var $form = $(document.getElementById('cf-translate-language-control'));
+        var $language_selector = $(document.getElementById('cf-translate-language-chooser'));
+        var $add_language = $(document.getElementById('cf-translate-add-language'));
+        $add_language.select2();
+        // $add_language.select2();
+        var $add_language_button = $(document.getElementById('cf-translate-add-language-button'));
+
+        cf_translations.populate_language_selector($language_selector);
+        cf_translations.setup_language_form($form, $add_language, $add_language_button);
+
+    }
+
+    window.onbeforeunload = function (e) {
+        if( true == cf_translations_has_changes ) {
+            var message = CFTRANS.unsaved_translations;
+            e = e || window.event;
+            // For IE and Firefox
+            if (e) {
+                e.returnValue = message;
+            }
+
+            // For Safari
+            return message;
+        }
+
+    };
+
+});
+
+
+
+function CF_Translate_Template_Engine( $, Handlebars ){
+    var self = this;
+
+    this.templates = {
+        field: $( '#tpml--cf-translate-field' ).html(),
+        field_list: $( '#tpml--cf-translate-field-list' ).html()
+    };
+
+    this.get_template = function( template ){
+        if( _.has( self.templates, template ) ){
+            return self.templates[ template ];
+        }
+
+        return false;
+    };
+
+    this.render_template = function( template_name, data, $target ){
+        var source   = self.get_template( template_name );
+        if( false == source ){
+            return false;
+        }
+
+        var template = Handlebars.compile(source);
+        var html = template( data );
+        $target.append( html );
+    }
+
+}
 
 function CF_Translations( settings, $, _, Handlebars ){
 
@@ -90,7 +269,7 @@ function CF_Translations( settings, $, _, Handlebars ){
         });
 
         $add_language.on( 'change', function(){
-           //autocomplete
+            //autocomplete
         });
     };
 
@@ -137,187 +316,6 @@ function CF_Translations( settings, $, _, Handlebars ){
 
 }
 
-function CF_Translate_Template_Engine( $, Handlebars ){
-    var self = this;
-
-    this.templates = {
-        field: $( '#tpml--cf-translate-field' ).html(),
-        field_list: $( '#tpml--cf-translate-field-list' ).html()
-    };
-
-    this.get_template = function( template ){
-        if( _.has( self.templates, template ) ){
-            return self.templates[ template ];
-        }
-
-        return false;
-    };
-
-    this.render_template = function( template_name, data, $target ){
-        var source   = self.get_template( template_name );
-        if( false == source ){
-            return false;
-        }
-
-        var template = Handlebars.compile(source);
-        var html = template( data );
-        $target.append( html );
-    }
-
-}
-
-function CF_Translate_Form( form, language_code, save, $ ){
-    var self = this;
-
-    this.fields = {};
-
-    this.field_objs = {};
-
-    this.template_engine = new CF_Translate_Template_Engine( $, Handlebars );
-
-    this.$field_selector = $( '#cf-translate-field-select' );
-
-    this.$field_edit_area = $( '#cf-translate-field-translator-wrap' );
-
-    this.language = language_code;
-
-    this.$save_button = $( '#cf-translations-save-button' );
-
-    this.init = function( ){
-
-        if( _.has( form, 'fields') ){
-            self.fields = form.fields[ language_code ];
-        }
-
-        self.$save_button.attr( 'disabled', false );
-        self.$field_selector.find('option').remove();
-        self.setup_fields();
-        self.$field_selector.on( 'change', function(){
-            var field = self.get_field( self.$field_selector.val() );
-            self.render_field_ui( field, self.language, self.$field_edit_area );
-        });
-
-        self.$save_button.on( 'click', function(){
-            var data = {
-                action: 'cf_translate_save_translation',
-                language: language_code,
-                fields: self.fields,
-                cftrans_nonce: save.nonce,
-                form_id: form.ID
-            };
-            $.post( save.api, data ).success( function(r){
-                cf_translation_report( CFTRANS.strings.translations_saved, true );
-                cf_translations_has_changes = false;
-            }).error( function(r){
-                cf_translation_report( CFTRANS.strings.save_error, false );
-            });
-        });
-    };
-
-    this.setup_fields = function(){
-        var list = {};
-        _.each( self.fields, function( field, id ){
-
-           if( _.has( field, 'label' ) ){
-               list[id] = {ID: id, label: field.label};
-           }
-
-        });
-        self.template_engine.render_template( 'field_list', { fields: list}, self.$field_selector );
-        self.$field_selector.parent().parent().show().css( 'visibility', 'visible' ).attr( 'aria-hidden', false );
-    };
-
-    this.get_field = function( id ){
-        if( undefined == self.field_objs[ id ] ){
-            self.field_objs[ id ] = new CF_Translate_Field( self.fields[ id ], self.language );
-        }
-
-        return self.field_objs[ id ];
-    };
-
-    this.render_field_ui = function( field ){
-        self.$field_edit_area.empty();
-        self.template_engine.render_template( 'field', field, self.$field_edit_area );
-        self.bind( field.ID );
-    };
-
-    this.bind = function( id ){
-        var $label = $( '#cf-translate-field-label-' + id + '-' + self.language );
-        var $caption = $( '#cf-translate-field-caption-' + id + '-' + self.language );
-        var $default = $( '#cf-translate-field-default-' + id + '-' + self.language );
-
-        var  handle_click = function() {
-            cf_translations_has_changes = true;
-            _.debounce( self.add_translation( id, language_code, {
-                label : $label.val(),
-                caption: $caption.val(),
-                defualt: $default.val()
-            }), 3000 );
-        };
-
-        $label.on( 'change', handle_click );
-        $caption.on( 'change', handle_click );
-        $default.on( 'change', handle_click );
-
-    };
-
-    this.add_translation = function( field_id, language, translations ){
-        $.each( translations, function( i, translation ) {
-            form[ 'fields' ][ language ][ field_id ][ i ] = translation;
-        });
-
-        cf_translations_has_changes = true;
-
-    };
-
-
-}
-
-function CF_Translate_Field( field_data, language ){
-        return  {
-            language: language,
-            ID: field_data.ID,
-            caption: field_data.caption,
-            label: field_data.label,
-            default: field_data.default
-        };
-
-}
-
-jQuery( document ).ready( function( $ ) {
-    if( _.isObject( CFTRANS ) ) {
-        var cf_translations = new CF_Translations( CFTRANS, $,  _, Handlebars );
-        cf_translations.init();
-
-        var $form = $(document.getElementById('cf-translate-language-control'));
-        var $language_selector = $(document.getElementById('cf-translate-language-chooser'));
-        var $add_language = $(document.getElementById('cf-translate-add-language'));
-        $add_language.select2();
-       // $add_language.select2();
-        var $add_language_button = $(document.getElementById('cf-translate-add-language-button'));
-
-        cf_translations.populate_language_selector($language_selector);
-        cf_translations.setup_language_form($form, $add_language, $add_language_button);
-
-    }
-
-    window.onbeforeunload = function (e) {
-        if( true == cf_translations_has_changes ) {
-            var message = CFTRANS.unsaved_translations;
-            e = e || window.event;
-            // For IE and Firefox
-            if (e) {
-                e.returnValue = message;
-            }
-
-            // For Safari
-            return message;
-        }
-
-    };
-
-});
-
 function cf_translation_report( message, good ){
 
     var $not_saved = jQuery( document.getElementById( 'cf-translations-not-saved' ) );
@@ -332,5 +330,3 @@ function cf_translation_report( message, good ){
     }
 
 }
-
-

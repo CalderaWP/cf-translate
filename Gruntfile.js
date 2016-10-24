@@ -116,7 +116,30 @@ module.exports = function (grunt) {
                     to: "define( 'CFTRANS_VER', '<%= pkg.version %>' );"
                 }]
             }
-        }
+        },
+        uglify: {
+            options: {
+                mangle: false
+            },
+            compress: {
+                files: {
+                    'assets/js/cf-translate.min.js': ['assets/js/cf-translate.js'],
+                    'assets/js/language-picker.min.js': ['assets/js/language-picker.js']
+                }
+            }
+        },
+        concat: {
+            options: {
+                separator: '',
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+                '<%= grunt.template.today("yyyy-mm-dd") %> */',
+            },
+            admin: {
+                src: ['assets/js/src/**.js', 'src/project.js', 'src/outro.js'],
+                dest: 'assets/js/cf-translate.js',
+            }
+        },
+
 
     });
 
@@ -127,17 +150,21 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks( 'grunt-git' );
     grunt.loadNpmTasks( 'grunt-text-replace' );
     grunt.loadNpmTasks( 'grunt-shell');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+
 
 
     //register default task
+    grunt.registerTask( 'default',  [ 'concat', 'uglify' ] );
 
     //release tasks
     grunt.registerTask( 'version_number', [ 'replace:core_file' ] );
     grunt.registerTask( 'pre_vcs', [ 'shell:composer', 'version_number', 'copy', 'compress' ] );
     grunt.registerTask( 'do_git', [ 'gitadd', 'gitcommit', 'gittag', 'gitpush' ] );
-    grunt.registerTask( 'just_build', [  'shell:composer', 'copy', 'compress' ] );
+    grunt.registerTask( 'just_build', [  'default', 'shell:composer', 'copy', 'compress' ] );
 
-    grunt.registerTask( 'release', [ 'pre_vcs', 'do_git', 'clean:post_build' ] );
+    grunt.registerTask( 'release', [ 'default', 'pre_vcs', 'do_git', 'clean:post_build' ] );
 
 
 };

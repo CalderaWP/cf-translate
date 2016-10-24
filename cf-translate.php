@@ -229,7 +229,7 @@ function cf_translate_add_switcher_field( $field_types ){
 			"preview"  => CFTRANS_PATH . "fields/picker/dropdown/preview.php",
 		),
 		"scripts"     => array(
-			CFTRANS_URL . 'assets/js/language-picker.js'
+			CFTRANS_URL . 'assets/js/language-picker.min.js'
 		),
 	);
 
