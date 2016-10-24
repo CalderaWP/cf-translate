@@ -17,7 +17,6 @@ function CF_Translations( settings, $, _, Handlebars ){
 
         if( ! _.isEmpty( settings.form.languages ) ){
             self.languages = settings.form.languages;
-            var x=1;
         }else{
             self.add_language( settings.local );
         }
@@ -291,8 +290,6 @@ function CF_Translate_Field( field_data, language ){
 
 jQuery( document ).ready( function( $ ) {
     if( _.isObject( CFTRANS ) ) {
-
-
         var cf_translations = new CF_Translations( CFTRANS, $,  _, Handlebars );
         cf_translations.init();
 

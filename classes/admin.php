@@ -109,9 +109,17 @@ class CF_Translate_Admin {
 
 		//@TODO better handling for handlebars loading
 		$handlebars_slug = $this->slugs->cf . '-handlebars';
+		wp_enqueue_style( 'cf-grid-styles' );
+		wp_enqueue_style( 'cf-form-styles' );
 		wp_register_script( $handlebars_slug, CFCORE_URL . 'assets/js/handlebars.js' );
-		wp_register_script( $this->slugs->translate, $this->url . '/assets/js/cf-translate.js', array( 'jquery', 'underscore', $handlebars_slug ), $this->version, true );
-		wp_register_style( $this->slugs->translate, $this->url . '/assets/css/cf-translate.css', array(  ), $this->version );
+		wp_register_script( $this->slugs->translate, $this->url . '/assets/js/cf-translate.js', array(
+			'jquery',
+			'underscore',
+			$handlebars_slug
+		), $this->version, true );
+		wp_register_style( $this->slugs->translate, $this->url . '/assets/css/cf-translate.css', array(
+
+		), $this->version );
 
 	}
 
