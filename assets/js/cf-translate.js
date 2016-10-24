@@ -28,7 +28,6 @@ function CF_Translations( settings, $, _, Handlebars ){
 
         return false;
 
-
     };
 
     this.populate_language_selector = function( $selector ){
@@ -136,7 +135,6 @@ function CF_Translations( settings, $, _, Handlebars ){
         translator.init();
     };
 
-
 }
 
 function CF_Translate_Template_Engine( $, Handlebars ){
@@ -166,9 +164,7 @@ function CF_Translate_Template_Engine( $, Handlebars ){
         $target.append( html );
     }
 
-
 }
-
 
 function CF_Translate_Form( form, language_code, save, $ ){
     var self = this;
@@ -190,9 +186,9 @@ function CF_Translate_Form( form, language_code, save, $ ){
     this.init = function( ){
 
         if( _.has( form, 'fields') ){
-            //this needs to use self.language_code but en_US vs en...
             self.fields = form.fields[ language_code ];
         }
+
         self.$save_button.attr( 'disabled', false );
         self.$field_selector.find('option').remove();
         self.setup_fields();
@@ -334,7 +330,6 @@ function cf_translation_report( message, good ){
         $not_saved.html( message ).show().css( 'visibility', 'visible' ).attr( 'aria-hidden', false );
         $saved.html( '' ).hide().css( 'visibility', 'hidden' ).attr( 'aria-hidden', true );
     }
-
 
 }
 
