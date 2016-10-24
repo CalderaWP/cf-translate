@@ -76,7 +76,8 @@ class CF_Translate_Languages implements JsonSerializable{
 		if (  empty( $this->languages ) ) {
 			foreach ( $this->languages() as $code => $language ) {
 				$this->languages[ $code ] = array(
-					'name' => $language
+					'name' => $language,
+					'code' => $code
 				);
 			}
 		}

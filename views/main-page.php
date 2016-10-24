@@ -97,7 +97,11 @@
 	                            <?php esc_html_e('Enter New Language', 'caldera-forms-translation'); ?>
 	                        </label>
 	                        <div class="caldera-config-field">
-	                            <input id="cf-translate-add-language" class="block-input" type="text"/>
+	                            <select id="cf-translate-add-language" class="block-input">
+		                            <?php foreach ( CF_Translate_Languages::get_instance()->to_array()  as $lang ){
+		                            	printf( '<option value="%s">%s</option>', esc_attr( $lang[ 'code' ] ), esc_html( $lang[ 'name' ] ) );
+		                            }?>
+	                            </select>
 	                        </div>
 	                    </div>
 	                    <div class="caldera-config-group">

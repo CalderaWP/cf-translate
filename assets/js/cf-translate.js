@@ -6,8 +6,6 @@ function CF_Translations( settings, $, _, Handlebars ){
 
     this.languages = [];
 
-    this.languages_objects = {};
-
     this.language_codes = {};
 
     this.$language_selector = null;
@@ -21,8 +19,6 @@ function CF_Translations( settings, $, _, Handlebars ){
             self.add_language( settings.local );
         }
     };
-
-
 
     this.add_language = function( language ){
         if ( self.is_language_known( language ) ){
@@ -43,11 +39,13 @@ function CF_Translations( settings, $, _, Handlebars ){
     };
 
     this.get_language_obj = function( code ){
-        if( ! _.has( self.languages_objects, code ) ){
-            self.languages_objects[ code ] = self.language_codes[ code ];
-        }
 
-        return self.languages_objects[ code ];
+
+        if ( _.isObject( self.language_codes[ code ] ) ) {
+            return self.language_codes[code];
+        } else {
+            alert( settings.strings.bad_language );
+        }
     };
 
     this.add_language_option = function( code ){
@@ -294,6 +292,8 @@ jQuery( document ).ready( function( $ ) {
         var $form = $(document.getElementById('cf-translate-language-control'));
         var $language_selector = $(document.getElementById('cf-translate-language-chooser'));
         var $add_language = $(document.getElementById('cf-translate-add-language'));
+        $add_language.select2();
+       // $add_language.select2();
         var $add_language_button = $(document.getElementById('cf-translate-add-language-button'));
 
         cf_translations.populate_language_selector($language_selector);
