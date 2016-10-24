@@ -8,40 +8,10 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-class  CF_Translate_Render {
-
-    /**
-     * @var CF_Translate_Form
-     */
-    protected $form;
-
-    protected $hook = 'caldera_forms_render_get_field';
-
-	protected $callback = 'translate';
-
-	protected $priority;
-
-    protected $language;
-    public function __construct( CF_Translate_Form  $form, $language ){
-        $this->language = $language;
-        $this->form = $form;
-	    $this->callable = array( $this, 'translate' );
-	    $this->priority = 51;
-        $this->maybe_add_hook();
+class  CF_Translate_Render extends CF_Translate_Filter{
 
 
-    }
 
-	/**
-	 * Change hook priority
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param int $priority Hook priority
-	 */
-    public function change_priority( $priority ){
-    	$this->priority = absint( $priority );
-    }
 
 	/**
 	 * Translate a field
@@ -73,7 +43,7 @@ class  CF_Translate_Render {
 	 * @return array
 	 */
     protected function translate_field( $field ){
-        $field_object  = $this->form->get_translator()->get_field( $this->language, $field[ 'ID' ] );
+        $field_object  = $this->form->get_translator()->get_field( $this->args[ 'language' ], $field[ 'ID' ] );
         /**  @var CF_Translate_Field $field_object */
         if( is_object( $field_object ) ){
             foreach( $field_object->get_field_names() as $key ){
@@ -93,23 +63,16 @@ class  CF_Translate_Render {
 
     }
 
-	/**
-	 * Remove field translation hook
-	 *
-	 * @since 0.1.0
-	 */
-    public function remove_hook(){
-        remove_filter( $this->hook, array( $this, $this->callback ), $this->priority );
-    }
+
 
     /**
      * Add field translation hook if needed
      *
      * @since 0.1.0
      */
-    protected function maybe_add_hook (){
-        if ( $this->form->get_translator()->has_language( $this->language )) {
-            add_filter( $this->hook, array( $this, $this->callback ), $this->priority, 2 );
+    protected function add_hook (){
+        if ( $this->form->get_translator()->has_language( $this->args[ 'language'] )) {
+			parent::add_hook();
         }
 
     }

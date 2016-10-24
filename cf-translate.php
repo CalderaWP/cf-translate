@@ -57,6 +57,11 @@ function cf_translate_load(){
         add_action( 'caldera_forms_render_start', 'cf_translate_front_end_init' );
 
 	    /**
+	     * Create field(s)
+	     */
+	    add_filter('caldera_forms_get_field_types', 'cf_translate_add_switcher_field' );
+
+	    /**
 	     * admin-ajax - use CF API when we get to 1.5.0
 	     */
 	    add_action( 'wp_ajax_cf_translate_save_translation', 'cf_translate_save_translation'  );
@@ -76,7 +81,14 @@ function cf_translate_load(){
  */
 function cf_translate_front_end_init( $form ){
 	$form = CF_Translate_Factories::get_form( $form );
-	$front_end = new CF_Translate_Render( $form, cf_translate_get_current_language()  );
+	$front_end = new CF_Translate_Render( $form, array(
+		'hook' => 'caldera_forms_render_get_field',
+		'callback' => 'translate',
+	) );
+
+	new CF_Translate_PickerOptions( $form, array(
+		'hook' => 'caldera_forms_render_get_field_type-language-picker',
+	));
 
 	/**
 	 * Runs after the front-end is loaded for a form
@@ -164,6 +176,35 @@ function cf_translate_save_translation(){
 	}
 	exit;
 }
+
+/**
+ * Add language picker field
+ *
+ * @uses "caldera_forms_get_field_types" filter
+ *
+ * @since 0.1.0
+ *
+ * @param array $field_types
+ *
+ * @return array
+ */
+function cf_translate_add_switcher_field( $field_types ){
+
+	$field_types[ 'language-picker' ] =  array(
+		"field"		=>	__( 'Language Picker', 'caldera-forms-translation' ),
+		"description" => __( 'Translation chooser', 'caldera-forms-translation' ),
+		"file"		=>	CFTRANS_PATH . "fields/picker/field.php",
+		"category"	=>	__( 'Select', 'caldera-forms' ),
+		"static"	=> true,
+		"setup"		=>	array(
+			"template"	=>	CFTRANS_PATH . "fields/picker/config_template.php",
+			"preview"	=>	CFTRANS_PATH . "fields/picker/dropdown/preview.php",
+		)
+	);
+
+	return $field_types;
+}
+
 
 function cf_translate_add_language(){
     if( cf_translate_can_translate() ){

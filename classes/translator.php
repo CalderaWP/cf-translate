@@ -88,6 +88,9 @@ class CF_Translate_Translator {
 	 * @return array
 	 */
     public function get_languages(){
+    	if( empty( $this->languages ) ){
+    		return array( cf_translate_get_current_language() );
+	    }
         return $this->languages;
     }
 
