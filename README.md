@@ -1,5 +1,5 @@
 # Caldera Forms Translations
 Translate Caldera Forms fields.
 
-* Does not work yet. Do not use.
+* Functional beta, with a few serious issues to be worked out.
 * Requires Caldera Forms 1.4.4 or later.
