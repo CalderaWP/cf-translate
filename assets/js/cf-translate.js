@@ -40,8 +40,6 @@
         });
 
         self.$save_button.on( 'click', function(){
-
-
             var data = {
                 action: 'cf_translate_save_translation',
                 language: language_code,
@@ -52,7 +50,7 @@
 
             $.post( save.api, data ).success( function(r){
                 cf_translation_report( CFTRANS.strings.translations_saved, true );
-                cf_translations_has_changes = false;
+                window.cf_translations_has_changes = false;
             }).error( function(r){
                 cf_translation_report( CFTRANS.strings.save_error, false );
             });
@@ -92,7 +90,6 @@
         var $default = $( '#cf-translate-field-default-' + id + '-' + self.language );
 
         var  handle_click = function() {
-            cf_translations_has_changes = true;
             _.debounce( self.add_translation( id, language_code, {
                 label : $label.val(),
                 caption: $caption.val(),
@@ -102,6 +99,7 @@
 
 
         var handle_change = function(e){
+            window.cf_translations_has_changes = true;
             handle_click();
         };
 
@@ -114,14 +112,14 @@
     this.add_translation = function( field_id, language, translation ){
         form[ 'fields' ][ language ][ field_id ]  = translation;
         self.update_fields[ field_id ] = translation;
-        cf_translations_has_changes = true;
+        window.cf_translations_has_changes = true;
 
     };
 
 
 }
 jQuery( document ).ready( function( $ ) {
-    var cf_translations_has_changes = false;
+    window.cf_translations_has_changes = false;
     if( _.isObject( CFTRANS ) ) {
         var cf_translations = new CF_Translations( CFTRANS, $,  _, Handlebars );
         cf_translations.init();
@@ -139,7 +137,7 @@ jQuery( document ).ready( function( $ ) {
     }
 
     window.onbeforeunload = function (e) {
-        if( true == cf_translations_has_changes ) {
+        if( true == window.cf_translations_has_changes ) {
             var message = CFTRANS.unsaved_translations;
             e = e || window.event;
             // For IE and Firefox
@@ -277,9 +275,6 @@ function CF_Translations( settings, $, _, Handlebars ){
             }
         });
 
-        $add_language.on( 'change', function(){
-            //autocomplete
-        });
     };
 
     this.get_language_fields = function( language ){

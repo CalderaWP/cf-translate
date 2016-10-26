@@ -1,5 +1,5 @@
 jQuery( document ).ready( function( $ ) {
-    var cf_translations_has_changes = false;
+    window.cf_translations_has_changes = false;
     if( _.isObject( CFTRANS ) ) {
         var cf_translations = new CF_Translations( CFTRANS, $,  _, Handlebars );
         cf_translations.init();
@@ -17,7 +17,7 @@ jQuery( document ).ready( function( $ ) {
     }
 
     window.onbeforeunload = function (e) {
-        if( true == cf_translations_has_changes ) {
+        if( true == window.cf_translations_has_changes ) {
             var message = CFTRANS.unsaved_translations;
             e = e || window.event;
             // For IE and Firefox

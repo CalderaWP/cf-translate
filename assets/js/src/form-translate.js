@@ -32,8 +32,6 @@ function CF_Translate_Form( form, language_code, save, $ ){
         });
 
         self.$save_button.on( 'click', function(){
-
-
             var data = {
                 action: 'cf_translate_save_translation',
                 language: language_code,
@@ -44,7 +42,7 @@ function CF_Translate_Form( form, language_code, save, $ ){
 
             $.post( save.api, data ).success( function(r){
                 cf_translation_report( CFTRANS.strings.translations_saved, true );
-                cf_translations_has_changes = false;
+                window.cf_translations_has_changes = false;
             }).error( function(r){
                 cf_translation_report( CFTRANS.strings.save_error, false );
             });
@@ -84,7 +82,6 @@ function CF_Translate_Form( form, language_code, save, $ ){
         var $default = $( '#cf-translate-field-default-' + id + '-' + self.language );
 
         var  handle_click = function() {
-            cf_translations_has_changes = true;
             _.debounce( self.add_translation( id, language_code, {
                 label : $label.val(),
                 caption: $caption.val(),
@@ -94,6 +91,7 @@ function CF_Translate_Form( form, language_code, save, $ ){
 
 
         var handle_change = function(e){
+            window.cf_translations_has_changes = true;
             handle_click();
         };
 
@@ -106,7 +104,7 @@ function CF_Translate_Form( form, language_code, save, $ ){
     this.add_translation = function( field_id, language, translation ){
         form[ 'fields' ][ language ][ field_id ]  = translation;
         self.update_fields[ field_id ] = translation;
-        cf_translations_has_changes = true;
+        window.cf_translations_has_changes = true;
 
     };
 

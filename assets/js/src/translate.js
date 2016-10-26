@@ -89,9 +89,6 @@ function CF_Translations( settings, $, _, Handlebars ){
             }
         });
 
-        $add_language.on( 'change', function(){
-            //autocomplete
-        });
     };
 
     this.get_language_fields = function( language ){
