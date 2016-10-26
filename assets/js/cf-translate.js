@@ -237,6 +237,7 @@ function CF_Translations( settings, $, _, Handlebars ){
         var opts = [];
         var $options = $( '#' + self.$language_selector.attr( 'id' ) + ' option' );
         var found = false;
+        var lang = self.find_language( code );
         if ( $options.length ) {
             var $opt;
             $options.each(function (i, opt) {
@@ -247,7 +248,8 @@ function CF_Translations( settings, $, _, Handlebars ){
                 }
             });
         }
-        if ( ! found ) {
+
+        if ( ! found && 'object' == typeof lang ) {
             var lang = self.get_language_obj( code );
             self.$language_selector.append('<option value="' + code + '">' + lang.name + '</option>');
         }
