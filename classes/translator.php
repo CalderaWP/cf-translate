@@ -117,7 +117,7 @@ class CF_Translate_Translator {
 	 * @return bool
 	 */
     public function add_language( $code ){
-        if( ! $this->validate_code( $code ) ){
+        if( ! CF_Translate_Languages::get_instance()->valid( $code ) ){
             return false;
         }
 
@@ -165,10 +165,6 @@ class CF_Translate_Translator {
         return false;
     }
 
-    protected function validate_code( $code ){
-        //@todo validate code
-        return $code;
-    }
 
 
 }

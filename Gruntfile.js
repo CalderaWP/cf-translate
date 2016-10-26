@@ -119,7 +119,11 @@ module.exports = function (grunt) {
         },
         uglify: {
             options: {
-                mangle: false
+                mangle: false,
+                options: {
+                    sourceMap: true,
+                    sourceMapName: 'assets/js/cf-translate.js.map'
+                },
             },
             compress: {
                 files: {
@@ -135,9 +139,18 @@ module.exports = function (grunt) {
                 '<%= grunt.template.today("yyyy-mm-dd") %> */',
             },
             admin: {
-                src: ['assets/js/src/**.js', 'src/project.js', 'src/outro.js'],
+                src: ['assets/js/src/**.js' ],
                 dest: 'assets/js/cf-translate.js',
             }
+        },
+        watch: {
+            scripts: {
+                files: ['assets/js/src/**.js'],
+                tasks: ['default'],
+                options: {
+                    spawn: false,
+                },
+            },
         },
 
 
@@ -152,6 +165,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks( 'grunt-shell');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
 
 

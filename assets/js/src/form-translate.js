@@ -15,6 +15,8 @@ function CF_Translate_Form( form, language_code, save, $ ){
 
     this.$save_button = $( '#cf-translations-save-button' );
 
+    this.update_fields = {};
+
     this.init = function( ){
 
         if( _.has( form, 'fields') ){
@@ -30,13 +32,16 @@ function CF_Translate_Form( form, language_code, save, $ ){
         });
 
         self.$save_button.on( 'click', function(){
+
+
             var data = {
                 action: 'cf_translate_save_translation',
                 language: language_code,
-                fields: self.fields,
+                fields: self.update_fields,
                 cftrans_nonce: save.nonce,
                 form_id: form.ID
             };
+
             $.post( save.api, data ).success( function(r){
                 cf_translation_report( CFTRANS.strings.translations_saved, true );
                 cf_translations_has_changes = false;
@@ -83,21 +88,24 @@ function CF_Translate_Form( form, language_code, save, $ ){
             _.debounce( self.add_translation( id, language_code, {
                 label : $label.val(),
                 caption: $caption.val(),
-                defualt: $default.val()
+                default: $default.val()
             }), 3000 );
         };
 
-        $label.on( 'change', handle_click );
-        $caption.on( 'change', handle_click );
-        $default.on( 'change', handle_click );
+
+        var handle_change = function(e){
+            handle_click();
+        };
+
+        $label.on( 'change', handle_change );
+        $caption.on( 'change', handle_change );
+        $default.on( 'change', handle_change );
 
     };
 
-    this.add_translation = function( field_id, language, translations ){
-        $.each( translations, function( i, translation ) {
-            form[ 'fields' ][ language ][ field_id ][ i ] = translation;
-        });
-
+    this.add_translation = function( field_id, language, translation ){
+        form[ 'fields' ][ language ][ field_id ]  = translation;
+        self.update_fields[ field_id ] = translation;
         cf_translations_has_changes = true;
 
     };

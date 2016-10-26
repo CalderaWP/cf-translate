@@ -170,19 +170,22 @@ function cf_translate_save_translation(){
 		if( ! empty( $_POST[ 'language' ] ) &&  ! empty( $_POST[ 'form_id' ] ) && ! empty( $_POST[ 'fields' ] ) && is_array(  $_POST[ 'fields' ] ) && ! empty( $_POST[ CF_Translate_AdminForm::nonce_field_name() ] ) ){
 			if( CF_Translate_AdminForm::verify_nonce( $_POST[ CF_Translate_AdminForm::nonce_field_name() ] ) ){
 
+
 				$form = CF_Translate_Factories::get_form( $_POST[ 'form_id' ] );
-				if( ! empty( $form ) ) {
+				if( is_object( $form ) && ! is_wp_error( $form ) ) {
 					//@todo validate code
 					$language = trim( strip_tags( trim( $_POST[ 'language' ] ) ) );
 
 
                     $fields = array();
 					foreach ( $_POST[ 'fields' ] as $id => $field ) {
+						$field[ 'ID' ] = $id;
 					    $fields[ $id ] = CF_Translate_Factories::field_object( $field, true );
 
 
                     }
 
+                    /** @var  CF_Translate_Form  $form */
                     $form->get_translator()->add_fields_to_language( $language, $fields );
                     $saved = $form->save();
                     if( $saved ){
