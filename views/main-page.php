@@ -138,7 +138,7 @@
 	            </div>
 
 				<div class="row">
-					<div class="col-md-4 text-center">
+					<div class="col-md-6 col-md-offset-6">
 						<button role="button" id="cf-translations-save-button" title="<?php esc_attr_e('Save Translations For This Language', 'caldera-forms-translation' ); ?>" class="button primary button-primary" disabled>
 							<?php esc_html_e( 'Save Translations', 'caldera-forms-translation' ); ?>
 						</button>
