@@ -105,7 +105,7 @@ function cf_translate_front_end_init( $form ){
 	 * @param CF_Translate_Render $front_end Front-end system
 	 * @param CF_Translate_Form $form Form object for translating
 	 */
-	add_action( 'cf_translate_front_end_init', $front_end, $form );
+	do_action( 'cf_translate_front_end_init', $front_end, $form );
 }
 
 /**
