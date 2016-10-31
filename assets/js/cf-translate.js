@@ -1,4 +1,4 @@
-/*! cf-translations - v0.1.0 - 2016-10-26 */function CF_Translate_Field( field_data, language ){
+/*! cf-translations - v0.1.0 - 2016-10-31 */function CF_Translate_Field( field_data, language ){
     return  {
         language: language,
         ID: field_data.ID,

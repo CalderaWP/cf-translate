@@ -20,6 +20,8 @@ window.addEventListener("load", function(){
 
     }
 
-    var chooser = CF_Translate_Language_Picker( CF_LANGUAGE_PICKER_FIELD, jQuery );
+    if ( 'object' == typeof CF_LANGUAGE_PICKER_FIELD ) {
+        var chooser = CF_Translate_Language_Picker(CF_LANGUAGE_PICKER_FIELD, jQuery);
+    }
 
 });
