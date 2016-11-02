@@ -6,7 +6,7 @@
         label: field_data.label,
         default: field_data.default
     };
-}function CF_Translate_Form( form, language_code, save, $ ){
+}function CF_Translate_Form( form, fields, language_code, save, $ ){
     var self = this;
 
     this.fields = {};
@@ -26,10 +26,6 @@
     this.update_fields = {};
 
     this.init = function( ){
-
-        if( _.has( form, 'fields') ){
-            self.fields = form.fields[ language_code ];
-        }
 
         self.$save_button.attr( 'disabled', false );
         self.$field_selector.find('option').remove();
@@ -64,7 +60,7 @@
 
     this.setup_fields = function(){
         var list = {};
-        _.each( self.fields, function( field, id ){
+        _.each( fields, function( field, id ){
 
             if( _.has( field, 'label' ) ){
                 list[id] = {ID: id, label: field.label};
@@ -77,10 +73,10 @@
 
     this.get_field = function( id ){
         if( _.isUndefined( self.field_objs[ id ] ) ){
-            if( _.isUndefined( self.fields[ id ] ) ){
+            if( _.isUndefined( fields[ id ] ) ){
                 alert( settings.strings.error );
             }else{
-                self.field_objs[ id ] = new CF_Translate_Field( self.fields[ id ], self.language );
+                self.field_objs[ id ] = new CF_Translate_Field( fields[ id ], self.language );
             }
         }
 
@@ -203,6 +199,8 @@ function CF_Translations( settings, $, _, Handlebars ){
 
     this.$language_selector = null;
 
+    var fields = [];
+
     this.init = function(){
         self.language_codes = cf_lang_codes;
 
@@ -293,7 +291,8 @@ function CF_Translations( settings, $, _, Handlebars ){
             language: language,
             _wpnonce: settings.data.rest_nonce
         }).success( function( r ){
-            settings.form.fields[ language ] = r;
+            settings.form.fields[ language ] = language;
+            fields[ language ] = r;
         } ).error( function( r ){
             if( _.has( r, 'message' ) ){
                 alert( r.message );
@@ -323,7 +322,13 @@ function CF_Translations( settings, $, _, Handlebars ){
     };
 
     this.load_language = function( language_code ){
-        var translator = new CF_Translate_Form( settings.form, language_code, settings.data, $ );
+        var fields;
+        if( _.has( fields, language_code ) && ! _.isEmpty( fields[ language_code ] ) ){
+            fields = fields[ language_code ];
+        }else if( _.has( settings.form.fields, language_code ) && ! _.isEmpty( settings.form.fields[ language_code ] ) ){
+            fields = settings.form.fields[ language_code ];
+        }
+        var translator = new CF_Translate_Form( settings.form, fields, language_code, settings.data, $ );
         translator.init();
     };
 

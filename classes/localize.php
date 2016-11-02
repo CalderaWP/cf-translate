@@ -73,6 +73,20 @@ class CF_Translate_Localize {
                     }
                 }
 
+                //add fields without translations
+                foreach( $this->form[ 'fields' ] as $id => $field ){
+                	if( ! array_key_exists( $id, $data[ 'form' ][ 'fields' ][ $language ] ) ){
+
+                		//Hi Josh - You will want to take this out later. It is here to reduce size of array sent to DOM. Take care, Josh
+		                $_field = CF_Translate_Factories::field_object( $field );
+		                $_field = $_field->to_array( false );
+
+		                $data[ 'form' ][ 'fields' ][ $language ][ $id ] = $_field;
+
+	                }
+
+                }
+
 
             }
 

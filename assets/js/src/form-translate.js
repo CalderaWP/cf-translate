@@ -1,4 +1,4 @@
-function CF_Translate_Form( form, language_code, save, $ ){
+function CF_Translate_Form( form, fields, language_code, save, $ ){
     var self = this;
 
     this.fields = {};
@@ -18,10 +18,6 @@ function CF_Translate_Form( form, language_code, save, $ ){
     this.update_fields = {};
 
     this.init = function( ){
-
-        if( _.has( form, 'fields') ){
-            self.fields = form.fields[ language_code ];
-        }
 
         self.$save_button.attr( 'disabled', false );
         self.$field_selector.find('option').remove();
@@ -56,7 +52,7 @@ function CF_Translate_Form( form, language_code, save, $ ){
 
     this.setup_fields = function(){
         var list = {};
-        _.each( self.fields, function( field, id ){
+        _.each( fields, function( field, id ){
 
             if( _.has( field, 'label' ) ){
                 list[id] = {ID: id, label: field.label};
@@ -69,10 +65,10 @@ function CF_Translate_Form( form, language_code, save, $ ){
 
     this.get_field = function( id ){
         if( _.isUndefined( self.field_objs[ id ] ) ){
-            if( _.isUndefined( self.fields[ id ] ) ){
+            if( _.isUndefined( fields[ id ] ) ){
                 alert( settings.strings.error );
             }else{
-                self.field_objs[ id ] = new CF_Translate_Field( self.fields[ id ], self.language );
+                self.field_objs[ id ] = new CF_Translate_Field( fields[ id ], self.language );
             }
         }
 
