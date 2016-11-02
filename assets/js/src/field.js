@@ -6,4 +6,5 @@ function CF_Translate_Field( field_data, language ){
         label: field_data.label,
         default: field_data.default
     };
+
 }

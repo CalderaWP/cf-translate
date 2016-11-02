@@ -6,6 +6,7 @@
         label: field_data.label,
         default: field_data.default
     };
+
 }function CF_Translate_Form( form, fields, language_code, save, $ ){
     var self = this;
 
