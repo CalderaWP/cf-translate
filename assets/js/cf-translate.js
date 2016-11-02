@@ -329,13 +329,14 @@ function CF_Translations( settings, $, _, Handlebars ){
     };
 
     this.load_language = function( language_code ){
-        var fields;
-        if( _.has( fields, language_code ) && ! _.isEmpty( fields[ language_code ] ) ){
-            fields = fields[ language_code ];
+        var lfields;
+        if( _.has( fields, language_code ) ){
+            lfields = fields[ language_code ];
         }else if( _.has( settings.form.fields, language_code ) && ! _.isEmpty( settings.form.fields[ language_code ] ) ){
-            fields = settings.form.fields[ language_code ];
+            lfields = settings.form.fields[ language_code ];
         }
-        var translator = new CF_Translate_Form( settings.form, fields, language_code, settings.data, $ );
+
+        var translator = new CF_Translate_Form( settings.form, lfields, language_code, settings.data, $ );
         translator.init();
     };
 

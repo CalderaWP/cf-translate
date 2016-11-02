@@ -11,15 +11,15 @@
  */
 class CF_Translate_Localize {
 
-    /**
-     * Current form
-     *
-     * Not always set!
-     *
-     * @since 0.1.0
-     *
-     * @var CF_Translate_Form|null
-     */
+	/**
+	 * Current form
+	 *
+	 * Not always set!
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var CF_Translate_Form|null
+	 */
 	protected $form;
 
 	/**
@@ -40,55 +40,55 @@ class CF_Translate_Localize {
 	 *
 	 * @return array
 	 */
-	public function to_array(){
+	public function to_array() {
 		$data = array(
 			'strings' => $this->strings(),
-			'data' => $this->data(),
-			'local' => get_locale(),
-			'form' => array(
-				'ID' => 0,
+			'data'    => $this->data(),
+			'local'   => get_locale(),
+			'form'    => array(
+				'ID'        => 0,
 				'languages' => array(),
-				'fields' => array(),
+				'fields'    => array(),
 				'form_info' => array( 'name' => '' )
 			),
 
 		);
 
-		if( ! empty( $this->form ) ){
+		if ( ! empty( $this->form ) ) {
 			$data[ 'form' ] = array(
-				'ID' => $this->form->get_id(),
+				'ID'        => $this->form->get_id(),
 				'languages' => $this->form->get_translator()->get_languages(),
 				'form_info' => $this->form_info()
 			);
-            foreach( $data[ 'form' ][ 'languages' ] as $language ){
-                $fields =  $this->form->get_translator()->get_fields( $language );
-                if( ! empty( $fields ) ){
-                    foreach ( $fields as $id => $field ){
-                        $_field = array();
-                        if( $field instanceof  CF_Translate_Field ){
-                            $_field = $field->to_array( false );
-                        }
+			foreach ( $data[ 'form' ][ 'languages' ] as $language ) {
+				$fields = $this->form->get_translator()->get_fields( $language );
+				if ( ! empty( $fields ) ) {
+					foreach ( $fields as $id => $field ) {
+						$_field = array();
+						if ( $field instanceof CF_Translate_Field ) {
+							$_field = $field->to_array( false );
+						}
 
-                        $data[ 'form' ][ 'fields' ][ $language ][ $id ] = $_field;
-                    }
-                }
+						$data[ 'form' ][ 'fields' ][ $language ][ $id ] = $_field;
+					}
+				}
 
-                //add fields without translations
-                foreach( $this->form[ 'fields' ] as $id => $field ){
-                	if( ! array_key_exists( $id, $data[ 'form' ][ 'fields' ][ $language ] ) ){
+				//add fields without translations
+				foreach ( $this->form[ 'fields' ] as $id => $field ) {
+					if ( ! array_key_exists( $id, $data[ 'form' ][ 'fields' ][ $language ] ) ) {
 
-                		//Hi Josh - You will want to take this out later. It is here to reduce size of array sent to DOM. Take care, Josh
-		                $_field = CF_Translate_Factories::field_object( $field );
-		                $_field = $_field->to_array( false );
+						//Hi Josh - You will want to take this out later. It is here to reduce size of array sent to DOM. Take care, Josh
+						$_field = CF_Translate_Factories::field_object( $field );
+						$_field = $_field->to_array( false );
 
-		                $data[ 'form' ][ 'fields' ][ $language ][ $id ] = $_field;
+						$data[ 'form' ][ 'fields' ][ $language ][ $id ] = $_field;
 
-	                }
+					}
 
-                }
+				}
 
 
-            }
+			}
 
 		}
 
@@ -102,7 +102,7 @@ class CF_Translate_Localize {
 	 *
 	 * @return array
 	 */
-	protected function form_info(){
+	protected function form_info() {
 		return array(
 			'name' => $this->form[ 'name' ]
 		);
@@ -115,7 +115,7 @@ class CF_Translate_Localize {
 	 *
 	 * @return array
 	 */
-	protected function strings(){
+	protected function strings() {
 		return array(
 			'bad_language'         => __( 'Could not add language, please check that it is supported.', 'caldera-forms-translation' ),
 			'translations_saved'   => __( 'Translations Saved :)', 'caldera-forms-translation' ),
@@ -123,7 +123,7 @@ class CF_Translate_Localize {
 			'unsaved_translations' => __( 'You Have Unsaved Translations!', 'caldera-forms-translation' ),
 			'unsaved_settings'     => __( 'You Have Unsaved Settings!', 'caldera-forms-translation' ),
 			'error'                => __( 'An unknown error has occured.', 'caldera-forms-translation' ),
-			'nothing_to_save'     => __( 'Nothing to save', 'caldera-forms-translations' )
+			'nothing_to_save'      => __( 'Nothing to save', 'caldera-forms-translations' )
 		);
 	}
 
@@ -134,13 +134,13 @@ class CF_Translate_Localize {
 	 *
 	 * @return array
 	 */
-	protected function data(){
+	protected function data() {
 		return array(
 			'rest_nonce' => wp_create_nonce( 'wp_rest' ),
-			'nonce' => CF_Translate_AdminForm:: nonce(),
-			'api' => array(
-				'save' => esc_url_raw( Caldera_Forms_API_Util::url( 'translations/admin' )  ),
-				'lang' => esc_url_raw( Caldera_Forms_API_Util::url( 'translations/admin/language' )  )
+			'nonce'      => CF_Translate_AdminForm:: nonce(),
+			'api'        => array(
+				'save' => esc_url_raw( Caldera_Forms_API_Util::url( 'translations/admin' ) ),
+				'lang' => esc_url_raw( Caldera_Forms_API_Util::url( 'translations/admin/language' ) )
 			)
 		);
 	}
