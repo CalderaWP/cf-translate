@@ -1,4 +1,4 @@
-/*! cf-translations - v0.1.0 - 2016-10-31 */function CF_Translate_Field( field_data, language ){
+/*! cf-translations - v0.1.0 - 2016-11-01 */function CF_Translate_Field( field_data, language ){
     return  {
         language: language,
         ID: field_data.ID,
@@ -29,6 +29,7 @@
 
         if( _.has( form, 'fields') ){
             self.fields = form.fields[ language_code ];
+            
         }
 
         self.$save_button.attr( 'disabled', false );
