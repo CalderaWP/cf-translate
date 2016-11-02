@@ -30,3 +30,10 @@ li.caldera-editor-logo {
     border-color: #999;
     color: #23282d;
 }
+
+.cf-translate-green{
+    background: #a3bf61;
+}
+.cf-translate-red {
+    background: #ff0000;
+}

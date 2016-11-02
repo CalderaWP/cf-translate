@@ -33,6 +33,12 @@ function CF_Translate_Form( form, fields, language_code, save, $ ){
         });
 
         self.$save_button.on( 'click', function(){
+            if( _.isEmpty( self.update_fields ) ){
+                alert( CFTRANS.strings.nothing_to_save );
+                return;
+            }
+
+
             var data = {
                 action: 'cf_translate_save_translation',
                 language: language_code,

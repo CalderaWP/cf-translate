@@ -10,7 +10,7 @@
  */
 
 ?>
-<div class="caldera-editor-header">
+<div class="caldera-editor-header" id="cf-translate-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
 			<span class="dashicons-cf-logo"></span>

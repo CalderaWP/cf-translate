@@ -123,6 +123,7 @@ class CF_Translate_Localize {
 			'unsaved_translations' => __( 'You Have Unsaved Translations!', 'caldera-forms-translation' ),
 			'unsaved_settings'     => __( 'You Have Unsaved Settings!', 'caldera-forms-translation' ),
 			'error'                => __( 'An unknown error has occured.', 'caldera-forms-translation' ),
+			'nothing_to_save'     => __( 'Nothing to save', 'caldera-forms-translations' )
 		);
 	}
 
