@@ -7,13 +7,13 @@ function CF_Translate_Form( form, language_code, save, $ ){
 
     this.template_engine = new CF_Translate_Template_Engine( $, Handlebars );
 
-    this.$field_selector = $( '#cf-translate-field-select' );
+    this.$field_selector = $( document.getElementById( 'cf-translate-field-select' ) );
 
-    this.$field_edit_area = $( '#cf-translate-field-translator-wrap' );
+    this.$field_edit_area = $(  document.getElementById( 'cf-translate-field-translator-wrap' ) );
 
     this.language = language_code;
 
-    this.$save_button = $( '#cf-translations-save-button' );
+    this.$save_button = $(  document.getElementById( 'cf-translations-save-button' ) );
 
     this.update_fields = {};
 
@@ -28,7 +28,12 @@ function CF_Translate_Form( form, language_code, save, $ ){
         self.setup_fields();
         self.$field_selector.on( 'change', function(){
             var field = self.get_field( self.$field_selector.val() );
-            self.render_field_ui( field, self.language, self.$field_edit_area );
+            if( _.isUndefined( field ) ){
+                alert( CFTRANS.strings.error );
+            }else{
+                self.render_field_ui( field, self.language, self.$field_edit_area );
+
+            }
         });
 
         self.$save_button.on( 'click', function(){
@@ -36,11 +41,11 @@ function CF_Translate_Form( form, language_code, save, $ ){
                 action: 'cf_translate_save_translation',
                 language: language_code,
                 fields: self.update_fields,
-                cftrans_nonce: save.nonce,
+                _wpnonce: save.rest_nonce,
                 form_id: form.ID
             };
 
-            $.post( save.api, data ).success( function(r){
+            $.post( save.api.save, data ).success( function(r){
                 cf_translation_report( CFTRANS.strings.translations_saved, true );
                 window.cf_translations_has_changes = false;
             }).error( function(r){
@@ -63,8 +68,12 @@ function CF_Translate_Form( form, language_code, save, $ ){
     };
 
     this.get_field = function( id ){
-        if( undefined == self.field_objs[ id ] ){
-            self.field_objs[ id ] = new CF_Translate_Field( self.fields[ id ], self.language );
+        if( _.isUndefined( self.field_objs[ id ] ) ){
+            if( _.isUndefined( self.fields[ id ] ) ){
+                alert( settings.strings.error );
+            }else{
+                self.field_objs[ id ] = new CF_Translate_Field( self.fields[ id ], self.language );
+            }
         }
 
         return self.field_objs[ id ];

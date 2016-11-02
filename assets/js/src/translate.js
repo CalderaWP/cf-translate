@@ -92,19 +92,19 @@ function CF_Translations( settings, $, _, Handlebars ){
     };
 
     this.get_language_fields = function( language ){
-        $.get( settings.data.api, {
+        $.get( settings.data.api.lang, {
             action: 'cf_translate_get_language',
             form_id: settings.form.ID,
             language: language,
-            cftrans_nonce: settings.data.nonce,
-
+            _wpnonce: settings.data.rest_nonce
         }).success( function( r ){
-            if( _.has( r, 'data' ) ){
-                settings.form.fields[ language ] = r.data;
-            }
-
+            settings.form.fields[ language ] = r;
         } ).error( function( r ){
-
+            if( _.has( r, 'message' ) ){
+                alert( r.message );
+            }else{
+                alert( settings.string.error );
+            }
         });
     };
 

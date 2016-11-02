@@ -62,11 +62,17 @@ function cf_translate_load(){
 	    add_filter('caldera_forms_get_field_types', 'cf_translate_add_switcher_field' );
 
 	    /**
+	     * REST API: GO!
+	     */
+	    add_action( 'rest_api_init', 'cf_translate_init_api', 21 );
+	    add_action( 'caldera_forms_rest_api_pre_init', 'cf_translate_init_api_route' );
+
+	    /**
 	     * admin-ajax - use CF API when we get to 1.5.0
 	     */
-	    add_action( 'wp_ajax_cf_translate_save_translation', 'cf_translate_save_translation'  );
-	    add_action( 'wp_ajax_cf_translate_add_language', 'cf_translate_add_language'  );
-	    add_action( 'wp_ajax_cf_translate_get_language', 'cf_translate_get_language'  );
+	    //add_action( 'wp_ajax_cf_translate_save_translation', 'cf_translate_save_translation'  );
+	    //add_action( 'wp_ajax_cf_translate_add_language', 'cf_translate_add_language'  );
+	   // add_action( 'wp_ajax_cf_translate_get_language', 'cf_translate_get_language'  );
 
 
     }
@@ -313,8 +319,38 @@ function cf_translate_get_language(){
     exit;
 }
 
-
+/**
+ * Generic capability check
+ *
+ * @return bool
+ */
 function cf_translate_can_translate(){
 	return current_user_can( Caldera_Forms::get_manage_cap( 'translate' ) );
 }
 
+/**
+ * Make sure API infrastructure is loaded
+ *
+ * CF 1.4.4 has API infrastructure, but does not load it, but we need it.
+ *
+ * @uses "rest_api_init" action
+ *
+ * @since 0.0.3
+ */
+function cf_translate_init_api(){
+	if( ! did_action( 'caldera_forms_rest_api_init' ) ){
+		add_action( 'rest_api_init', [ 'Caldera_Forms', 'init_rest_api' ], 25 );
+	}
+
+}
+
+/**
+ * Add our API endpoint for saving settings and such
+ *
+ * @uses "caldera_forms_rest_api_init" action
+ *
+ * @since 0.3.0
+ */
+function cf_translate_init_api_route(  $api ){
+	$api->add_route( new CF_Translate_API() );
+}

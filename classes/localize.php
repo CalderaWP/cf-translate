@@ -108,6 +108,7 @@ class CF_Translate_Localize {
 			'save_error'           => __( 'Not Saved :(', 'caldera-forms-translation' ),
 			'unsaved_translations' => __( 'You Have Unsaved Translations!', 'caldera-forms-translation' ),
 			'unsaved_settings'     => __( 'You Have Unsaved Settings!', 'caldera-forms-translation' ),
+			'error'                => __( 'An unknown error has occured.', 'caldera-forms-translation' ),
 		);
 	}
 
@@ -120,8 +121,12 @@ class CF_Translate_Localize {
 	 */
 	protected function data(){
 		return array(
+			'rest_nonce' => wp_create_nonce( 'wp_rest' ),
 			'nonce' => CF_Translate_AdminForm:: nonce(),
-			'api' => esc_url_raw( admin_url( 'admin-ajax.php' ) )
+			'api' => array(
+				'save' => esc_url_raw( Caldera_Forms_API_Util::url( 'translations/admin' )  ),
+				'lang' => esc_url_raw( Caldera_Forms_API_Util::url( 'translations/admin/language' )  )
+			)
 		);
 	}
 
