@@ -50,7 +50,7 @@ class  CF_Translate_Render extends CF_Translate_Filter{
 
                 if( 'ID' != $key  ){
 		            $value = $field_object->$key;
-		            if( ! empty( $value )  && isset( $field[ $key ], $field_object->$key ) && $value != $field[ $key ] ) {
+		            if( ! empty( $value )  && isset( $field[ $key ] )  && $value != $field[ $key ] ) {
 			            $field[ $key ] = $field_object->$key;
 		            }
 
