@@ -67,13 +67,6 @@ function cf_translate_load(){
 	    add_action( 'rest_api_init', 'cf_translate_init_api', 21 );
 	    add_action( 'caldera_forms_rest_api_pre_init', 'cf_translate_init_api_route' );
 
-	    /**
-	     * admin-ajax - use CF API when we get to 1.5.0
-	     */
-	    //add_action( 'wp_ajax_cf_translate_save_translation', 'cf_translate_save_translation'  );
-	    //add_action( 'wp_ajax_cf_translate_add_language', 'cf_translate_add_language'  );
-	   // add_action( 'wp_ajax_cf_translate_get_language', 'cf_translate_get_language'  );
-
 
     }
 
@@ -170,49 +163,6 @@ function cf_translate_templates(){
 }
 
 
-
-function cf_translate_save_translation(){
-	if( cf_translate_can_translate() ){
-		if( ! empty( $_POST[ 'language' ] ) &&  ! empty( $_POST[ 'form_id' ] ) && ! empty( $_POST[ 'fields' ] ) && is_array(  $_POST[ 'fields' ] ) && ! empty( $_POST[ CF_Translate_AdminForm::nonce_field_name() ] ) ){
-			if( CF_Translate_AdminForm::verify_nonce( $_POST[ CF_Translate_AdminForm::nonce_field_name() ] ) ){
-
-
-				$form = CF_Translate_Factories::get_form( $_POST[ 'form_id' ] );
-				if( is_object( $form ) && ! is_wp_error( $form ) ) {
-					//@todo validate code
-					$language = trim( strip_tags( trim( $_POST[ 'language' ] ) ) );
-
-
-                    $fields = array();
-					foreach ( $_POST[ 'fields' ] as $id => $field ) {
-						$field[ 'ID' ] = $id;
-					    $fields[ $id ] = CF_Translate_Factories::field_object( $field, true );
-
-
-                    }
-
-                    /** @var  CF_Translate_Form  $form */
-                    $form->get_translator()->add_fields_to_language( $language, $fields );
-                    $saved = $form->save();
-                    if( $saved ){
-                        status_header( 200 );
-                    }else{
-                        status_header( 500 );
-                    }
-
-				}
-			}else{
-				status_header( 406 );
-			}
-		}else{
-			status_header( 400 );
-		}
-	}else{
-		status_header( 403 );
-	}
-	exit;
-}
-
 /**
  * Add language picker field
  *
@@ -243,80 +193,6 @@ function cf_translate_add_switcher_field( $field_types ){
 	);
 
 	return $field_types;
-}
-
-
-function cf_translate_add_language(){
-    if( cf_translate_can_translate() ){
-        if( ! empty( $_POST[ 'language' ] ) &&  ! empty( $_POST[ 'form_id' ] )   && ! empty( $_POST[ CF_Translate_AdminForm::nonce_field_name() ] ) ){
-            if( CF_Translate_AdminForm::verify_nonce( $_POST[ CF_Translate_AdminForm::nonce_field_name() ] ) ){
-
-                $form = CF_Translate_Factories::get_form( $_POST[ 'form_id' ] );
-                if( ! empty( $form ) ) {
-                    //@todo validate code
-                    $language = trim( strip_tags( trim( $_POST[ 'language' ] ) ) );
-
-                    $form->get_translator()->add_language( $language );
-
-                    $saved = $form->save();
-                    if( $saved ){
-                        status_header( 200 );
-                    }else{
-                        status_header( 500 );
-                    }
-
-                }
-            }else{
-                status_header( 406 );
-            }
-        }else{
-            status_header( 400 );
-        }
-    }else{
-        status_header( 403 );
-    }
-}
-
-function cf_translate_get_language(){
-
-    if( cf_translate_can_translate() ){
-
-        if( ! empty( $_GET[ 'language' ] ) &&  ! empty( $_GET[ 'form_id' ] )   && ! empty( $_GET[ CF_Translate_AdminForm::nonce_field_name() ] ) ){
-            if( CF_Translate_AdminForm::verify_nonce( $_GET[ CF_Translate_AdminForm::nonce_field_name() ] ) ){
-
-                $form = CF_Translate_Factories::get_form( $_GET[ 'form_id' ] );
-                if( ! empty( $form ) ) {
-                    //@todo validate code
-                    $language = trim( strip_tags( trim( $_GET[ 'language' ] ) ) );
-
-                    $form->get_translator()->add_language( $language );
-                    $form->get_translator()->add_fields_to_language( $language, CF_Translate_Factories::new_language_fields( $form ) );
-
-                    $fields = $form->get_translator()->get_fields( $language, true );
-                    if( ! empty( $fields ) ){
-                        status_header( 200 );
-                        wp_send_json_success( $fields );
-                        exit;
-                    }else{
-                        status_header( 501 );
-                        wp_send_json_error( $form->get_translator()->get_languages() );
-
-                    }
-
-                }else{
-                    status_header( 404 );
-                }
-            }else{
-                status_header( 406 );
-            }
-        }else{
-            status_header( 400 );
-        }
-    }else{
-        status_header( 403 );
-    }
-
-    exit;
 }
 
 /**
