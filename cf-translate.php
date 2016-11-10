@@ -10,7 +10,7 @@
  * Plugin Name: Caldera Forms Translation
  * Plugin URI:  https://CalderaWP.com
  * Description: Translate Caldera Forms
- * Version: 1.0.7
+ * Version: 1.0.0
  * Author:      CalderaWP LLC
  * Author URI:  https://CalderaForms.com
  * Text Domain: caldera-forms-translation
