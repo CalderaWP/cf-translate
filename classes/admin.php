@@ -181,7 +181,7 @@ class CF_Translate_Admin {
 			$form_id = $_GET[ 'form' ];
 			$nonce   = $_GET[ 'cftrans_nonce' ];
 			if( CF_Translate_AdminForm::verify_nonce( $nonce ) ){
-				return  CF_Translate_Factories::get_form( $form_id );
+				return  CF_Translate_Factories::get_form( esc_attr( $form_id ) );
 			}
 		}
 

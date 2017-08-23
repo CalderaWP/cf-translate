@@ -41,6 +41,7 @@ class CF_Translate_Form implements ArrayAccess {
 	 * @param array $form Form config
 	 */
     public function __construct( array  $form ){
+    	$this->form = $form;
         $this->form = $this->set_translator( $form );
     }
 
@@ -74,7 +75,7 @@ class CF_Translate_Form implements ArrayAccess {
 	 * @return bool|string
 	 */
     public function save(){
-        $this->form[ 'translations' ] = $this->translator;
+        update_option( $this->option_name(), $this->translator, false );
         return Caldera_Forms_Forms::save_form( $this->form );
     }
 
@@ -100,6 +101,7 @@ class CF_Translate_Form implements ArrayAccess {
 	 * @return array
 	 */
     private  function set_translator( $form ){
+    	$form[ 'translations' ] = get_option( $this->option_name(), false );
         if( ! isset( $form[ 'translations' ] ) || ! $form[ 'translations' ] instanceof  CF_Translate_Translator ){
             $form[ 'translations' ]  =  CF_Translate_Factories::new_translator( $form );
 
@@ -109,6 +111,17 @@ class CF_Translate_Form implements ArrayAccess {
 
 
         return $form;
+    }
+
+	/**
+	 * Get name of option used to store translator
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return string
+	 */
+    protected function option_name(){
+    	return $this->form[ 'ID' ] . '_translator';
     }
 
 	/**
@@ -144,4 +157,5 @@ class CF_Translate_Form implements ArrayAccess {
     public function offsetGet($offset) {
         return isset($this->form[$offset]) ? $this->form[$offset] : null;
     }
+
 }
