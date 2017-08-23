@@ -112,7 +112,7 @@ class CF_Translate_Translator {
 	 *
 	 * If $code is es_PE and es is found, then this will return true, while $this->has_language() would not
 	 *
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 *
 	 * @param string $code Full language code to check
 	 *
@@ -130,7 +130,7 @@ class CF_Translate_Translator {
 	 *
 	 * es_PE will become es
 	 *
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 *
 	 * @param string $code Full language code
 	 *

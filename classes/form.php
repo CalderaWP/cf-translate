@@ -116,7 +116,7 @@ class CF_Translate_Form implements ArrayAccess {
 	/**
 	 * Get name of option used to store translator
 	 *
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 *
 	 * @return string
 	 */
