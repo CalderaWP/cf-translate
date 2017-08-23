@@ -139,13 +139,17 @@ function cf_translate_get_current_language(){
  * @return string
  */
 function cf_translate_select_language( $language ){
-	if( ! empty( $_GET[ 'cf_lang' ] ) && is_string( $_GET[ 'cf_lang' ] ) ){
+	if( defined( 'ICL_LANGUAGE_CODE' ) ){
+		$language = ICL_LANGUAGE_CODE;
+	}elseif( ! empty( $_GET[ 'cf_lang' ] ) && is_string( $_GET[ 'cf_lang' ] ) ){
 		$language = trim( strip_tags( $_GET[ 'cf_lang' ] ) );
 	}
 
 	return $language;
 
 }
+
+
 
 
 add_action( 'init', 'cf_translate_init_text_domain' );
