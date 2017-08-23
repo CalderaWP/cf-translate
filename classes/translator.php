@@ -108,6 +108,39 @@ class CF_Translate_Translator {
     }
 
 	/**
+	 * Checks if we have a non-locale variant
+	 *
+	 * If $code is es_PE and es is found, then this will return true, while $this->has_language() would not
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $code Full language code to check
+	 *
+	 * @return bool
+	 */
+    public function has_less_locale( $code ){
+    	if ( $this->has_language( $this->get_less_locale_code( $code ) ) ){
+    		return true;
+	    }
+	    return false;
+    }
+
+	/**
+	 * Reduces a 2 part language code to a 1 part
+	 *
+	 * es_PE will become es
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $code Full language code
+	 *
+	 * @return string
+	 */
+    public function get_less_locale_code( $code ){
+    	return strtolower( substr( $code, 0, 2 ) );
+    }
+
+	/**
 	 * Add a language to system
 	 *
 	 * @since 0.1.0

@@ -69,8 +69,10 @@ class  CF_Translate_Render extends CF_Translate_Filter{
 	* @since 0.1.0
 	*/
 	protected function add_hook (){
-		if ( $this->form->get_translator()->has_language( $this->args[ 'language'] )) {
-				parent::add_hook();
+		if ( $this->form->get_translator()->has_language( $this->args[ 'language'] )
+		     ||  $this->form->get_translator()->has_less_locale( $this->args[ 'language'] )
+		) {
+			parent::add_hook();
 		}
 
 	}
