@@ -10,21 +10,14 @@
  */
 
 ?>
+
 <div class="caldera-editor-header" id="cf-translate-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
-			<span class="dashicons-cf-logo"></span>
-			Caldera Forms: <?php esc_html_e( 'Translations', 'caldera-forms-translation' ); ?>
+		<span class="caldera-forms-name">
+			Caldera Forms: Translations
+		</span>
 		</li>
-		<li class="cf-translations-notice-wrap">
-			<p id="cf-translations-not-saved" class="error alert cf-translations-notice cf-translations-error" style="display: none;visibility: hidden" aria-hidden="true">
-
-			</p>
-			<p id="cf-translations-saved" class="error alert cf-translations-success cf-translations-notice" style="display: none;visibility: hidden" aria-hidden="true">
-
-			</p>
-		</li>
-
 	</ul>
 </div>
 <div class="support-admin-page-wrap caldera-grid" id="cf-translate-admin" style="margin-top: 75px;">
