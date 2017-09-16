@@ -12,3 +12,19 @@ function cf_translation_report( message, good ){
         $saved.html( '' ).hide().css( 'visibility', 'hidden' ).attr( 'aria-hidden', true );
     }
 }
+
+Handlebars.registerHelper('ifIs', function (conditional, options) {
+    if (options.hash.value == conditional) {
+        return options.fn(this)
+    } else {
+        return options.inverse(this);
+    }
+});
+
+Handlebars.registerHelper('ifNot', function (conditional, options) {
+    if (options.hash.value != conditional) {
+        return options.fn(this)
+    } else {
+        return options.inverse(this);
+    }
+});
