@@ -1,10 +1,11 @@
-/*! cf-translations - v1.1.0 - 2017-08-23 */function CF_Translate_Field( field_data, language ){
+/*! cf-translations - v1.1.0 - 2017-09-15 */function CF_Translate_Field( field_data, language ){
     return  {
         language: language,
         ID: field_data.ID,
         caption: field_data.caption,
         label: field_data.label,
-        default: field_data.default
+        default: field_data.default,
+        type: field_data.hasOwnProperty( 'type' ) ? field_data.type : ''
     };
 
 }function CF_Translate_Form( form, fields, language_code, save, $ ){
@@ -92,6 +93,7 @@
 
     this.render_field_ui = function( field ){
         self.$field_edit_area.empty();
+        console.log(field);
         self.template_engine.render_template( 'field', field, self.$field_edit_area );
         self.bind( field.ID );
     };
@@ -130,6 +132,22 @@
 
 
 }
+Handlebars.registerHelper('ifIs', function (conditional, options) {
+    if (options.hash.value == conditional) {
+        return options.fn(this)
+    } else {
+        return options.inverse(this);
+    }
+});
+
+Handlebars.registerHelper('ifNot', function (conditional, options) {
+    if (options.hash.value != conditional) {
+        return options.fn(this)
+    } else {
+        return options.inverse(this);
+    }
+});
+
 jQuery( document ).ready( function( $ ) {
     window.cf_translations_has_changes = false;
     if( _.isObject( CFTRANS ) ) {

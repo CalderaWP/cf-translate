@@ -37,3 +37,6 @@ li.caldera-editor-logo {
 .cf-translate-red {
     background: #ff0000;
 }
+.caldera-config-field textarea {
+    width: 250px;
+}

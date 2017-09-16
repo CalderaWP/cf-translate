@@ -69,6 +69,13 @@ class CF_Translate_Localize {
 							$_field = $field->to_array( false );
 						}
 
+						if( empty( $_field[ 'type' ] ) ){
+							$_field[ 'type' ] = Caldera_Forms_Field_Util::get_type(
+								Caldera_Forms_Field_Util::get_field( $field->ID, $this->form->get_form() ),
+								$this->form->get_form()
+							);
+						}
+
 						$data[ 'form' ][ 'fields' ][ $language ][ $id ] = $_field;
 					}
 				}
@@ -80,6 +87,11 @@ class CF_Translate_Localize {
 						//Hi Josh - You will want to take this out later. It is here to reduce size of array sent to DOM. Take care, Josh
 						$_field = CF_Translate_Factories::field_object( $field );
 						$_field = $_field->to_array( false );
+
+						$_field[ 'type' ] = Caldera_Forms_Field_Util::get_type(
+							Caldera_Forms_Field_Util::get_field( $field[ 'ID' ], $this->form->get_form() ),
+							$this->form->get_form()
+						);
 
 						$data[ 'form' ][ 'fields' ][ $language ][ $id ] = $_field;
 

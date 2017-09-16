@@ -83,6 +83,7 @@ function CF_Translate_Form( form, fields, language_code, save, $ ){
 
     this.render_field_ui = function( field ){
         self.$field_edit_area.empty();
+        console.log(field);
         self.template_engine.render_template( 'field', field, self.$field_edit_area );
         self.bind( field.ID );
     };

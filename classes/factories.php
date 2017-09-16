@@ -89,7 +89,7 @@ class CF_Translate_Factories{
     public static function field_object( array $field, $sanitize = false ){
         $field_object = new CF_Translate_Field();
         foreach ( $field_object->get_field_names() as $key ){
-            if (isset( $field[ $key ] ) ) {
+            if ( isset( $field[ $key ] ) ) {
                 $field_object->$key = $field[$key];
             }
         }

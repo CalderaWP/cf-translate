@@ -1,3 +1,19 @@
+Handlebars.registerHelper('ifIs', function (conditional, options) {
+    if (options.hash.value == conditional) {
+        return options.fn(this)
+    } else {
+        return options.inverse(this);
+    }
+});
+
+Handlebars.registerHelper('ifNot', function (conditional, options) {
+    if (options.hash.value != conditional) {
+        return options.fn(this)
+    } else {
+        return options.inverse(this);
+    }
+});
+
 jQuery( document ).ready( function( $ ) {
     window.cf_translations_has_changes = false;
     if( _.isObject( CFTRANS ) ) {

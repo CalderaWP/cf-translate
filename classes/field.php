@@ -21,6 +21,15 @@ class CF_Translate_Field extends Caldera_Forms_Object {
     protected $default;
 
 	/**
+	 * Field type
+	 *
+	 * @since 2.1.0
+	 *
+	 * @var string
+	 */
+	protected $type;
+
+	/**
 	 * Get all field names
 	 *
 	 * @since 0.1.0
@@ -31,7 +40,6 @@ class CF_Translate_Field extends Caldera_Forms_Object {
         $vars = get_object_vars(  $this );
         return array_keys( $vars );
     }
-
 
 
 }
