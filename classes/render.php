@@ -49,13 +49,13 @@ class  CF_Translate_Render extends CF_Translate_Filter{
 		if( is_object( $field_object ) ){
 		    foreach( $field_object->get_field_names() as $key ){
 
-			if( 'ID' != $key  ){
-				    $value = $field_object->$key;
-				    if( ! empty( $value )  && isset( $field[ $key ] )  && $value != $field[ $key ] ) {
-					    $field[ $key ] = $field_object->$key;
-				    }
+				if( 'ID' != $key  ){
+					    $value = $field_object->$key;
+					    if( ! empty( $value )  && isset( $field[ $key ] )  && $value != $field[ $key ] ) {
+						    $field[ $key ] = $field_object->$key;
+					    }
 
-			}
+				}
 		    }
 
 		}

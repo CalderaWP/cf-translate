@@ -5,7 +5,8 @@
         caption: field_data.caption,
         label: field_data.label,
         default: field_data.default,
-        type: field_data.hasOwnProperty( 'type' ) ? field_data.type : ''
+        type: field_data.hasOwnProperty( 'type' ) ? field_data.type : '',
+        options: field_data.hasOwnProperty( 'options' ) ? field_data.options : {},
     };
 
 }function CF_Translate_Form( form, fields, language_code, save, $ ){
@@ -147,6 +148,7 @@ Handlebars.registerHelper('ifNot', function (conditional, options) {
         return options.inverse(this);
     }
 });
+
 
 jQuery( document ).ready( function( $ ) {
     window.cf_translations_has_changes = false;

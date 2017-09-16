@@ -137,7 +137,6 @@ class CF_Translate_Admin {
 	 */
 	public function enqueue( $hook ){
 		if( $this->slugs->cf . '_page_' . $this->slugs->translate == $hook ){
-
 			wp_enqueue_script( $this->slugs->translate );
 			wp_enqueue_style( $this->slugs->translate );
 			wp_enqueue_style( $this->slugs->cf . '-admin-styles', CFCORE_URL . 'assets/css/admin.css', array(), CFCORE_VER );

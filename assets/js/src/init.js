@@ -14,6 +14,7 @@ Handlebars.registerHelper('ifNot', function (conditional, options) {
     }
 });
 
+
 jQuery( document ).ready( function( $ ) {
     window.cf_translations_has_changes = false;
     if( _.isObject( CFTRANS ) ) {

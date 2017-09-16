@@ -89,10 +89,22 @@ class CF_Translate_Factories{
     public static function field_object( array $field, $sanitize = false ){
         $field_object = new CF_Translate_Field();
         foreach ( $field_object->get_field_names() as $key ){
-            if ( isset( $field[ $key ] ) ) {
-                $field_object->$key = $field[$key];
-            }
+        	if( 'options' === $key ){
+        		if( empty( $field[ 'config' ][ 'option' ] ) ){
+        			continue;
+		        }
+		        foreach ( $field[ 'config' ][ 'option' ] as $opt => $option ){
+			        $field_object->add_option( $opt, $option[ 'label' ] );
+		        }
+
+	        }else{
+		        if ( isset( $field[ $key ] ) ) {
+			        $field_object->$key = $field[$key];
+		        }
+	        }
+
         }
+
 
         if( $sanitize ){
             return self::sanatize_field( $field_object );

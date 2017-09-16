@@ -30,6 +30,15 @@ class CF_Translate_Field extends Caldera_Forms_Object {
 	protected $type;
 
 	/**
+	 * Field options
+	 *
+	 * @since 2.1.0
+	 *
+	 * @var string
+	 */
+	protected $options;
+
+	/**
 	 * Get all field names
 	 *
 	 * @since 0.1.0
@@ -39,6 +48,13 @@ class CF_Translate_Field extends Caldera_Forms_Object {
     public function get_field_names(){
         $vars = get_object_vars(  $this );
         return array_keys( $vars );
+    }
+
+    public function add_option( $opt, $label ){
+    	if( ! is_array( $this->options ) ){
+    		$this->options = array();
+	    }
+    	$this->options[ $opt ] = $label;
     }
 
 
