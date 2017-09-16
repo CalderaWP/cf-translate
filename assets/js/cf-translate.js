@@ -157,8 +157,6 @@ jQuery( document ).ready( function( $ ) {
         var $form = $(document.getElementById('cf-translate-language-control'));
         var $language_selector = $(document.getElementById('cf-translate-language-chooser'));
         var $add_language = $(document.getElementById('cf-translate-add-language'));
-        $add_language.select2();
-        // $add_language.select2();
         var $add_language_button = $(document.getElementById('cf-translate-add-language-button'));
 
         cf_translations.populate_language_selector($language_selector);

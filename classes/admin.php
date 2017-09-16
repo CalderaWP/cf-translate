@@ -138,12 +138,6 @@ class CF_Translate_Admin {
 	public function enqueue( $hook ){
 		if( $this->slugs->cf . '_page_' . $this->slugs->translate == $hook ){
 
-			//shit I need to make this easier.
-			$select2_js = CFCORE_URL . 'fields/select2/js/select2.js';
-			wp_enqueue_script( Caldera_Forms_Render_Assets::make_slug( $select2_js ), $select2_js, array( 'jquery' ), CFCORE_VER );
-			$select2_css = CFCORE_URL . 'fields/select2/css/select2.css';
-			wp_enqueue_style( Caldera_Forms_Render_Assets::make_slug( $select2_css ), $select2_css, array(), CFCORE_VER );
-
 			wp_enqueue_script( $this->slugs->translate );
 			wp_enqueue_style( $this->slugs->translate );
 			wp_enqueue_style( $this->slugs->cf . '-admin-styles', CFCORE_URL . 'assets/css/admin.css', array(), CFCORE_VER );
