@@ -23,7 +23,7 @@ class CF_Translate_Field extends Caldera_Forms_Object {
 	/**
 	 * Field type
 	 *
-	 * @since 2.1.0
+	 * @since 1.2.0
 	 *
 	 * @var string
 	 */
@@ -32,7 +32,7 @@ class CF_Translate_Field extends Caldera_Forms_Object {
 	/**
 	 * Field options
 	 *
-	 * @since 2.1.0
+	 * @since 1.2.0
 	 *
 	 * @var string
 	 */
