@@ -30,12 +30,13 @@
 				printf( '<h3>%s</h3>', esc_html__( 'Choose Form', 'caldera-forms-translation') );
 				?>
 					<form id="cf-translations-form-chooser" action="<?php echo esc_url_raw( admin_url( 'admin.php?page=caldera-forms-translate' ) ); ?>">
+						<?php wp_nonce_field( CF_Translate_AdminForm::$nonce_action, CF_Translate_AdminForm::nonce_field_name(), false ); ?>
 
 						<div class="caldera-config-group">
 							<label for="cf-translate-form-list" class="">
 								<?php esc_html_e('Select Form', 'caldera-forms-translation'); ?>
 							</label>
-							<div class="caldera-config-field">
+							<div class="caldera-config-field" id="cf-translate-form-list-wrap">
 								<select id="cf-translate-form-list" class=" field-config" name="form">
 
 									<?php
@@ -48,18 +49,18 @@
 										}
 									?>
 								</select>
+								<?php
+								if( empty( $_GET[ 'form' ] ) ){
+									$type = 'primary';
+								}else{
+									$type = 'secondary';
+								}
+								submit_button( __( 'Load Form', 'caldera-forms-translation' ), $type );
+								?>
 							</div>
 						</div>
 						<input type="hidden" value="caldera-forms-translate" class="block-input" name="page" />
-						<?php
-							wp_nonce_field( CF_Translate_AdminForm::$nonce_action, CF_Translate_AdminForm::nonce_field_name(), false );
-							if( empty( $_GET[ 'form' ] ) ){
-								$type = 'primary';
-							}else{
-								$type = 'secondary';
-							}
-							submit_button( __( 'Load Form', 'caldera-forms-translation' ), $type );
-						?>
+
 
 					</form>
 	</div>

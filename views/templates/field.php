@@ -5,7 +5,7 @@ if( ! defined( 'ABSPATH' )){
 ?>
 <script id="tpml--cf-translate-field" type="text/x-handlebars-template">
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="cf-translate-left">
 			<div class="caldera-config-group cf-translate-field-label-wrap cf-translate-field-group">
 				<label for="cf-translate-field-label-{{ID}}-{{language}}" class="label-{{language}}">
 					<?php esc_html_e('Field Label', 'caldera-forms-translation'); ?>
@@ -46,13 +46,23 @@ if( ! defined( 'ABSPATH' )){
 				{{/ifNot}}
 			</div>
 		</div>
-		<div class="col-xs-6">
-
-
+		<div class="cf-translate-right">
+			{{#if options }}
+				<?php echo '<h4>' . esc_html__( 'Field Option Labels', 'caldera-forms-translation' ) . '</h4>'; ?>
+			{{/if}}
+			<div id="cf-translate-options-{{ID}}-{{language}}">
 				{{#each options}}
-
-			opt
-			{{/each}}
+					<div class="caldera-config-group cf-translate-field-group">
+						<label for="cf-translate-field-default-{{../ID}}-{{@key}}-{{../language}}" class="label-{{../language}}">
+							<?php esc_html_e('Option Label', 'caldera-forms-translation'); ?>
+						</label>
+						<div class="caldera-config-field">
+							<input id="cf-translate-field-default-{{../ID}}-{{@key}}-{{../language}}" type="text" value="{{this}}" data-language="{{../language}}" name="default" data-field-id="{{../ID}}" data-opt="{{@key}}" class="cf-translate-opt"/>
+						</div>
+					</div>
+				{{/each}}
+			</div>
 		</div>
 	</div>
+	<div style="clear: both"></div>
 </script>

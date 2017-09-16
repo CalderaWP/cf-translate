@@ -44,3 +44,26 @@ li.caldera-editor-logo {
 select#cf-translate-add-language, select#cf-translate-language-chooser {
     min-width: 250px;
 }
+
+#cf-translate-form-list, #cf-translate-form-list-wrap .submit button{
+    min-width: 250px;
+}
+
+#cf-translate-form-list-wrap .submit{
+    display: block;
+    float: none;
+}
+
+.cf-translate-left {
+    float:left;
+    display: inline;
+    width: 47%;
+    margin-left: 3%
+}
+
+.cf-translate-right {
+    display: inline;
+    width: 47%;
+    margin-right: 3%;
+    float:left;
+}

@@ -90,7 +90,11 @@ class CF_Translate_API implements Caldera_Forms_API_Route {
 			foreach ( $request[ 'fields' ] as $id => $field ) {
 				$field[ 'ID' ] = $id;
 				$fields[ $id ] = CF_Translate_Factories::field_object( $field, true );
-
+				if( ! empty( $field[ 'opts' ] ) ){
+					foreach ( $field[ 'opts'  ] as $opt => $label ){
+						$fields[ $id ]->add_option( $opt, $label );
+					}
+				}
 
 			}
 

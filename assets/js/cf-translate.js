@@ -103,13 +103,23 @@
         var $label = $( '#cf-translate-field-label-' + id + '-' + self.language );
         var $caption = $( '#cf-translate-field-caption-' + id + '-' + self.language );
         var $default = $( '#cf-translate-field-default-' + id + '-' + self.language );
+        var $opts = $( '#cf-translate-options-' + id + '-' + self.language + ' .cf-translate-opt' );
+        var opts = {};
+        var $opt;
 
         var  handle_click = function() {
+            if( $opts.length ){
+                $opts.each( function ( i, opt ) {
+                    $opt = $( opt );
+                    opts[  $opt.data( 'opt' ) ] = $opt.val();
+                });
+            }
             _.debounce( self.add_translation( id, language_code, {
                 label : $label.val(),
                 caption: $caption.val(),
-                default: $default.val()
-            }), 3000 );
+                default: $default.val(),
+                opts: opts
+            }), 500 );
         };
 
 
@@ -121,6 +131,11 @@
         $label.on( 'change', handle_change );
         $caption.on( 'change', handle_change );
         $default.on( 'change', handle_change );
+        if( $opts.length ){
+            $opts.each( function ( i, opt ) {
+                $( opt ).on( 'change', handle_change );
+            });
+        }
 
     };
 
