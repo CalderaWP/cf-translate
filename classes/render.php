@@ -48,12 +48,21 @@ class  CF_Translate_Render extends CF_Translate_Filter{
 		/**  @var CF_Translate_Field $field_object */
 		if( is_object( $field_object ) ){
 		    foreach( $field_object->get_field_names() as $key ){
-
+				if( 'options' == $key ){
+					if( is_array( $field_object->options ) ){
+						foreach( $field_object->options  as $opt => $label ){
+							if( isset( $field[ 'config' ][ 'option' ][ $opt ] ) ){
+								$field[ 'config' ][ 'option' ][ $opt ][ 'label' ] = $label;
+							}
+						}
+					}
+					continue;
+				}
 				if( 'ID' != $key  ){
-					    $value = $field_object->$key;
-					    if( ! empty( $value )  && isset( $field[ $key ] )  && $value != $field[ $key ] ) {
-						    $field[ $key ] = $field_object->$key;
-					    }
+				    $value = $field_object->$key;
+				    if( ! empty( $value )  && isset( $field[ $key ] )  && $value != $field[ $key ] ) {
+					    $field[ $key ] = $field_object->$key;
+				    }
 
 				}
 		    }
