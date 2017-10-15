@@ -23,7 +23,7 @@ if( ! defined( 'ABSPATH' )){
 					<input id="cf-translate-field-caption-{{ID}}-{{language}}" type="text" value="{{caption}}" data-language="{{language}}" name="caption" data-field-id="{{ID}}" />
 				</div>
 			</div>
-			<?php //note ifIs and ifNot are custom Handlebars conditionals created in util.js ?>
+			<?php //note ifIs and ifNot are custom Handlebars conditonals created in init.js ?>
 			<div class="caldera-config-group cf-translate-field-default-wrap cf-translate-field-group">
 				{{#ifIs type value="html" }}
 				<label for="cf-translate-field-default-{{ID}}-{{language}}" class="label-{{language}}">
@@ -41,11 +41,7 @@ if( ! defined( 'ABSPATH' )){
 						<?php esc_html_e('Default', 'caldera-forms-translation'); ?>
 					</label>
 					<div class="caldera-config-field">
-						{{#if options }}
-							<input id="cf-translate-field-default-{{ID}}-{{language}}" disabled />
-						{{else}}
-							<input id="cf-translate-field-default-{{ID}}-{{language}}" value="{{default}}" data-language="{{language}}" name="default" data-field-id="{{ID}}" />
-						{{/if}}
+						<input id="cf-translate-field-default-{{ID}}-{{language}}" type="text" value="{{default}}" data-language="{{language}}" name="default" data-field-id="{{ID}}" />
 					</div>
 				{{/ifNot}}
 			</div>
