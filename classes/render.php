@@ -58,7 +58,12 @@ class  CF_Translate_Render extends CF_Translate_Filter{
 					}
 					continue;
 				}
-				if( 'ID' != $key  ){
+
+				if( in_array( $key, array(
+					'default',
+				) ) ){
+					$field[ 'config' ][ $key ] = $field_object->$key;
+				} elseif( 'ID' != $key  ){
 				    $value = $field_object->$key;
 				    if( ! empty( $value )  && isset( $field[ $key ] )  && $value != $field[ $key ] ) {
 					    $field[ $key ] = $field_object->$key;
