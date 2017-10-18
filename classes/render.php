@@ -59,17 +59,36 @@ class  CF_Translate_Render extends CF_Translate_Filter{
 					continue;
 				}
 
-				if( in_array( $key, array(
-					'default',
-				) ) ){
-					$field[ 'config' ][ $key ] = $field_object->$key;
-				} elseif( 'ID' != $key  ){
+
+			    if( in_array( $key, array(
+				    'default',
+				    'option'
+			    ) ) ){
+				    if ( isset( $field[ 'config' ][ $key ] ) ) {
+					    $value                     = $field_object->$key;
+					    if ( 'option' !== $key ) {
+						    $field[ 'config' ][ $key ] = ! empty( $value ) && $value != $field[ 'config' ][ $key ] ? $value : $field[ 'config' ][ $key ];
+					    } else {
+					    	if( is_array( $value ) ){
+					    		foreach ( $value as $opt => $label ){
+								    if ( isset( $field[ 'config' ][ $key ][ $opt ] ) ) {
+									    $field[ 'config' ][ $key ][ $opt ][ 'label' ] = $label;
+								    }
+							    }
+						    }
+					    }
+				    }
+			    } elseif( 'ID' != $key  ){
 				    $value = $field_object->$key;
-				    if( ! empty( $value )  && isset( $field[ $key ] )  && $value != $field[ $key ] ) {
+				    if( ! empty( $value )  && ( ( empty( $field[ $key ] ) )  || $value != $field[ $key ] ) ) {
 					    $field[ $key ] = $field_object->$key;
 				    }
 
-				}
+			    }else{
+			    	//don't translate IDs.
+				    continue;
+			    }
+
 		    }
 
 		}

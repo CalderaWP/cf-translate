@@ -1,0 +1,19 @@
+<template>
+	<input
+			v-bind:id="'cf-translations-' + opt"
+			type="text"
+			:value="value"
+			class="block-input"
+			@input="changed"
+	/>
+</template>
+<script>
+	export default{
+		props: ['opt', 'field', 'value'],
+		methods : {
+			changed(ev){
+				this.$store.commit( 'fieldOpt', {opt:this.opt,value:ev.target.value})
+			}
+		}
+	}
+</script>

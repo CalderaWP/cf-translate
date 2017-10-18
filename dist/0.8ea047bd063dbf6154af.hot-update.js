@@ -1,0 +1,16 @@
+webpackHotUpdate(0,{
+
+/***/ 45:
+/* exports provided: default */
+/* all exports used */
+/*!********************************************************************************************************************!*\
+  !*** ./~/babel-loader/lib!./~/vue-loader/lib/selector.js?type=script&index=0!./client/components/fieldChooser.vue ***!
+  \********************************************************************************************************************/
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("Object.defineProperty(__webpack_exports__, \"__esModule\", { value: true });\n/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states_fieldsState__ = __webpack_require__(/*! ./states/fieldsState */ 71);\n/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_fieldIdState__ = __webpack_require__(/*! ./states/fieldIdState */ 69);\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n\n\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = {\n\tdata: function data() {\n\t\treturn {\n\t\t\tlabelText: 'Choose Field To Translate'\n\t\t};\n\t},\n\n\tcomputed: {\n\t\tfields: {\n\t\t\tget: function get() {\n\t\t\t\treturn this.$store.state.fields;\n\t\t\t}\n\t\t},\n\t\tfieldId: __WEBPACK_IMPORTED_MODULE_1__states_fieldIdState__[\"a\" /* fieldIdState */]\n\t}\n};//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2pvc2gvc2l0ZXMvd3AyL3d3dy9jb250ZW50L3BsdWdpbnMvY2YtdHJhbnNsYXRlL2ZpZWxkQ2hvb3Nlci52dWU/MDA4NjZmODAiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBd0JBO0FBQ0E7O0FBRUE7dUJBRUE7O2NBR0E7QUFGQTtBQUdBOzs7O3VCQUdBOzZCQUNBO0FBRUE7QUFKQTtXQU1BO0FBUEE7QUFOQSIsImZpbGUiOiI0NS5qcyIsInNvdXJjZXNDb250ZW50IjpbIjx0ZW1wbGF0ZT5cblxuXHQ8ZGl2IGNsYXNzPVwiY2FsZGVyYS1jb25maWctZ3JvdXBcIj5cblx0XHQ8bGFiZWwgZm9yPVwiY2YtdHJhbnNsYXRpb25zLWZpZWxkXCI+XG5cdFx0XHR7e2xhYmVsVGV4dH19XG5cdFx0PC9sYWJlbD5cblx0XHQ8ZGl2IGNsYXNzPVwiY2FsZGVyYS1jb25maWctZmllbGRcIj5cblx0XHRcdDxzZWxlY3Rcblx0XHRcdFx0XHRpZD1cImNmLXRyYW5zbGF0aW9ucy1maWVsZFwiXG5cdFx0XHRcdFx0di1tb2RlbD1cImZpZWxkSWRcIlxuXHRcdFx0PlxuXHRcdFx0XHQ8b3B0aW9uPjwvb3B0aW9uPlxuXHRcdFx0XHQ8b3B0aW9uXG5cdFx0XHRcdFx0XHR2LWZvcj1cIl9maWVsZCBpbiBmaWVsZHNcIlxuXHRcdFx0XHRcdFx0di1iaW5kOnZhbHVlPVwiX2ZpZWxkLklEXCJcblx0XHRcdFx0PlxuXHRcdFx0XHRcdHt7X2ZpZWxkLmxhYmVsfX1cblx0XHRcdFx0PC9vcHRpb24+XG5cdFx0XHQ8L3NlbGVjdD5cblx0XHQ8L2Rpdj5cblx0PC9kaXY+XG5cbjwvdGVtcGxhdGU+XG48c2NyaXB0PlxuXHRpbXBvcnQgeyBmaWVsZHNTdGF0ZSB9IGZyb20gJy4vc3RhdGVzL2ZpZWxkc1N0YXRlJztcblx0aW1wb3J0IHsgZmllbGRJZFN0YXRlIH0gZnJvbSAnLi9zdGF0ZXMvZmllbGRJZFN0YXRlJztcblxuXHRleHBvcnQgZGVmYXVsdHtcblx0XHRkYXRhKCl7XG5cdFx0XHRyZXR1cm4ge1xuXHRcdFx0XHRsYWJlbFRleHQ6ICdDaG9vc2UgRmllbGQgVG8gVHJhbnNsYXRlJyxcblx0XHRcdH1cblx0XHR9LFxuXHRcdGNvbXB1dGVkOiB7XG5cdFx0XHRmaWVsZHM6IHtcblx0XHRcdFx0Z2V0ICgpICB7XG5cdFx0XHRcdFx0cmV0dXJuIHRoaXMuJHN0b3JlLnN0YXRlLmZpZWxkcztcblx0XHRcdFx0fVxuXHRcdFx0fSxcblx0XHRcdGZpZWxkSWQ6IGZpZWxkSWRTdGF0ZSxcblx0XHR9XG5cdH1cbjwvc2NyaXB0PlxuXG5cbi8vIFdFQlBBQ0sgRk9PVEVSIC8vXG4vLyBmaWVsZENob29zZXIudnVlPzAwODY2ZjgwIl0sInNvdXJjZVJvb3QiOiIifQ==");
+
+/***/ })
+
+})

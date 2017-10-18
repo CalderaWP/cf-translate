@@ -85,7 +85,6 @@ class CF_Translate_Languages implements JsonSerializable{
 		return $this->languages;
 	}
 
-
 	/**
 	 * Raw language data
 	 *

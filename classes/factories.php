@@ -48,7 +48,11 @@ class CF_Translate_Factories{
         $code = get_locale();
         $translator = new CF_Translate_Translator(  );
         $translator->add_language( $code );
-        $translator->add_form_info( $code, 'name', $form[ 'name' ] );
+        $translator->add_form_info(
+        	$code,
+	        'name',
+	        ! empty( $form[ 'name' ] ) ? $form[ 'name' ] : ''
+        );
         $translator->add_fields_to_language( $code, self::new_language_fields( $form ) );
 
         return $translator;
@@ -89,11 +93,11 @@ class CF_Translate_Factories{
     public static function field_object( array $field, $sanitize = false ){
         $field_object = new CF_Translate_Field();
         foreach ( $field_object->get_field_names() as $key ){
-        	if( 'options' === $key ){
-        		if( empty( $field[ 'config' ][ 'option' ] ) ){
+        	if( 'option' === $key ){
+        		if( empty( $field[ 'option' ] ) ){
         			continue;
 		        }
-		        foreach ( $field[ 'config' ][ 'option' ] as $opt => $option ){
+		        foreach ( $field[ 'option' ] as $opt => $option ){
 			        $field_object->add_option( $opt, $option[ 'label' ] );
 		        }
 
@@ -125,10 +129,29 @@ class CF_Translate_Factories{
     public static function sanatize_field( CF_Translate_Field $field  ){
         $field->ID = trim( strip_tags( $field->ID ) );
 	    foreach ( $field->get_field_names() as $key ){
-		    if ( 'ID' != $key &&  ! empty(  $field->$key  ) ) {
-			    $field->$key = Caldera_Forms_Sanitize::sanitize( $field->$key );
+		    if (  ! empty(  $field->$key  ) ) {
+		    	switch( $key ){
+				    case 'ID':
+				    	continue;
+						break;
+				    case 'option':
+				    	if( is_array( $field->option ) ){
+				    	    foreach ( $field->option as $opt => $label ){
+				    	    	$field->add_option(
+				    	    		$opt,
+							        Caldera_Forms_Sanitize::sanitize( $opt )
+						        );
+					        }
+					    }
+					    break;
+				    default :
+					    $field->$key = Caldera_Forms_Sanitize::sanitize( $field->$key );
+					    break;
+			    }
 		    }
 	    }
+
         return $field;
+
     }
 }
