@@ -11,6 +11,7 @@ import store from  './store/index';
 		elements[0].parentNode.removeChild(elements[0]);
 	}
 });
+
 const mainSettingsApp = new Vue({
 	el: '#cf-translate-app',
 	store,
