@@ -1,0 +1,16 @@
+webpackHotUpdate(0,{
+
+/***/ 62:
+/* exports provided: stateFactory */
+/* exports used: stateFactory */
+/*!**************************************************!*\
+  !*** ./client/components/states/stateFactory.js ***!
+  \**************************************************/
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_isfunction__ = __webpack_require__(/*! lodash.isfunction */ 67);\n/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_isfunction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash_isfunction__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"a\", function() { return stateFactory; });\nvar _this = this;\n\n\n\n/**\n * @param {String} getter The name of the getter\n * @param {String|undefined} mutation The name of the mutation, or undefined to use same name as getter\n */\nvar stateFactory = function stateFactory(getter, mutation) {\n\n\tif (!mutation) {\n\t\tmutation = getter;\n\t}\n\n\tif (!__WEBPACK_IMPORTED_MODULE_0_lodash_isfunction___default()(mutation)) {\n\t\tmutation = _this.$store.commit(mutation, value);\n\t}\n\n\treturn {\n\t\tget: function get() {\n\t\t\treturn this.$store.state[getter];\n\t\t},\n\n\t\tset: mutation\n\t};\n};//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2pvc2gvc2l0ZXMvd3AyL3d3dy9jb250ZW50L3BsdWdpbnMvY2YtdHJhbnNsYXRlL2NsaWVudC9jb21wb25lbnRzL3N0YXRlcy9zdGF0ZUZhY3RvcnkuanMiXSwibmFtZXMiOlsic3RhdGVGYWN0b3J5IiwiZ2V0dGVyIiwibXV0YXRpb24iLCJpc0Z1bmN0aW9uIiwiJHN0b3JlIiwiY29tbWl0IiwidmFsdWUiLCJnZXQiLCJzdGF0ZSIsInNldCJdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQTs7QUFHQTs7OztBQUlRLElBQU1BLGVBQWUsU0FBZkEsWUFBZSxDQUFFQyxNQUFGLEVBQVVDLFFBQVYsRUFBd0I7O0FBRXBELEtBQUksQ0FBRUEsUUFBTixFQUFnQjtBQUFHQSxhQUFXRCxNQUFYO0FBQW9COztBQUV2QyxLQUFJLENBQUUseURBQUFFLENBQVlELFFBQVosQ0FBTixFQUE4QjtBQUM1QkEsYUFBVyxNQUFLRSxNQUFMLENBQVlDLE1BQVosQ0FBbUJILFFBQW5CLEVBQTZCSSxLQUE3QixDQUFYO0FBQ0Q7O0FBRUQsUUFBTztBQUNOQyxLQURNLGlCQUNFO0FBQ1AsVUFBTyxLQUFLSCxNQUFMLENBQVlJLEtBQVosQ0FBbUJQLE1BQW5CLENBQVA7QUFDQSxHQUhLOztBQUlOUSxPQUFNUDtBQUpBLEVBQVA7QUFNQSxDQWRPIiwiZmlsZSI6IjYyLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGlzRnVuY3Rpb24gZnJvbSAnbG9kYXNoLmlzZnVuY3Rpb24nO1xuXG5cbi8qKlxuICogQHBhcmFtIHtTdHJpbmd9IGdldHRlciBUaGUgbmFtZSBvZiB0aGUgZ2V0dGVyXG4gKiBAcGFyYW0ge1N0cmluZ3x1bmRlZmluZWR9IG11dGF0aW9uIFRoZSBuYW1lIG9mIHRoZSBtdXRhdGlvbiwgb3IgdW5kZWZpbmVkIHRvIHVzZSBzYW1lIG5hbWUgYXMgZ2V0dGVyXG4gKi9cbmV4cG9ydCAgY29uc3Qgc3RhdGVGYWN0b3J5ID0gKCBnZXR0ZXIsIG11dGF0aW9uICkgPT4ge1xuXG5cdGlmKCAhIG11dGF0aW9uICl7ICBtdXRhdGlvbiA9IGdldHRlcjsgfVxuXG5cdGlmKCAhIGlzRnVuY3Rpb24oIG11dGF0aW9uICkgKXtcblx0XHQgbXV0YXRpb24gPSB0aGlzLiRzdG9yZS5jb21taXQobXV0YXRpb24sIHZhbHVlKTtcblx0fVxuXG5cdHJldHVybiB7XG5cdFx0Z2V0ICgpICB7XG5cdFx0XHRyZXR1cm4gdGhpcy4kc3RvcmUuc3RhdGVbIGdldHRlciBdO1xuXHRcdH0sXG5cdFx0c2V0IDogbXV0YXRpb25cblx0fVxufTtcblxuXG5cbi8vIFdFQlBBQ0sgRk9PVEVSIC8vXG4vLyAuL2NsaWVudC9jb21wb25lbnRzL3N0YXRlcy9zdGF0ZUZhY3RvcnkuanMiXSwic291cmNlUm9vdCI6IiJ9");
+
+/***/ })
+
+})

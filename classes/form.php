@@ -68,6 +68,17 @@ class CF_Translate_Form implements ArrayAccess {
     }
 
 	/**
+	 * Get the name fo the form
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return string
+	 */
+    public function get_name(){
+    	return $this->form[ 'name' ];
+    }
+
+	/**
 	 * Save form
 	 *
 	 * @since 0.1.0

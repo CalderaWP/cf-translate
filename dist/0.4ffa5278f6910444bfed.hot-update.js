@@ -1,0 +1,19 @@
+webpackHotUpdate(0,{
+
+/***/ 4:
+/* exports provided: stateFactory, stateFactoryDispatching */
+/* exports used: stateFactory */
+/*!**************************************************!*\
+  !*** ./client/components/states/stateFactory.js ***!
+  \**************************************************/
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"a\", function() { return stateFactory; });\n/* unused harmony export stateFactoryDispatching */\n\n/**\n * @param {String} getter The name of the getter\n * @param {String|undefined} mutation The name of the mutation, or undefined to use same name as getter\n */\nvar stateFactory = function stateFactory(getter, mutation) {\n\n\tif (!mutation) {\n\t\tmutation = getter;\n\t}\n\n\treturn {\n\t\tget: function get() {\n\t\t\treturn this.$store.state[getter];\n\t\t},\n\t\tset: function set(value) {\n\t\t\tthis.$store.commit(mutation, value);\n\t\t}\n\t};\n};\n\nvar stateFactoryDispatching = function stateFactoryDispatching(getter, mutation) {\n\n\tif (!mutation) {\n\t\tmutation = getter;\n\t}\n\n\treturn {\n\t\tget: function get() {\n\t\t\treturn this.$store.state[getter];\n\t\t},\n\t\tset: function set(value) {\n\t\t\tthis.$store.commit(mutation, value);\n\t\t}\n\t};\n};//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2pvc2gvc2l0ZXMvd3AyL3d3dy9jb250ZW50L3BsdWdpbnMvY2YtdHJhbnNsYXRlL2NsaWVudC9jb21wb25lbnRzL3N0YXRlcy9zdGF0ZUZhY3RvcnkuanMiXSwibmFtZXMiOlsic3RhdGVGYWN0b3J5IiwiZ2V0dGVyIiwibXV0YXRpb24iLCJnZXQiLCIkc3RvcmUiLCJzdGF0ZSIsInNldCIsInZhbHVlIiwiY29tbWl0Iiwic3RhdGVGYWN0b3J5RGlzcGF0Y2hpbmciXSwibWFwcGluZ3MiOiI7OztBQUNBOzs7O0FBSVEsSUFBTUEsZUFBZSxTQUFmQSxZQUFlLENBQUVDLE1BQUYsRUFBVUMsUUFBVixFQUF3Qjs7QUFFcEQsS0FBSSxDQUFFQSxRQUFOLEVBQWdCO0FBQUdBLGFBQVdELE1BQVg7QUFBb0I7O0FBR3ZDLFFBQU87QUFDTkUsS0FETSxpQkFDRTtBQUNQLFVBQU8sS0FBS0MsTUFBTCxDQUFZQyxLQUFaLENBQW1CSixNQUFuQixDQUFQO0FBQ0EsR0FISztBQUlOSyxLQUpNLGVBSUZDLEtBSkUsRUFJSztBQUNWLFFBQUtILE1BQUwsQ0FBWUksTUFBWixDQUFtQk4sUUFBbkIsRUFBNkJLLEtBQTdCO0FBQ0E7QUFOSyxFQUFQO0FBUUEsQ0FiTzs7QUFnQkEsSUFBTUUsMEJBQTBCLFNBQTFCQSx1QkFBMEIsQ0FBRVIsTUFBRixFQUFVQyxRQUFWLEVBQXdCOztBQUUvRCxLQUFJLENBQUVBLFFBQU4sRUFBZ0I7QUFBR0EsYUFBV0QsTUFBWDtBQUFvQjs7QUFHdkMsUUFBTztBQUNORSxLQURNLGlCQUNFO0FBQ1AsVUFBTyxLQUFLQyxNQUFMLENBQVlDLEtBQVosQ0FBbUJKLE1BQW5CLENBQVA7QUFDQSxHQUhLO0FBSU5LLEtBSk0sZUFJRkMsS0FKRSxFQUlLO0FBQ1YsUUFBS0gsTUFBTCxDQUFZSSxNQUFaLENBQW1CTixRQUFuQixFQUE2QkssS0FBN0I7QUFDQTtBQU5LLEVBQVA7QUFRQSxDQWJPIiwiZmlsZSI6IjQuanMiLCJzb3VyY2VzQ29udGVudCI6WyJcbi8qKlxuICogQHBhcmFtIHtTdHJpbmd9IGdldHRlciBUaGUgbmFtZSBvZiB0aGUgZ2V0dGVyXG4gKiBAcGFyYW0ge1N0cmluZ3x1bmRlZmluZWR9IG11dGF0aW9uIFRoZSBuYW1lIG9mIHRoZSBtdXRhdGlvbiwgb3IgdW5kZWZpbmVkIHRvIHVzZSBzYW1lIG5hbWUgYXMgZ2V0dGVyXG4gKi9cbmV4cG9ydCAgY29uc3Qgc3RhdGVGYWN0b3J5ID0gKCBnZXR0ZXIsIG11dGF0aW9uICkgPT4ge1xuXG5cdGlmKCAhIG11dGF0aW9uICl7ICBtdXRhdGlvbiA9IGdldHRlcjsgfVxuXG5cblx0cmV0dXJuIHtcblx0XHRnZXQgKCkgIHtcblx0XHRcdHJldHVybiB0aGlzLiRzdG9yZS5zdGF0ZVsgZ2V0dGVyIF07XG5cdFx0fSxcblx0XHRzZXQodmFsdWUpIHtcblx0XHRcdHRoaXMuJHN0b3JlLmNvbW1pdChtdXRhdGlvbiwgdmFsdWUpO1xuXHRcdH1cblx0fVxufTtcblxuXG5leHBvcnQgIGNvbnN0IHN0YXRlRmFjdG9yeURpc3BhdGNoaW5nID0gKCBnZXR0ZXIsIG11dGF0aW9uICkgPT4ge1xuXG5cdGlmKCAhIG11dGF0aW9uICl7ICBtdXRhdGlvbiA9IGdldHRlcjsgfVxuXG5cblx0cmV0dXJuIHtcblx0XHRnZXQgKCkgIHtcblx0XHRcdHJldHVybiB0aGlzLiRzdG9yZS5zdGF0ZVsgZ2V0dGVyIF07XG5cdFx0fSxcblx0XHRzZXQodmFsdWUpIHtcblx0XHRcdHRoaXMuJHN0b3JlLmNvbW1pdChtdXRhdGlvbiwgdmFsdWUpO1xuXHRcdH1cblx0fVxufTtcblxuXG5cbi8vIFdFQlBBQ0sgRk9PVEVSIC8vXG4vLyAuL2NsaWVudC9jb21wb25lbnRzL3N0YXRlcy9zdGF0ZUZhY3RvcnkuanMiXSwic291cmNlUm9vdCI6IiJ9");
+
+/***/ }),
+
+/***/ 52:
+false
+
+})

@@ -47,11 +47,11 @@ if( ! defined( 'ABSPATH' )){
 			</div>
 		</div>
 		<div class="cf-translate-right">
-			{{#if options }}
+			{{#if option }}
 				<?php echo '<h4>' . esc_html__( 'Field Option Labels', 'caldera-forms-translation' ) . '</h4>'; ?>
 			{{/if}}
 			<div id="cf-translate-options-{{ID}}-{{language}}">
-				{{#each options}}
+				{{#each option}}
 					<div class="caldera-config-group cf-translate-field-group">
 						<label for="cf-translate-field-default-{{../ID}}-{{@key}}-{{../language}}" class="label-{{../language}}">
 							<?php esc_html_e('Option Label', 'caldera-forms-translation'); ?>

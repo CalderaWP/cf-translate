@@ -1,0 +1,16 @@
+webpackHotUpdate(0,{
+
+/***/ 62:
+/* exports provided: stateFactory */
+/* exports used: stateFactory */
+/*!**************************************************!*\
+  !*** ./client/components/states/stateFactory.js ***!
+  \**************************************************/
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_isfunction__ = __webpack_require__(/*! lodash.isfunction */ 67);\n/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_isfunction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash_isfunction__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"a\", function() { return stateFactory; });\nvar _this = this;\n\n\n\n/**\n * @param {String} getter The name of the getter\n * @param {String|undefined} mutation The name of the mutation, or undefined to use same name as getter\n */\nvar stateFactory = function stateFactory(getter, _mutation) {\n\n\tif (!_mutation) {\n\t\t_mutation = getter;\n\t}\n\n\tif (!__WEBPACK_IMPORTED_MODULE_0_lodash_isfunction___default()(_mutation)) {\n\t\t_mutation = function mutation(value) {\n\t\t\treturn _this.$store.commit(_mutation, value);\n\t\t};\n\t}\n\n\treturn {\n\t\tget: function get() {\n\t\t\treturn this.$store.state[getter];\n\t\t},\n\n\t\tset: _mutation\n\t};\n};//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2pvc2gvc2l0ZXMvd3AyL3d3dy9jb250ZW50L3BsdWdpbnMvY2YtdHJhbnNsYXRlL2NsaWVudC9jb21wb25lbnRzL3N0YXRlcy9zdGF0ZUZhY3RvcnkuanMiXSwibmFtZXMiOlsic3RhdGVGYWN0b3J5IiwiZ2V0dGVyIiwibXV0YXRpb24iLCJpc0Z1bmN0aW9uIiwidmFsdWUiLCIkc3RvcmUiLCJjb21taXQiLCJnZXQiLCJzdGF0ZSIsInNldCJdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQTs7QUFHQTs7OztBQUlRLElBQU1BLGVBQWUsU0FBZkEsWUFBZSxDQUFFQyxNQUFGLEVBQVVDLFNBQVYsRUFBd0I7O0FBRXBELEtBQUksQ0FBRUEsU0FBTixFQUFnQjtBQUFHQSxjQUFXRCxNQUFYO0FBQW9COztBQUV2QyxLQUFJLENBQUUseURBQUFFLENBQVlELFNBQVosQ0FBTixFQUE4QjtBQUM1QkEsY0FBVyxrQkFBQ0UsS0FBRDtBQUFBLFVBQVcsTUFBS0MsTUFBTCxDQUFZQyxNQUFaLENBQW1CSixTQUFuQixFQUE2QkUsS0FBN0IsQ0FBWDtBQUFBLEdBQVg7QUFDRDs7QUFFRCxRQUFPO0FBQ05HLEtBRE0saUJBQ0U7QUFDUCxVQUFPLEtBQUtGLE1BQUwsQ0FBWUcsS0FBWixDQUFtQlAsTUFBbkIsQ0FBUDtBQUNBLEdBSEs7O0FBSU5RLE9BQU1QO0FBSkEsRUFBUDtBQU1BLENBZE8iLCJmaWxlIjoiNjIuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgaXNGdW5jdGlvbiBmcm9tICdsb2Rhc2guaXNmdW5jdGlvbic7XG5cblxuLyoqXG4gKiBAcGFyYW0ge1N0cmluZ30gZ2V0dGVyIFRoZSBuYW1lIG9mIHRoZSBnZXR0ZXJcbiAqIEBwYXJhbSB7U3RyaW5nfHVuZGVmaW5lZH0gbXV0YXRpb24gVGhlIG5hbWUgb2YgdGhlIG11dGF0aW9uLCBvciB1bmRlZmluZWQgdG8gdXNlIHNhbWUgbmFtZSBhcyBnZXR0ZXJcbiAqL1xuZXhwb3J0ICBjb25zdCBzdGF0ZUZhY3RvcnkgPSAoIGdldHRlciwgbXV0YXRpb24gKSA9PiB7XG5cblx0aWYoICEgbXV0YXRpb24gKXsgIG11dGF0aW9uID0gZ2V0dGVyOyB9XG5cblx0aWYoICEgaXNGdW5jdGlvbiggbXV0YXRpb24gKSApe1xuXHRcdCBtdXRhdGlvbiA9ICh2YWx1ZSkgPT4gdGhpcy4kc3RvcmUuY29tbWl0KG11dGF0aW9uLCB2YWx1ZSk7XG5cdH1cblxuXHRyZXR1cm4ge1xuXHRcdGdldCAoKSAge1xuXHRcdFx0cmV0dXJuIHRoaXMuJHN0b3JlLnN0YXRlWyBnZXR0ZXIgXTtcblx0XHR9LFxuXHRcdHNldCA6IG11dGF0aW9uXG5cdH1cbn07XG5cblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gLi9jbGllbnQvY29tcG9uZW50cy9zdGF0ZXMvc3RhdGVGYWN0b3J5LmpzIl0sInNvdXJjZVJvb3QiOiIifQ==");
+
+/***/ })
+
+})

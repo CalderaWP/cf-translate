@@ -68,6 +68,20 @@ class CF_Translate_API implements Caldera_Forms_API_Route {
 			)
 		);
 
+		$endpoint = $base . '/form';
+		register_rest_route( $namespace, $endpoint ,	array(
+				'methods' => WP_REST_Server::READABLE,
+				'callback' => array( $this, 'get_form' ),
+				'permission_callback' => 'cf_translate_can_translate',
+				'args' => array(
+					'form_id' => array(
+						'required' => true,
+					)
+				)
+
+			)
+		);
+
 
 	}
 
@@ -90,8 +104,8 @@ class CF_Translate_API implements Caldera_Forms_API_Route {
 			foreach ( $request[ 'fields' ] as $id => $field ) {
 				$field[ 'ID' ] = $id;
 				$fields[ $id ] = CF_Translate_Factories::field_object( $field, true );
-				if( ! empty( $field[ 'opts' ] ) ){
-					foreach ( $field[ 'opts'  ] as $opt => $label ){
+				if( ! empty( $field[ 'option' ] ) ){
+					foreach ( $field[ 'option'  ] as $opt => $label ){
 						$fields[ $id ]->add_option( $opt, $label );
 					}
 				}
@@ -131,7 +145,7 @@ class CF_Translate_API implements Caldera_Forms_API_Route {
 
 			$saved = $form->save();
 			if ( $saved ) {
-				return new Caldera_Forms_API_Response( __( 'Saved', 'caldera-forms-translations '), 201 );
+				return $this->form_response( $request->get_param( 'form_id' ), 201 );
 
 			}else{
 				return new Caldera_Forms_API_Error();
@@ -164,5 +178,22 @@ class CF_Translate_API implements Caldera_Forms_API_Route {
 		}else{
 			return new Caldera_Forms_API_Error();
 		}
+	}
+
+	public function get_form( WP_REST_Request $request ){
+		return $this->form_response( $request->get_param( 'form_id' ) );
+
+	}
+
+	/**
+	 * @param $form_id
+	 *
+	 * @return Caldera_Forms_API_Response
+	 */
+	protected function form_response( $form_id, $status = 200 )
+	{
+		$localizer = new CF_Translate_Localize( CF_Translate_Factories::get_form( $form_id ) );
+
+		return new Caldera_Forms_API_Response( $localizer->get_form_data(), $status );
 	}
 }

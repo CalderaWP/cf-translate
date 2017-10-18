@@ -81,9 +81,9 @@ class CF_Translate_Translator {
 
 	/**
 	 * Get all languages
+	 *
 	 * @since 0.1.0
 	 *
-	 * @param string $code Language code
 	 *
 	 * @return array
 	 */
@@ -92,6 +92,28 @@ class CF_Translate_Translator {
     		return array( cf_translate_get_current_language() );
 	    }
         return $this->languages;
+    }
+
+	/**
+	 * Get all languages with names
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return array
+	 */
+    public function get_languages_with_names(){
+    	$languages = CF_Translate_Languages::get_instance()->to_array();
+    	$_langs = $this->get_languages();
+	    $out = array();
+	    if( ! empty( $_langs ) ){
+	    	foreach ( $_langs as $lang ){
+			    $out[] = $languages[ $lang ];
+		    }
+
+	    }
+
+	    return $out;
+
     }
 
 	/**
@@ -169,6 +191,7 @@ class CF_Translate_Translator {
         if( empty( $fields ) || ! isset( $fields[ $id ] ) ){
             return false;
         }else{
+
             return $fields[ $id ];
         }
 
