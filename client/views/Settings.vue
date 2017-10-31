@@ -1,5 +1,6 @@
 <template>
 		<div id="cf-translate-settings">
+
 			<div id="cf-translate-setting-inner">
 				<div class="caldera-editor-header">
 					<ul class="caldera-editor-header-nav">
@@ -55,6 +56,7 @@
 				</div>
 
 				<div style="clear:both"></div>
+
 			</div>
 		</div>
 
@@ -65,37 +67,13 @@
 	import formChooser from  '../components/formChooser.vue';
 	import langChooser from  '../components/langChooser.vue';
 
-
-	import { formState } from '../components/states/formState';
-	import { languageState } from '../components/states/languageState';
-	import { fieldIdState } from '../components/states/fieldIdState';
-	import { fieldState } from '../components/states/fieldState';
-	import { savingState } from '../components/states/savingState';
-
-
 	export  default {
 		components: {
 			'field-chooser': feildChooser,
 			'field-translate': fieldTranslate,
 			'form-chooser': formChooser,
 			'lang-chooser': langChooser
-		},
-		data(){
-			return {
-
-			}
-		},
-		computed: {
-			form: formState,
-			language: languageState,
-			fieldId: fieldIdState,
-			field: fieldState,
-			saving: savingState,
-			strings (){
-				return this.$store.getters.strings
-			}
-		},
-
+		}
 	}
 
 </script>

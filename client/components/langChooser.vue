@@ -58,13 +58,6 @@
 </template>
 <script>
 
-	import { formState } from './states/formState';
-	import { formLanguagesState } from './states/formLanguagesState';
-	import { languagesState } from './states/languagesState';
-	import { languageState } from './states/languageState';
-	import { showAddLanguageState } from  './states/showAddLanguageState';
-	import { showLanguageChoiceState } from  './states/showLanguageChoiceState';
-
 	export default{
 		data(){
 			return {
@@ -76,15 +69,7 @@
 		},
 
 		computed: {
-			formLanguages: formLanguagesState,
-			language: languageState,
-			showAddLanguage: showAddLanguageState,
-			showLanguageChoice: showLanguageChoiceState,
-			languages : languagesState,
-			form: formState,
-			strings (){
-				return this.$store.getters.strings
-			}
+
 		},
 		watch: {
 			language(val){

@@ -5,7 +5,7 @@
 			 v-if="showChooser"
 		>
 			<label for="cf-translations-form">
-				{{strings.choose_form}}
+				{{strings.choose_form}} {{foo}}
 			</label>
 			<div class="caldera-config-field">
 				<select
@@ -58,11 +58,6 @@
 
 </template>
 <script>
-	import { formState } from './states/formState';
-	import { formsState } from './states/formsState';
-	import { savingState } from './states/savingState';
-	import { showAddLanguageState } from './states/showAddLanguageState';
-	import { showLanguageChoiceState } from  './states/showLanguageChoiceState';
 
 	export default{
 		data(){
@@ -71,15 +66,8 @@
 			}
 		},
 		computed: {
-			form: formState,
-			forms:  formsState,
-			saving: savingState,
-			showAddLanguage: showAddLanguageState,
 			saveText(){
 				return this.$store.getters.saving ? 'Saving' : 'Save';
-			},
-			strings (){
-				return this.$store.getters.strings
 			}
 		},
 		methods:{

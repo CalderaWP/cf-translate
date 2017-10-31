@@ -75,20 +75,15 @@
 
 </template>
 <script>
-	import { fieldState } from './states/fieldState';
 	import optionTranslateInput from './optionTranslateInput';
 	export default{
 		components:{
 			'option-input' : optionTranslateInput
 		},
 		computed: {
-			field: fieldState,
 			hasOptions(){
 				return null !== this.$store.getters.field.option;
 			},
-			strings (){
-				return this.$store.getters.strings
-			}
 		}
 
 	}

@@ -65,5 +65,8 @@ export const GETTERS = {
 	},
 	saving: state => {
 		return state.saving;
+	},
+	foo: state => {
+		return state.hasOwnProperty('foo' ) ? state.foo : 'oof';
 	}
 };

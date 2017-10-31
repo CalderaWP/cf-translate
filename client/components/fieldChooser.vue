@@ -31,19 +31,9 @@
 
 </template>
 <script>
-	import { fieldsState } from './states/fieldsState';
-	import { fieldIdState } from './states/fieldIdState';
-	import { languageState } from './states/languageState';
-
 	export default{
-
 		computed: {
 			fields() { return this.$store.state.fields;},
-			fieldId: fieldIdState,
-			language: languageState,
-			strings (){
-				return this.$store.getters.strings
-			}
 		}
 	}
 </script>

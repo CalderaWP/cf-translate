@@ -81,6 +81,9 @@ export const MUTATIONS = {
 		}else{
 			state.saving = ! state.saving;
 		}
+	},
+	foo(state, value ){
+		state.foo = value;
 	}
 
 };
