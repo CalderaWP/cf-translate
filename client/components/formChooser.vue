@@ -5,7 +5,7 @@
 			 v-if="showChooser"
 		>
 			<label for="cf-translations-form">
-				{{strings.choose_form}} {{foo}}
+				{{strings.choose_form}}
 			</label>
 			<div class="caldera-config-field">
 				<select
