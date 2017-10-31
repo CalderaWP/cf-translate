@@ -1,5 +1,4 @@
-
-
+import  { stateFactory, stateFactoryDispatching, stateFactoryReadOnly } from  './util/stateFactory';
 
 export const GETTERS = {
 	fieldId : state => {
@@ -36,7 +35,7 @@ export const GETTERS = {
 		return state.form.fields[state.language];
 	},
 	field: state => {
-		if( 'object' != typeof  state.field ){
+		if( 'object' !== typeof  state.field ){
 			return {};
 		}
 
@@ -65,5 +64,14 @@ export const GETTERS = {
 	},
 	saving: state => {
 		return state.saving;
+	},
+	stateFactory: state => (getter, setter ) => {
+		return new stateFactory(getter, setter);
+	},
+	stateFactoryReadOnly: state => ( getter ) => {
+		return new stateFactoryReadOnly( getter );
+	},
+	stateFactoryDispatching: state => ( getter, action ) => {
+		return new stateFactoryDispatching( getter, action );
 	}
 };
