@@ -72,7 +72,6 @@
 	import { fieldState } from '../components/states/fieldState';
 	import { savingState } from '../components/states/savingState';
 
-
 	export  default {
 		components: {
 			'field-chooser': feildChooser,
@@ -86,11 +85,11 @@
 			}
 		},
 		computed: {
-			form: formState,
-			language: languageState,
-			fieldId: fieldIdState,
-			field: fieldState,
-			saving: savingState,
+			form() { return this.$store.getters.stateFactory( 'form' ) },
+			language() { return this.$store.getters.stateFactory( 'language' ) },
+			fieldId() { return this.$store.getters.stateFactory( 'fieldId' ); },
+			field() { return this.$store.getters.stateFactoryReadOnly( 'field' ); },
+			saving() { return this.$store.getters.stateFactoryReadOnly( 'field' ); },
 			strings (){
 				return this.$store.getters.strings
 			}

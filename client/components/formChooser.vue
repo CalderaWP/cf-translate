@@ -71,7 +71,7 @@
 			}
 		},
 		computed: {
-			form: formState,
+			form() { return this.$store.getters.stateFactory( 'form', 'form' ) },
 			forms:  formsState,
 			saving: savingState,
 			showAddLanguage: showAddLanguageState,
