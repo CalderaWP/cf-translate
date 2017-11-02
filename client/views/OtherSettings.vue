@@ -1,7 +1,9 @@
 <template>
 
     <div>
-        <success-setting></success-setting>
+        <success-setting
+                v-if="language"
+        ></success-setting>
     </div>
 
 </template>

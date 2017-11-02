@@ -41,11 +41,11 @@
 					<tabs>
 						<tab name="Fields">
 							<div
-									v-if="! saving"
-									class="cf-translate-left"
+								v-if="! saving"
+								class="cf-translate-left"
 							>
 								<field-chooser
-										v-if="language"
+									v-if="language"
 								>
 								</field-chooser>
 								<div v-else>
@@ -56,7 +56,7 @@
 							<div class="cf-translate-right">
 								<div v-if="! saving">
 									<field-translate
-											v-if="fieldId"
+										v-if="fieldId"
 									>
 
 									</field-translate>

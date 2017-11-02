@@ -102,7 +102,6 @@ class CF_Translate_Form implements ArrayAccess {
         return $this->translator;
     }
 
-
 	/**
 	 * Setup form property with proper translator added in.
 	 *
@@ -113,17 +112,16 @@ class CF_Translate_Form implements ArrayAccess {
 	 * @return array
 	 */
     private  function set_translator( $form ){
-    	$form[ 'translations' ] = get_option( $this->option_name(), false );
-        if( ! isset( $form[ 'translations' ] ) || ! $form[ 'translations' ] instanceof  CF_Translate_Translator ){
-            $form[ 'translations' ]  =  CF_Translate_Factories::new_translator( $form );
+		$this->translator = get_option( $this->option_name(), false );
+		if( ! $this->translator || ! $this->translator instanceof  CF_Translate_Translator ){
+			$this->translator = CF_Translate_Factories::new_translator( $form );
+		}
 
-        }
-
-	    $this->translator = $form[ 'translations' ];
-
+		$this->translator->form_info_from_form( $form );
 
         return $form;
     }
+
 
 	/**
 	 * Get name of option used to store translator

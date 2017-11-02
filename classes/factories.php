@@ -48,15 +48,14 @@ class CF_Translate_Factories{
         $code = get_locale();
         $translator = new CF_Translate_Translator(  );
         $translator->add_language( $code );
-        $translator->add_form_info(
-        	$code,
-	        'name',
-	        ! empty( $form[ 'name' ] ) ? $form[ 'name' ] : ''
-        );
-        $translator->add_fields_to_language( $code, self::new_language_fields( $form ) );
+        $translator->
+
+
+		$translator->add_fields_to_language( $code, self::new_language_fields( $form ) );
 
         return $translator;
     }
+
 
 	/**
 	 * Create a set of fields for a language
@@ -99,7 +98,7 @@ class CF_Translate_Factories{
 		        }
 		        foreach ( $field[ 'option' ] as $opt => $option ){
         			if( isset( $option[ 'label' ] ) ){
-						$field_object->add_option( $opt, $option[ 'label' ] );
+
 					}
 		        }
 

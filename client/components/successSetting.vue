@@ -10,7 +10,7 @@
                 <input
                     type="text"
                     id="cf-translations-success_message"
-                    v-model="form.info.success"
+                    v-model="formInfo.success"
                 />
             </div>
 
@@ -20,6 +20,19 @@
 </template>
 
 <script>
+    export default {
+		computed: {
+			formInfo: {
+				get(){
+					return this.$store.getters.formInfo;
+				},
+                set(value){
+					this.formInfo[success] = value;
+					this.store.dispatch( 'formInfo', this.formInfo )
+                }
+			}
+		}
+    }
 
 </script>
 

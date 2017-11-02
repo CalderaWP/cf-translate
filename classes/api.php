@@ -112,6 +112,19 @@ class CF_Translate_API implements Caldera_Forms_API_Route {
 
 			}
 
+			$language = $request->get_param( 'language' );
+			$form_info = $request->get_param( 'form_info' );
+			if( ! empty( $form_info ) ){
+				foreach ( $form_info as $key => $value ){
+					$form->get_translator()->add_form_info(
+						$language,
+						$key,
+						$value
+					);
+
+				}
+			}
+
 			/** @var  CF_Translate_Form $form */
 			$form->get_translator()->add_fields_to_language( $language, $fields );
 			$saved = $form->save();
@@ -190,8 +203,8 @@ class CF_Translate_API implements Caldera_Forms_API_Route {
 	 *
 	 * @return Caldera_Forms_API_Response
 	 */
-	protected function form_response( $form_id, $status = 200 )
-	{
+	protected function form_response( $form_id, $status = 200 ){
+
 		$localizer = new CF_Translate_Localize( CF_Translate_Factories::get_form( $form_id ) );
 
 		return new Caldera_Forms_API_Response( $localizer->get_form_data(), $status );

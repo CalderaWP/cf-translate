@@ -29,8 +29,19 @@ class CF_Translate_Translator {
         $this->languages = array();
     }
 
+	/**
+	 * Get form info fields that can be translated
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return array
+	 */
+    public function get_form_info(){
+    	return $this->form_info;
+	}
 
 	/**
+	 * Add one item to form.info for a language
 	 *
 	 * @since 0.1.0
 	 *
@@ -48,6 +59,28 @@ class CF_Translate_Translator {
 
         return false;
     }
+
+	/**
+	 * Add form info form.info from form config
+	 *
+	 * @since 1.2.0
+	 *
+  	 * @param array $form Form configuration
+	 */
+    public function form_info_from_form(array  $form ){
+		foreach ( $this->get_languages() as $code ) {
+			foreach (array(
+						 'name',
+						 'success'
+					 ) as $key) {
+				$this->add_form_info(
+					$code,
+					$key,
+					!empty($form[$key]) ? $form[$key] : ''
+				);
+			}
+		}
+	}
 
 	/**
 	 * Get fields by language

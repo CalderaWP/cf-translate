@@ -91,6 +91,9 @@ export const MUTATIONS = {
 	showChooser(state,value){
 		state.showChooser = value;
 	},
+	formInfo( state,value){
+		state.form.info[state.language] = value;
+	},
 	foo(state, value ){
 		state.foo = value;
 	}

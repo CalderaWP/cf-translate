@@ -55,6 +55,7 @@ export const ACTIONS = {
 			form_id: context.getters.formId,
 			language: context.getters.language,
 			fields: context.getters.fields,
+			form_info: context.getters.formInfo
 		};
 		return localAPI.post('/', data)
 			.then(r =>  {

@@ -68,6 +68,17 @@ export const GETTERS = {
 	showChooser: state => {
 		return state.showChooser;
 	},
+	formInfo: state => {
+
+		if( undefined === state.form.info ){
+			return {}
+		}
+		return (state.form.info.hasOwnProperty( state.language ))
+			?  state.form.info[state.language]
+			: state.form.hasOwnProperty( 'info' )
+				? state.form.info
+				: { success: '', name: '' }
+	},
 	foo: state => {
 		return state.hasOwnProperty('foo' ) ? state.foo : 'oof';
 	}

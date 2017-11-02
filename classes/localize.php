@@ -93,6 +93,11 @@ class CF_Translate_Localize {
 	 * @return array
 	 */
 	protected function form_info() {
+		$translator = $this->form->get_translator();
+		if( is_object( $translator ) ){
+			return $translator->get_form_info();
+		}
+
 		return array(
 			'name' => $this->form->get_name(),
 			'success' => $this->form[ 'success' ],

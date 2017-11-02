@@ -55,7 +55,8 @@ const stateComputes = {
 		'languages',
 		'showLanguageChoice',
 		'formLanguages',
-		'showChooser'
+		'showChooser',
+		'formInfo'
 	],
 	oneWay: [
 		'field'
