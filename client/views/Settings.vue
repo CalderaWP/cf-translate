@@ -58,6 +58,12 @@
 				<div style="clear:both"></div>
 
 			</div>
+			<cf-input-group
+				:id="'foo'"
+				:label="'LABELFOO!'"
+				:value="'valueFood!'"
+				:type="'email'"
+			></cf-input-group>
 		</div>
 
 </template>

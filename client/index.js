@@ -9,6 +9,9 @@ Vue.use(StatePlugin);
 import StringsPlugin from './plugins/strings';
 Vue.use(StringsPlugin);
 
+import CFUIPlugin from './plugins/CFUI';
+Vue.use(CFUIPlugin);
+
 //Remove nags from DOM
 [ 'update-nag', 'notice' ].forEach( className => {
 	let elements = document.getElementsByClassName(className);
@@ -33,7 +36,7 @@ const mainSettingsApp = new Vue({
 				}
 			},
 			[
-				h( 'settings')
+				h( 'settings' )
 			]
 		)
 	}
