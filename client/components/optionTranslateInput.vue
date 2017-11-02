@@ -9,7 +9,7 @@
 </template>
 <script>
 	export default{
-		props: ['opt', 'field', 'value'],
+		props: ['opt', 'value'],
 		methods : {
 			changed(ev){
 				this.$store.commit( 'fieldOpt', {opt:this.opt,value:ev.target.value})

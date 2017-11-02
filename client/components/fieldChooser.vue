@@ -1,11 +1,6 @@
 <template>
 
 	<div>
-		<p
-			style="display: inline"
-		>
-			{{strings.current_language}} : {{language}}
-		</p>
 
 		<div class="caldera-config-group">
 			<label for="cf-translations-field">

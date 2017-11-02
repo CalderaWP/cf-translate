@@ -1,7 +1,6 @@
 <template>
 
 	<div>
-
 		<div class="cf-translate-left">
 			<div class="caldera-config-group">
 				<label for="cf-translations-label">

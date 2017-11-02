@@ -38,6 +38,7 @@ export const ACTIONS = {
 				}
 			})
 			.then(r =>  {
+				context.commit('notSaving', false );
 				saveForm(ID, r, context);
 			})
 			.catch( error => {

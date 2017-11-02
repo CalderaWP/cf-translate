@@ -14,56 +14,74 @@
 				</div>
 			</div>
 			<div class="caldera-editor-body">
-
-				<div class="cf-translate-left ">
-					<form-chooser
-					>
-					</form-chooser>
-
-					<lang-chooser
-						v-if="form.ID"
-					>
-					</lang-chooser>
-
-
-				</div>
-				<div
-					v-if="! saving"
-					class="cf-translate-right"
+				<form-chooser
+					v-if="showChooser"
 				>
-					<field-chooser
-						v-if="language"
-					>
-					</field-chooser>
-					<div v-else>
-						{{strings.select_language}}
-					</div>
+				</form-chooser>
+				<form-saver
+					v-if="! showChooser">
+				</form-saver>
+
+				<div v-bind:style="{ minHeight: '42px' }">
+					<lang-chooser
+						v-if="form.ID && showLanguageChoice"
+                    >
+				    </lang-chooser>
+                    <p
+						class="cf-translate-info-block description"
+                        v-if="form.ID && ! showLanguageChoice"
+                        v-bind:style="{ display: 'inline' }"
+
+                    >
+                        {{strings.current_language}} : {{language}}
+                    </p>
+                </div>
+
+				<div v-if="form.ID">
+					<tabs>
+						<tab name="Fields">
+							<div
+									v-if="! saving"
+									class="cf-translate-left"
+							>
+								<field-chooser
+										v-if="language"
+								>
+								</field-chooser>
+								<div v-else>
+									{{strings.select_language}}
+								</div>
+							</div>
+
+							<div class="cf-translate-right">
+								<div v-if="! saving">
+									<field-translate
+											v-if="fieldId"
+									>
+
+									</field-translate>
+									<div v-else>
+										<span v-if="language">
+											{{strings.select_field}}
+										</span>
+									</div>
+								</div>
+							</div>
+
+						</tab>
+						<tab name="Other">
+							Second tab content
+						</tab>
+						<tab name="Add Language">
+							<lang-adder></lang-adder>
+						</tab>
+					</tabs>
 				</div>
-				<div style="clear:both"></div>
 
-				<div v-if="! saving">
-					<field-translate
-						v-if="fieldId"
-						>
 
-					</field-translate>
-					<div v-else>
-						<span v-if="language">
-							{{strings.select_field}}
-						</span>
-					</div>
-
-				</div>
-
-				<div style="clear:both"></div>
 
 			</div>
-			<cf-input-group
-				:id="'foo'"
-				:label="'LABELFOO!'"
-				:value="'valueFood!'"
-				:type="'email'"
-			></cf-input-group>
+
 		</div>
 
 </template>
@@ -72,13 +90,16 @@
 	import fieldTranslate from  '../components/fieldTranslate.vue';
 	import formChooser from  '../components/formChooser.vue';
 	import langChooser from  '../components/langChooser.vue';
-
+	import langAdder from '../components/langAdder';
+	import formSaver from '../components/formSaver';
 	export  default {
 		components: {
 			'field-chooser': feildChooser,
 			'field-translate': fieldTranslate,
 			'form-chooser': formChooser,
-			'lang-chooser': langChooser
+			'lang-chooser': langChooser,
+			'lang-adder': langAdder,
+			'form-saver': formSaver
 		}
 	}
 
@@ -153,5 +174,49 @@
 		margin-right: 3%;
 		float:left;
 	}
+
+
+
+    .tabs-component-panels,ul.tabs-component-tabs {
+        float: left;
+        display:inline-block
+    }
+
+    .tabs-component-panels{
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    ul.tabs-component-tabs{
+        background: #a3bf61;
+
+    }
+    li.tabs-component-tab {
+        margin-bottom: 0;
+        border-bottom: thin solid white;
+        padding: 0;
+    }
+    li.tabs-component-tab:last-child() {
+        border-bottom: none;
+    }
+    li.tabs-component-tab a{
+        display: block;
+        width: 69%;
+        color: white;
+        font-size: 1rem;
+        padding: 1rem 1.4rem;
+        text-decoration: none;
+        text-align: center;
+    }
+    li.tabs-component-tab.is-active{
+        background-color: #ff7e30;
+    }
+
+    .tabs-component-panels section:nth-child(3) .caldera-config-group {
+        margin: 0 1rem 0;
+    }
+    .tabs-component-panels section:nth-child(3) label {
+        display: inline;
+        margin: 0;
+    }
 
 </style>

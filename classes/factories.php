@@ -98,7 +98,9 @@ class CF_Translate_Factories{
         			continue;
 		        }
 		        foreach ( $field[ 'option' ] as $opt => $option ){
-			        $field_object->add_option( $opt, $option[ 'label' ] );
+        			if( isset( $option[ 'label' ] ) ){
+						$field_object->add_option( $opt, $option[ 'label' ] );
+					}
 		        }
 
 	        }else{

@@ -60,11 +60,13 @@ export const GETTERS = {
 		if(  null !== state.showLanguageChoice ) {
 			state.showLanguageChoice = false;
 		}
-		console.log(state.showLanguageChoice);
 		return state.showLanguageChoice;
 	},
 	saving: state => {
 		return state.saving;
+	},
+	showChooser: state => {
+		return state.showChooser;
 	},
 	foo: state => {
 		return state.hasOwnProperty('foo' ) ? state.foo : 'oof';

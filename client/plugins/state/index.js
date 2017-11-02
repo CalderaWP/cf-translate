@@ -54,13 +54,14 @@ const stateComputes = {
 		'showAddLanguage',
 		'languages',
 		'showLanguageChoice',
-		'formLanguages'
+		'formLanguages',
+		'showChooser'
 	],
 	oneWay: [
 		'field'
 	],
 	dispatching: [
-		'form'
+		'form',
 	]
 };
 

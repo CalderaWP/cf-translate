@@ -4,17 +4,14 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 
-
-
-
 const STATE = {
-  field: {},
-  fields: {},
-  form: {
-    ID: 0
-  },
-  language: '',
-  strings: CF_TRANS_ADMIN.strings
+	field: {},
+	fields: {},
+	form: {
+		ID: 0
+	},
+	language: '',
+	strings: CF_TRANS_ADMIN.strings
 };
 
 
@@ -30,7 +27,7 @@ Object.getOwnPropertyNames(GETTERS).forEach( (index) => {
   STATE[index] = CF_TRANS_ADMIN.hasOwnProperty(index) ? CF_TRANS_ADMIN[index] : null;
 });
 
-
+STATE.showChooser = true;
 
 
 const store =  new Vuex.Store({

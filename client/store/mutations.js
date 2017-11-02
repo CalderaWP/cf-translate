@@ -82,6 +82,15 @@ export const MUTATIONS = {
 			state.saving = ! state.saving;
 		}
 	},
+	isSaving(state){
+		state.saving = true;
+	},
+	notSaving(state){
+		state.saving = false;
+	},
+	showChooser(state,value){
+		state.showChooser = value;
+	},
 	foo(state, value ){
 		state.foo = value;
 	}

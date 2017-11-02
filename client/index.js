@@ -9,8 +9,12 @@ Vue.use(StatePlugin);
 import StringsPlugin from './plugins/strings';
 Vue.use(StringsPlugin);
 
-import CFUIPlugin from './plugins/CFUI';
-Vue.use(CFUIPlugin);
+
+/** Tabs Plugin **/
+import {Tabs, Tab} from 'vue-tabs-component';
+
+Vue.component('tabs', Tabs);
+Vue.component('tab', Tab);
 
 //Remove nags from DOM
 [ 'update-nag', 'notice' ].forEach( className => {
