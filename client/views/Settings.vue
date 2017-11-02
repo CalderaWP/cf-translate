@@ -70,7 +70,7 @@
 
 						</tab>
 						<tab name="Other">
-							Second tab content
+							<other-settings></other-settings>
 						</tab>
 						<tab name="Add Language">
 							<lang-adder></lang-adder>
@@ -92,6 +92,7 @@
 	import langChooser from  '../components/langChooser.vue';
 	import langAdder from '../components/langAdder';
 	import formSaver from '../components/formSaver';
+	import otherSettings from './OtherSettings'
 	export  default {
 		components: {
 			'field-chooser': feildChooser,
@@ -99,7 +100,8 @@
 			'form-chooser': formChooser,
 			'lang-chooser': langChooser,
 			'lang-adder': langAdder,
-			'form-saver': formSaver
+			'form-saver': formSaver,
+			'other-settings' : otherSettings
 		}
 	}
 

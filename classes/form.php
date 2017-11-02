@@ -78,6 +78,7 @@ class CF_Translate_Form implements ArrayAccess {
     	return $this->form[ 'name' ];
     }
 
+
 	/**
 	 * Save form
 	 *

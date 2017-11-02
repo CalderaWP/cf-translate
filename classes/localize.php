@@ -94,10 +94,11 @@ class CF_Translate_Localize {
 	 */
 	protected function form_info() {
 		return array(
-			'name' => $this->form->get_name()
+			'name' => $this->form->get_name(),
+			'success' => $this->form[ 'success' ],
+			'pageNames' => $this->form[ 'page_names' ]
 		);
 	}
-
 	/**
 	 * Get prepared strings for UI
 	 *
@@ -132,6 +133,7 @@ class CF_Translate_Localize {
 			'saving'     => __( 'Saving', 'caldera-forms-translations' ),
 			'saved'     => __( 'Saved', 'caldera-forms-translations' ),
 			'you_are_trans'     => __( 'You Are Translating', 'caldera-forms-translations' ),
+			'success_message' =>__('Success Message', 'caldera-forms-translations')
 
 		);
 	}
@@ -159,7 +161,7 @@ class CF_Translate_Localize {
 	/**
 	 * Add data about form to data
 	 *
-	 * Seperate method used by API endpoint and in intial data
+	 * Separate method used by API endpoint and in initial data print to DOM via wp_localize_script
 	 *
 	 * @param array $data Data to merge form data in with
 	 *
@@ -219,7 +221,7 @@ class CF_Translate_Localize {
 				'ID'        => 0,
 				'languages' => array(),
 				'fields'    => array(),
-				'info' => array( 'name' => '' ),
+				'info' => array( 'name' => '', 'success' => '', 'form_pages' => array() ),
 			);
 		}
 
