@@ -34,10 +34,13 @@ class CF_Translate_Translator {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @return array
+	 *
+	 * @return array|string|null
 	 */
-    public function get_form_info(){
+    public function get_form_info(  ){
     	return $this->form_info;
+
+
 	}
 
 	/**
@@ -48,13 +51,17 @@ class CF_Translate_Translator {
 	 * @param string $code Language code
 	 * @param string $type Info type
 	 * @param string $value Info bit
+	 * @param bool $overwrite Optional. If true, the default, value replaces existing value. If false, only used if value was empty before.
  	 *
 	 * @return bool
 	 */
-    public function add_form_info( $code, $type, $value  ){
+    public function add_form_info( $code, $type, $value, $overwrite = true ){
         if ( $this->add_language( $code ) ) {
-            $this->form_info[$code][$type] = $value;
-            return true;
+			if ( $overwrite || empty($this->form_info[$code][$type]  ) ) {
+				$this->form_info[$code][$type] = $value;
+			}
+
+			return true;
         }
 
         return false;
@@ -76,7 +83,8 @@ class CF_Translate_Translator {
 				$this->add_form_info(
 					$code,
 					$key,
-					!empty($form[$key]) ? $form[$key] : ''
+					!empty($form[$key]) ? $form[$key] : '',
+					false
 				);
 			}
 		}

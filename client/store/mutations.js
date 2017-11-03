@@ -4,23 +4,27 @@ const maybeSetField = function (state) {
 
 export const MUTATIONS = {
 	form(state,value){
-		if( 'string' == typeof  value ){
+		if( 'string' === typeof  value ){
 			value = {
 				ID: value
 			};
 		}
-		if( state.form.ID != value.ID ){
+		if( state.form.ID !== value.ID ){
 			state.language = '';
 			state.fieldId = '';
 			state.field = {};
 		}
+
 		state.form = Object.assign(state.form,value);
 		if( state.form.hasOwnProperty( 'languages_named' ) ){
 			state.formLanguages = state.form.languages_named;
 		}else{
 			state.formLanguages = {};
 		}
+
+		state.formName = state.form.name;
 	},
+	formName( state,value ) { state.formName = value },
 	formLanguages(state,value ){ state.formLanguages = value },
 	language(state,value){
 		state.language = value;

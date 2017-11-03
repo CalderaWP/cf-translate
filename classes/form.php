@@ -78,17 +78,16 @@ class CF_Translate_Form implements ArrayAccess {
     	return $this->form[ 'name' ];
     }
 
-
 	/**
 	 * Save form
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return bool|string
+	 * @return bool
 	 */
     public function save(){
-        update_option( $this->option_name(), $this->translator, false );
-        return Caldera_Forms_Forms::save_form( $this->form );
+		update_option( $this->option_name(), ( $this->translator ), false );
+		return true;
     }
 
     /**

@@ -35,7 +35,7 @@
 			change(){
 				this.$store.commit( 'showAddLanguage' );
 				this.$store.commit( 'showLanguageChoice', true );
-				this.showChooser = false;
+				this.$store.commit( 'showChooser', false );
 			}
 		}
 

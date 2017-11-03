@@ -48,8 +48,6 @@ class CF_Translate_Factories{
         $code = get_locale();
         $translator = new CF_Translate_Translator(  );
         $translator->add_language( $code );
-        $translator->
-
 
 		$translator->add_fields_to_language( $code, self::new_language_fields( $form ) );
 

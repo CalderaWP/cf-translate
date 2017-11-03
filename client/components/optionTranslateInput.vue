@@ -1,11 +1,13 @@
 <template>
-	<input
+	<div>
+		<input
 			v-bind:id="'cf-translations-' + opt"
 			type="text"
 			:value="value"
 			class="block-input"
 			@input="changed"
-	/>
+		/>
+	</div>
 </template>
 <script>
 	export default{

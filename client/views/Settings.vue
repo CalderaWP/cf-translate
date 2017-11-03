@@ -42,7 +42,7 @@
 						<tab name="Fields">
 							<div
 								v-if="! saving"
-								class="cf-translate-left"
+								class=""
 							>
 								<field-chooser
 									v-if="language"
@@ -53,12 +53,11 @@
 								</div>
 							</div>
 
-							<div class="cf-translate-right">
+							<div class="">
 								<div v-if="! saving">
 									<field-translate
 										v-if="fieldId"
 									>
-
 									</field-translate>
 									<div v-else>
 										<span v-if="language">
@@ -173,7 +172,7 @@
 	.cf-translate-right {
 		display: inline;
 		width: 47%;
-		margin-right: 3%;
+		margin-left: 3%;
 		float:left;
 	}
 

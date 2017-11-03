@@ -55,6 +55,11 @@ function cf_translate_load(){
 	     */
         add_action( 'caldera_forms_render_start', 'cf_translate_front_end_init' );
 
+		/**
+		 * When form is submitted, load translations as needed
+		 */
+        add_filter( 'caldera_forms_submit_get_form', 'cf_translate_process_init' );
+
 	    /**
 	     * Create field(s)
 	     */
@@ -66,13 +71,22 @@ function cf_translate_load(){
 	    add_action( 'rest_api_init', 'cf_translate_init_api', 21 );
 	    add_action( 'caldera_forms_rest_api_pre_init', 'cf_translate_init_api_route' );
 
+		/**
+		 * Append language to submit url
+		 */
+	    add_filter( 'caldera_forms_submission_url', 'cf_translate_submit_url' );
 
     }
 
 }
 
+
+
+
+
+
 /**
- *
+ * Control language selection
  */
 add_filter( 'cf_translate_get_current_language', 'cf_translate_select_language' );
 
@@ -85,26 +99,55 @@ add_filter( 'cf_translate_get_current_language', 'cf_translate_select_language' 
  * @uses "caldera_forms_render_start" action
  */
 function cf_translate_front_end_init( $form ){
-	$form = CF_Translate_Factories::get_form( $form );
-	$front_end = new CF_Translate_Render( $form, array(
-		'hook' => 'caldera_forms_render_get_field',
-		'callback' => 'translate',
-	) );
+	$_form = CF_Translate_Factories::get_form( $form );
+	$fields = new CF_Translate_Render(
+		$_form,
+		array(
+			'hook' => 'caldera_forms_render_get_field',
+		)
+	);
 
-	new CF_Translate_PickerOptions( $form, array(
-		'hook' => 'caldera_forms_render_get_field_type-language-picker',
-	));
+	new CF_Translate_PickerOptions(
+		$_form,
+		array(
+			'hook' => 'caldera_forms_render_get_field_type-language-picker',
+			'callback' => 'filter',
+		)
+	);
 
 	/**
 	 * Runs after the front-end is loaded for a form
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param CF_Translate_Render $front_end Front-end system
-	 * @param CF_Translate_Form $form Form object for translating
+	 * @param CF_Translate_Render $fields Fields Front-end system
+	 * @param CF_Translate_Form $_form Form object for translating
 	 */
-	do_action( 'cf_translate_front_end_init', $front_end, $form );
+	do_action( 'cf_translate_front_end_init', $fields, $_form );
+
 }
+
+/**
+ *  Setup translations during submission
+ *
+ * @since 1.2.0
+ *
+ * @uses "caldera_forms_get_field_types" filter
+ *
+ * @param array $form
+ */
+function cf_translate_process_init( $form ){
+	$_form = CF_Translate_Factories::get_form( $form );
+	 new CF_Translate_Success(
+		$_form,
+		array(
+			'hook' => 'caldera_forms_submit_get_form',
+		)
+	);
+
+	 return $form;
+}
+
 
 /**
  * Get the current language
@@ -230,6 +273,20 @@ function cf_translate_init_api(){
  *
  * @since 0.3.0
  */
-function cf_translate_init_api_route(  $api ){
+function cf_translate_init_api_route( $api ){
 	$api->add_route( new CF_Translate_API() );
+}
+
+/**
+ * Add cf_lang to submit url
+ *
+ * @since 1.2.0
+ *
+ * @uses "caldera_forms_submission_url" filter
+ *
+ * @param $url
+ * @return string
+ */
+function cf_translate_submit_url( $url ){
+	return add_query_arg( 'cf_lang', cf_translate_get_current_language(), $url );
 }

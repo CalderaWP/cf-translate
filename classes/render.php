@@ -10,9 +10,6 @@
  */
 class  CF_Translate_Render extends CF_Translate_Filter{
 
-
-
-
 	/**
 	 * Translate a field
 	 *

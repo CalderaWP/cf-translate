@@ -112,7 +112,6 @@ class CF_Translate_API implements Caldera_Forms_API_Route {
 
 			}
 
-			$language = $request->get_param( 'language' );
 			$form_info = $request->get_param( 'form_info' );
 			if( ! empty( $form_info ) ){
 				foreach ( $form_info as $key => $value ){

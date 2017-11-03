@@ -14,6 +14,7 @@ const localAPI  = axios.create({
 var _forms = {};
 var saveForm = function (ID, r, context) {
 	_forms[ID] = r.data.form;
+	context.commit( 'formName', r.data.form.name );
 	context.commit('form', r.data.form);
 };
 export const ACTIONS = {

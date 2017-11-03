@@ -176,6 +176,7 @@ class CF_Translate_Localize {
 		if ( ! empty( $this->form ) ) {
 			$data[ 'form' ] = array(
 				'ID'        => $this->form->get_id(),
+				'name' => $this->form->get_name(),
 				'languages' => $this->form->get_translator()->get_languages(),
 				'languages_named' => $this->form->get_translator()->get_languages_with_names(),
 				'info' => $this->form_info(),
@@ -226,6 +227,7 @@ class CF_Translate_Localize {
 				'ID'        => 0,
 				'languages' => array(),
 				'fields'    => array(),
+				'name' => '',
 				'info' => array( 'name' => '', 'success' => '', 'form_pages' => array() ),
 			);
 		}

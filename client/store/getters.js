@@ -3,7 +3,7 @@
 
 export const GETTERS = {
 	fieldId : state => {
-		return state.hasOwnProperty( 'fieldId' ) && undefined != state.fieldId ? state.fieldId : false;
+		return state.hasOwnProperty( 'fieldId' ) && undefined !== state.fieldId ? state.fieldId : false;
 	},
 	strings : state => {
 		return state.strings;
@@ -27,7 +27,10 @@ export const GETTERS = {
 		return state.languages;
 	},
 	language : state => {
-		return undefined != state.language ? state.language : '';
+		return undefined !== state.language ? state.language : '';
+	},
+	formName : state => {
+		return state.form.formName;
 	},
 	fields: state => {
 		if( undefined === state.fields ){
@@ -36,7 +39,7 @@ export const GETTERS = {
 		return state.form.fields[state.language];
 	},
 	field: state => {
-		if( 'object' != typeof  state.field ){
+		if( 'object' !== typeof  state.field ){
 			return {};
 		}
 
@@ -69,15 +72,7 @@ export const GETTERS = {
 		return state.showChooser;
 	},
 	formInfo: state => {
-
-		if( undefined === state.form.info ){
-			return {}
-		}
-		return (state.form.info.hasOwnProperty( state.language ))
-			?  state.form.info[state.language]
-			: state.form.hasOwnProperty( 'info' )
-				? state.form.info
-				: { success: '', name: '' }
+		return  state.form.info[state.language];
 	},
 	foo: state => {
 		return state.hasOwnProperty('foo' ) ? state.foo : 'oof';
