@@ -4,7 +4,7 @@ import store from  './store/index';
 import Promise from 'promise-polyfill';
 
 /** State Plugins **/
-import StatePlugin from './plugins/state/index';
+import StatePlugin from './plugins/state';
 Vue.use(StatePlugin);
 import StringsPlugin from './plugins/strings';
 Vue.use(StringsPlugin);

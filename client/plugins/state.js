@@ -1,3 +1,5 @@
+import { createStatePlugin } from "vue-app-state";
+
 const stateComputes = {
 	twoWay: [
 		'foo',
@@ -20,7 +22,6 @@ const stateComputes = {
 	]
 };
 
-import { createStatePlugin } from "vue-app-state";
 
 const statePlugin = createStatePlugin(stateComputes);
 export default statePlugin;
