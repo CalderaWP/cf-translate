@@ -9,7 +9,6 @@ Vue.use(StatePlugin);
 import StringsPlugin from './plugins/strings';
 Vue.use(StringsPlugin);
 
-
 /** Tabs Plugin **/
 import {Tabs, Tab} from 'vue-tabs-component';
 
