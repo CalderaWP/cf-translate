@@ -14,10 +14,10 @@ module.exports = function (grunt) {
         },
         clean: {
             post_build: [
-                'build/'
+                'build/<%= pkg.name %>'
             ],
             pre_compress: [
-                'build/releases'
+				'build/<%= pkg.name %>'
             ]
         },
         run: {
@@ -138,9 +138,19 @@ module.exports = function (grunt) {
 
     //release tasks
     grunt.registerTask( 'version_number', [ 'replace:core_file' ] );
-    grunt.registerTask( 'pre_vcs', [ 'shell:composer', 'shell:npm', 'version_number', 'copy', 'compress' ] );
+    grunt.registerTask( 'pre_vcs', [
+        'shell:composer',
+        //'shell:npm',
+        'version_number',
+        'copy',
+        'compress' ] );
     grunt.registerTask( 'do_git', [ 'gitadd', 'gitcommit', 'gittag', 'gitpush' ] );
-    grunt.registerTask( 'just_build', [  'npm run build', 'shell:composer', 'copy', 'compress' ] );
+    grunt.registerTask( 'just_build', [
+		//'shell:npm',
+        'shell:composer',
+        'copy',
+        'compress'
+    ] );
 
     grunt.registerTask( 'release', [ 'pre_vcs', 'do_git', 'clean:post_build' ] );
 
