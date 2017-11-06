@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         pkg     : grunt.file.readJSON( 'package.json' ),
         shell: {
             composer: {
-                command: 'composer update'
+                command: 'rm -rf vendor && composer update --prefer-dist -o'
             },
             webpack: {
                 command: 'npm run build && npm run dev'
