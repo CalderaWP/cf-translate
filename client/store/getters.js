@@ -78,3 +78,5 @@ export const GETTERS = {
 		return state.hasOwnProperty('foo' ) ? state.foo : 'oof';
 	}
 };
+
+
