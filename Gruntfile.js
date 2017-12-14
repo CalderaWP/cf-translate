@@ -6,15 +6,18 @@ module.exports = function (grunt) {
         pkg     : grunt.file.readJSON( 'package.json' ),
         shell: {
             composer: {
-                command: 'composer update'
+                command: 'rm -rf vendor && composer update --prefer-dist -o'
+            },
+            webpack: {
+                command: 'npm run build && npm run dev'
             }
         },
         clean: {
             post_build: [
-                'build/'
+                'build/<%= pkg.name %>'
             ],
             pre_compress: [
-                'build/releases'
+				'build/<%= pkg.name %>'
             ]
         },
         run: {
@@ -106,7 +109,7 @@ module.exports = function (grunt) {
         },
         replace: {
             core_file: {
-                src: [ 'plugincore.php' ],
+                src: [ 'cf-translate.php' ],
                 overwrite: true,
                 replacements: [{
                     from: /Version:\s*(.*)/,
@@ -117,41 +120,7 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        uglify: {
-            options: {
-                mangle: false,
-                options: {
-                    sourceMap: true,
-                    sourceMapName: 'assets/js/cf-translate.js.map'
-                },
-            },
-            compress: {
-                files: {
-                    'assets/js/cf-translate.min.js': ['assets/js/cf-translate.js'],
-                    'assets/js/language-picker.min.js': ['assets/js/language-picker.js']
-                }
-            }
-        },
-        concat: {
-            options: {
-                separator: '',
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-                '<%= grunt.template.today("yyyy-mm-dd") %> */',
-            },
-            admin: {
-                src: ['assets/js/src/**.js' ],
-                dest: 'assets/js/cf-translate.js',
-            }
-        },
-        watch: {
-            scripts: {
-                files: ['assets/js/src/**.js'],
-                tasks: ['default'],
-                options: {
-                    spawn: false,
-                },
-            },
-        },
+
 
 
     });
@@ -163,22 +132,27 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks( 'grunt-git' );
     grunt.loadNpmTasks( 'grunt-text-replace' );
     grunt.loadNpmTasks( 'grunt-shell');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-
 
 
     //register default task
-    grunt.registerTask( 'default',  [ 'concat', 'uglify' ] );
 
     //release tasks
     grunt.registerTask( 'version_number', [ 'replace:core_file' ] );
-    grunt.registerTask( 'pre_vcs', [ 'shell:composer', 'version_number', 'copy', 'compress' ] );
+    grunt.registerTask( 'pre_vcs', [
+        'shell:composer',
+        //'shell:npm',
+        'version_number',
+        'copy',
+        'compress' ] );
     grunt.registerTask( 'do_git', [ 'gitadd', 'gitcommit', 'gittag', 'gitpush' ] );
-    grunt.registerTask( 'just_build', [  'default', 'shell:composer', 'copy', 'compress' ] );
+    grunt.registerTask( 'just_build', [
+		//'shell:npm',
+        'shell:composer',
+        'copy',
+        'compress'
+    ] );
 
-    grunt.registerTask( 'release', [ 'default', 'pre_vcs', 'do_git', 'clean:post_build' ] );
+    grunt.registerTask( 'release', [ 'pre_vcs', 'do_git', 'clean:post_build' ] );
 
 
 };

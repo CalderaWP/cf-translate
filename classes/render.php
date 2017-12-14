@@ -10,9 +10,6 @@
  */
 class  CF_Translate_Render extends CF_Translate_Filter{
 
-
-
-
 	/**
 	 * Translate a field
 	 *
@@ -48,14 +45,47 @@ class  CF_Translate_Render extends CF_Translate_Filter{
 		/**  @var CF_Translate_Field $field_object */
 		if( is_object( $field_object ) ){
 		    foreach( $field_object->get_field_names() as $key ){
+				if( 'options' == $key ){
+					if( is_array( $field_object->options ) ){
+						foreach( $field_object->options  as $opt => $label ){
+							if( isset( $field[ 'config' ][ 'option' ][ $opt ] ) ){
+								$field[ 'config' ][ 'option' ][ $opt ][ 'label' ] = $label;
+							}
+						}
+					}
+					continue;
+				}
 
-			if( 'ID' != $key  ){
+
+			    if( in_array( $key, array(
+				    'default',
+				    'option'
+			    ) ) ){
+				    if ( isset( $field[ 'config' ][ $key ] ) ) {
+					    $value                     = $field_object->$key;
+					    if ( 'option' !== $key ) {
+						    $field[ 'config' ][ $key ] = ! empty( $value ) && $value != $field[ 'config' ][ $key ] ? $value : $field[ 'config' ][ $key ];
+					    } else {
+					    	if( is_array( $value ) ){
+					    		foreach ( $value as $opt => $label ){
+								    if ( isset( $field[ 'config' ][ $key ][ $opt ] ) ) {
+									    $field[ 'config' ][ $key ][ $opt ][ 'label' ] = $label;
+								    }
+							    }
+						    }
+					    }
+				    }
+			    } elseif( 'ID' != $key  ){
 				    $value = $field_object->$key;
-				    if( ! empty( $value )  && isset( $field[ $key ] )  && $value != $field[ $key ] ) {
+				    if( ! empty( $value )  && ( ( empty( $field[ $key ] ) )  || $value != $field[ $key ] ) ) {
 					    $field[ $key ] = $field_object->$key;
 				    }
 
-			}
+			    }else{
+			    	//don't translate IDs.
+				    continue;
+			    }
+
 		    }
 
 		}
@@ -69,8 +99,10 @@ class  CF_Translate_Render extends CF_Translate_Filter{
 	* @since 0.1.0
 	*/
 	protected function add_hook (){
-		if ( $this->form->get_translator()->has_language( $this->args[ 'language'] )) {
-				parent::add_hook();
+		if ( $this->form->get_translator()->has_language( $this->args[ 'language'] )
+		     ||  $this->form->get_translator()->has_less_locale( $this->args[ 'language'] )
+		) {
+			parent::add_hook();
 		}
 
 	}

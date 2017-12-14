@@ -41,6 +41,7 @@ class CF_Translate_Form implements ArrayAccess {
 	 * @param array $form Form config
 	 */
     public function __construct( array  $form ){
+    	$this->form = $form;
         $this->form = $this->set_translator( $form );
     }
 
@@ -67,15 +68,26 @@ class CF_Translate_Form implements ArrayAccess {
     }
 
 	/**
+	 * Get the name fo the form
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return string
+	 */
+    public function get_name(){
+    	return $this->form[ 'name' ];
+    }
+
+	/**
 	 * Save form
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return bool|string
+	 * @return bool
 	 */
     public function save(){
-        $this->form[ 'translations' ] = $this->translator;
-        return Caldera_Forms_Forms::save_form( $this->form );
+		update_option( $this->option_name(), ( $this->translator ), false );
+		return true;
     }
 
     /**
@@ -89,7 +101,6 @@ class CF_Translate_Form implements ArrayAccess {
         return $this->translator;
     }
 
-
 	/**
 	 * Setup form property with proper translator added in.
 	 *
@@ -100,15 +111,26 @@ class CF_Translate_Form implements ArrayAccess {
 	 * @return array
 	 */
     private  function set_translator( $form ){
-        if( ! isset( $form[ 'translations' ] ) || ! $form[ 'translations' ] instanceof  CF_Translate_Translator ){
-            $form[ 'translations' ]  =  CF_Translate_Factories::new_translator( $form );
+		$this->translator = get_option( $this->option_name(), false );
+		if( ! $this->translator || ! $this->translator instanceof  CF_Translate_Translator ){
+			$this->translator = CF_Translate_Factories::new_translator( $form );
+		}
 
-        }
-
-	    $this->translator = $form[ 'translations' ];
-
+		$this->translator->form_info_from_form( $form );
 
         return $form;
+    }
+
+
+	/**
+	 * Get name of option used to store translator
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return string
+	 */
+    protected function option_name(){
+    	return $this->form[ 'ID' ] . '_translator';
     }
 
 	/**
@@ -144,4 +166,5 @@ class CF_Translate_Form implements ArrayAccess {
     public function offsetGet($offset) {
         return isset($this->form[$offset]) ? $this->form[$offset] : null;
     }
+
 }

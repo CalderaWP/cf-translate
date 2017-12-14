@@ -10,25 +10,18 @@
  */
 
 ?>
+
 <div class="caldera-editor-header" id="cf-translate-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
-			<span class="dashicons-cf-logo"></span>
-			Caldera Forms: <?php esc_html_e( 'Translations', 'caldera-forms-translation' ); ?>
+		<span class="caldera-forms-name">
+			Caldera Forms: Translations
+		</span>
 		</li>
-		<li class="cf-translations-notice-wrap">
-			<p id="cf-translations-not-saved" class="error alert cf-translations-notice cf-translations-error" style="display: none;visibility: hidden" aria-hidden="true">
-
-			</p>
-			<p id="cf-translations-saved" class="error alert cf-translations-success cf-translations-notice" style="display: none;visibility: hidden" aria-hidden="true">
-
-			</p>
-		</li>
-
 	</ul>
 </div>
 <div class="support-admin-page-wrap caldera-grid" id="cf-translate-admin" style="margin-top: 75px;">
-	<div id="cf-translate-forms-list" class="row">
+	<div id="cf-translate-forms-list" >
 		<?php
 			$forms = Caldera_Forms_Forms::get_forms( true, true );
 			if( empty( $forms ) ){
@@ -37,12 +30,13 @@
 				printf( '<h3>%s</h3>', esc_html__( 'Choose Form', 'caldera-forms-translation') );
 				?>
 					<form id="cf-translations-form-chooser" action="<?php echo esc_url_raw( admin_url( 'admin.php?page=caldera-forms-translate' ) ); ?>">
+						<?php wp_nonce_field( CF_Translate_AdminForm::$nonce_action, CF_Translate_AdminForm::nonce_field_name(), false ); ?>
 
 						<div class="caldera-config-group">
 							<label for="cf-translate-form-list" class="">
 								<?php esc_html_e('Select Form', 'caldera-forms-translation'); ?>
 							</label>
-							<div class="caldera-config-field">
+							<div class="caldera-config-field" id="cf-translate-form-list-wrap">
 								<select id="cf-translate-form-list" class=" field-config" name="form">
 
 									<?php
@@ -55,22 +49,22 @@
 										}
 									?>
 								</select>
+								<?php
+								if( empty( $_GET[ 'form' ] ) ){
+									$type = 'primary';
+								}else{
+									$type = 'secondary';
+								}
+								submit_button( __( 'Load Form', 'caldera-forms-translation' ), $type );
+								?>
 							</div>
 						</div>
 						<input type="hidden" value="caldera-forms-translate" class="block-input" name="page" />
-						<?php
-							wp_nonce_field( CF_Translate_AdminForm::$nonce_action, CF_Translate_AdminForm::nonce_field_name(), false );
-							if( empty( $_GET[ 'form' ] ) ){
-								$type = 'primary';
-							}else{
-								$type = 'secondary';
-							}
-							submit_button( __( 'Load Form', 'caldera-forms-translation' ), $type );
-						?>
+
 
 					</form>
 	</div>
-	<div id="cf-translate-translation-section" class="row">
+	<div id="cf-translate-translation-section">
 				<?php
 			}
 
@@ -79,9 +73,9 @@
             if (!empty($_GET['cftrans_nonce']) && true == CF_Translate_AdminForm::verify_nonce($_GET['cftrans_nonce'])) {
 
                 ?>
-                <form id="cf-translate-language-control" class="col-sm-12 col-md-6">
+                <form id="cf-translate-language-control">
 	                <?php printf('<h3>%s</h3>', esc_html__('Choose Language', 'caldera-forms-translation')); ?>
-                    <div class="col-sm-12 col-md-9">
+                    <div >
 	                    <div class="caldera-config-group">
 	                        <label for="cf-translate-language-chooser">
 	                            <?php esc_html_e('Select Language', 'caldera-forms-translation'); ?>
@@ -110,7 +104,7 @@
                             </button>
 	                    </div>
                     </div>
-	                <div class="col-sm-12 col-md-3">
+	                <div >
 	                    <?php
 	                    wp_nonce_field('choose-form-language', 'cftrans_nonce_lang', false);
 	                    submit_button(__('Load Language', 'caldera-forms-translation'), 'secondary', 'cf-translate-load-language', false );
@@ -120,7 +114,7 @@
                 <?php
                 printf('<h3>%s</h3>', esc_html__('Translate Fields', 'caldera-forms-translation'));
                 ?>
-                <div class="col-sm-12 col-md-6">
+                <div class="">
 	                <div class="caldera-config-group cf-translate-field-group" style="display: none;visibility: hidden" aria-hidden="true">
 	                    <label for="cf-translate-field-select">
 	                        <?php esc_html_e('Select Field', 'caldera-forms-translation'); ?>
@@ -137,8 +131,8 @@
 	                </div>
 	            </div>
 
-				<div class="row">
-					<div class="col-md-6 col-md-offset-6">
+				<div >
+					<div class="">
 						<button role="button" id="cf-translations-save-button" title="<?php esc_attr_e('Save Translations For This Language', 'caldera-forms-translation' ); ?>" class="button primary button-primary" disabled>
 							<?php esc_html_e( 'Save Translations', 'caldera-forms-translation' ); ?>
 						</button>

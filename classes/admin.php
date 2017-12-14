@@ -93,7 +93,7 @@ class CF_Translate_Admin {
 	 * @since 0.1.0
 	 */
 	public function render_admin(){
-		include $this->path . '/views/main-page.php';
+		echo $this->webpack( true );
 	}
 
 	/**
@@ -103,26 +103,7 @@ class CF_Translate_Admin {
 	 *
 	 * @uses "admin_enqueue_scripts"
 	 */
-	public function register(){
-		//$codes_slug = $this->slugs->translate . '-language-codes';
-		//wp_register_script( $codes_slug, $this->url . '/assets/js/language-codes.js' );
-
-		//@TODO better handling for handlebars loading
-		$handlebars_slug = $this->slugs->cf . '-handlebars';
-
-
-
-		wp_enqueue_style( 'cf-grid-styles' );
-		wp_enqueue_style( 'cf-form-styles' );
-		wp_register_script( $handlebars_slug, CFCORE_URL . 'assets/js/handlebars.js' );
-		wp_register_script( $this->slugs->translate, $this->url . '/assets/js/cf-translate.js', array(
-			'jquery',
-			'underscore',
-			$handlebars_slug
-		), $this->version, true );
-		wp_register_style( $this->slugs->translate, $this->url . '/assets/css/cf-translate.css', array(
-
-		), $this->version );
+	public function register( ){
 
 	}
 
@@ -138,33 +119,26 @@ class CF_Translate_Admin {
 	public function enqueue( $hook ){
 		if( $this->slugs->cf . '_page_' . $this->slugs->translate == $hook ){
 
-			//shit I need to make this easier.
-			$select2_js = CFCORE_URL . 'fields/select2/js/select2.js';
-			wp_enqueue_script( Caldera_Forms_Render_Assets::make_slug( $select2_js ), $select2_js, array( 'jquery' ), CFCORE_VER );
-			$select2_css = CFCORE_URL . 'fields/select2/css/select2.css';
-			wp_enqueue_style( Caldera_Forms_Render_Assets::make_slug( $select2_css ), $select2_css, array(), CFCORE_VER );
-
-			wp_enqueue_script( $this->slugs->translate );
-			wp_enqueue_style( $this->slugs->translate );
-			wp_enqueue_style( $this->slugs->cf . '-admin-styles', CFCORE_URL . 'assets/css/admin.css', array(), CFCORE_VER );
-			$this->localize();
 		}
 
 	}
 
 	/**
-	 * Localize JavaScript
+	 * Create JavaScript localizer object
 	 *
 	 * @since 0.1.0
+	 *
+	 * @return CF_Translate_Localize
 	 */
 	public function localize(){
-        $form = $this->get_form();
-        if( is_wp_error( $form ) ){
-            $form = null;
-        }
+		$form = $this->get_form();
+		if ( is_wp_error( $form ) ) {
+			$form = null;
+		}
 
-        $localizer = new CF_Translate_Localize( $form );
-        wp_localize_script( $this->slugs->translate, 'CFTRANS', $localizer->to_array() );
+		$localizer = new CF_Translate_Localize( $form );
+
+		return $localizer;
 
 
 	}
@@ -181,12 +155,45 @@ class CF_Translate_Admin {
 			$form_id = $_GET[ 'form' ];
 			$nonce   = $_GET[ 'cftrans_nonce' ];
 			if( CF_Translate_AdminForm::verify_nonce( $nonce ) ){
-				return  CF_Translate_Factories::get_form( $form_id );
+				return  CF_Translate_Factories::get_form( esc_attr( $form_id ) );
 			}
 		}
 
 		return null;
 
+	}
+
+	/**
+	 * Print webpack entry to screen
+	 *
+	 * @param $enqueue_admin
+	 *
+	 * @return string
+	 */
+	protected function webpack( $enqueue_admin = true ){
+		$inline = \Caldera_Forms_Render_Util::create_cdata( 'var CF_TRANS_ADMIN= ' . wp_json_encode( $this->localize()->to_array() ) . ';' );
+		if ( $enqueue_admin ) {
+			wp_enqueue_style( \Caldera_Forms_Admin_Assets::slug( 'admin', false ), \Caldera_Forms_Render_Assets::make_url( 'admin', false ) );
+		}
+		ob_start();
+
+		include $this->path . 'dist/index.php';
+		$str = ob_get_clean();
+		foreach (
+			[
+				'styles',
+				'manifest',
+				'vendor',
+				'client'
+			] as $thing
+		) {
+			$str = str_replace( '/' . $thing, $this->url . 'dist/' . $thing, $str );
+		}
+
+		return $inline . str_replace( [
+			'<head>',
+			'</head>'
+		], '', $str );
 	}
 
 }
