@@ -11,10 +11,10 @@ window.addEventListener("load", function(){
                 $.get( settings.api, {
                     cf_lang: new_choice
                 }).success( function( r ){
-					
-					// Remove any event reference to the field so it doesn't stick around
-					$field.off('change');
-					
+
+                    // Remove any event reference to the field so it doesn't stick around
+                    $field.off('change');
+
                     var wrap =  document.getElementById( settings.wrap_id_attr  );
                     wrap.innerHTML = r;
 
