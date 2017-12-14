@@ -4,7 +4,7 @@ Donate link: https://calderaforms.com
 Tags: forms, caldera forms, Caldera Forms, wpform, translations, multilingual, translate, multilingual forms
 Requires at least: 4.5
 Tested up to: 4.9.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,11 @@ One form, all the languages you need.
 
 
 == Changelog ==
+= 1.2.1 =
+See: [https://calderaforms.com/updates/caldera-forms-translation-1-2-1](https://calderaforms.com/updates/caldera-forms-translation-1-2-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms-translate)
+* Fix bug affecting language switcher JavaScript loading.
+* Fix bug preventing language from being switched more than once.
+
 = 1.2.0 =
 See: [https://calderaforms.com/updates/caldera-forms-translation-1-2-0](https://calderaforms.com/updates/caldera-forms-translation-1-2-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms-translate)
 * Complete rebuild of translations interface.
